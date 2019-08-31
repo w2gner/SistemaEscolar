@@ -24,7 +24,6 @@ public class AlunoWindow extends JFrame {
 	private JTextField txtLegendaSexo;
 	private JLabel lblMatricula;
 	private JTextField txtLegendaMat;
-	private JPanel pnltest;
 	private JLabel lblAluno;
 	private JLabel lblNasc;
 	private JTextField txtLegendaNasc;
