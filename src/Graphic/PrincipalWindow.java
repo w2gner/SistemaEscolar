@@ -23,6 +23,11 @@ public class PrincipalWindow extends JFrame {
 
 		menuBar = new JMenuBar();
 		menuSistema = new JMenu("Sistema");
+		menuCasdastro = new JMenu("Cadastro");
+		menuProcessos = new JMenu("Processos");
+		menuFerramentas = new JMenu("Ferramentas");
+		
+		menuCurso = new JMenuItem("Curso");
 		menuUsuarios = new JMenuItem("Usuários");
 		menuSair = new JMenuItem(new AbstractAction("Sair") {
 			private static final long serialVersionUID = 1L;
@@ -32,20 +37,7 @@ public class PrincipalWindow extends JFrame {
 				System.exit(0);
 			}
 		});
-		menuCasdastro = new JMenu("Cadastro");
-		menuProcessos = new JMenu("Processos");
-		menuFerramentas = new JMenu("Ferramentas");
-
-		menuCurso = new JMenuItem("Curso");
-		menuDisciplina = new JMenuItem(new AbstractAction("Disciplina") {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new Disciplina().setVisible(true);
-			}
-		});
+		menuDisciplina = new JMenuItem("Disciplina");
 		menuProfessores = new JMenuItem("Professores");
 		menuAlunos = new JMenuItem(new AbstractAction("Alunos") {
 
@@ -54,10 +46,17 @@ public class PrincipalWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new AlunoWindow().setVisible(true);
-				;
 			}
 		});
-		menuMatricular = new JMenuItem("Matricular");
+		menuMatricular = new JMenuItem(new AbstractAction("Matricular"){
+		
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new MatricularWindow().setVisible(true);
+			}
+		});
 		menuBackup = new JMenuItem("Backup");
 		menuReplicador = new JMenuItem("Replicador");
 

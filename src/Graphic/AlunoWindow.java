@@ -167,11 +167,11 @@ public class AlunoWindow extends JFrame {
 		getContentPane().add(txtLegendaEmail);
 
 		btnSalvar = new JButton("Salvar");
-		btnSalvar.setBounds(220, 320, 150, 25);
+		btnSalvar.setBounds(220, 320, 115, 25);
 		getContentPane().add(btnSalvar);
 
 		btnLimpar = new JButton("Limpar");
-		btnLimpar.setBounds(390, 320, 150, 25);
+		btnLimpar.setBounds(390, 320, 115, 25);
 		getContentPane().add(btnLimpar);
 
 		JComboBox<String> combobox = new JComboBox<String>();

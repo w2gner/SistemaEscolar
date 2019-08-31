@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - MatricularWindow",
+            "request": "launch",
+            "mainClass": "Graphic.MatricularWindow",
+            "projectName": "Sistema"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - AlunoWindow",
             "request": "launch",
             "mainClass": "Graphic.AlunoWindow",
