@@ -1,15 +1,18 @@
 package Graphic;
 
+import java.awt.Toolkit;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 public class AlunoWindow extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JLabel lblSexo;
-	private JTextField txtLegendaSexo;
 	private JLabel lblMatricula;
 	private JTextField txtLegendaMat;
 	private JLabel lblAluno;
@@ -29,7 +32,6 @@ public class AlunoWindow extends JFrame {
 	private JLabel lblCidade;
 	private JTextField txtLegendaCidade;
 	private JLabel lblEstado;
-	private JTextField txtLegendaEstado;
 	private JLabel lblTelefone;
 	private JTextField txtLegendaTelefone;
 	private JLabel lblCelular;
@@ -38,6 +40,7 @@ public class AlunoWindow extends JFrame {
 	private JTextField txtLegendaEmail;
 	private JButton btnSalvar;
 	private JButton btnLimpar;
+	private JRadioButton rdbSexoM, rdbSexoF;
 
 	public AlunoWindow() {
 		setSize(750, 400);
@@ -45,6 +48,7 @@ public class AlunoWindow extends JFrame {
 		setLocationRelativeTo(null);
 		setTitle(" Cadastro de Aluno");
 		setResizable(false);
+		setIconImage(Toolkit.getDefaultToolkit().getImage("logo.png"));
 
 		lblNasc = new JLabel("Nascimento");
 		lblNasc.setBounds(405, 15, 80, 25);
@@ -74,9 +78,17 @@ public class AlunoWindow extends JFrame {
 		lblSexo.setBounds(540, 15, 80, 25);
 		getContentPane().add(lblSexo);
 
-		txtLegendaSexo = new JTextField();
-		txtLegendaSexo.setBounds(540, 35, 115, 25);
-		getContentPane().add(txtLegendaSexo);
+		rdbSexoM = new JRadioButton("M");
+		rdbSexoM.setBounds(540, 35, 45, 25);
+		getContentPane().add(rdbSexoM);
+
+		rdbSexoF = new JRadioButton("F");
+		rdbSexoF.setBounds(585, 35, 45, 25);
+		getContentPane().add(rdbSexoF);
+
+		ButtonGroup btnGroup = new ButtonGroup();
+		btnGroup.add(rdbSexoM);
+		btnGroup.add(rdbSexoF);
 
 		lblCpf = new JLabel("CPF");
 		lblCpf.setBounds(20, 60, 30, 25);
@@ -102,7 +114,7 @@ public class AlunoWindow extends JFrame {
 		txtLegendaCep.setBounds(20, 125, 130, 25);
 		getContentPane().add(txtLegendaCep);
 
-		lblEndereco = new JLabel("Endereço");
+		lblEndereco = new JLabel("EndereÃ§o");
 		lblEndereco.setBounds(155, 105, 80, 25);
 		getContentPane().add(lblEndereco);
 
@@ -129,10 +141,6 @@ public class AlunoWindow extends JFrame {
 		lblEstado = new JLabel("Estado");
 		lblEstado.setBounds(350, 150, 80, 25);
 		getContentPane().add(lblEstado);
-
-		txtLegendaEstado = new JTextField();
-		txtLegendaEstado.setBounds(350, 170, 80, 25);
-		getContentPane().add(txtLegendaEstado);
 
 		lblTelefone = new JLabel("Telefone");
 		lblTelefone.setBounds(20, 195, 80, 25);
@@ -165,6 +173,38 @@ public class AlunoWindow extends JFrame {
 		btnLimpar = new JButton("Limpar");
 		btnLimpar.setBounds(390, 320, 150, 25);
 		getContentPane().add(btnLimpar);
+
+		JComboBox<String> combobox = new JComboBox<String>();
+
+		combobox.addItem("AC");
+		combobox.addItem("AL");
+		combobox.addItem("AP");
+		combobox.addItem("AM");
+		combobox.addItem("BA");
+		combobox.addItem("CE");
+		combobox.addItem("DF");
+		combobox.addItem("ES");
+		combobox.addItem("GO");
+		combobox.addItem("MA");
+		combobox.addItem("MT");
+		combobox.addItem("MS");
+		combobox.addItem("MG");
+		combobox.addItem("PA");
+		combobox.addItem("PB");
+		combobox.addItem("PR");
+		combobox.addItem("PE");
+		combobox.addItem("PI");
+		combobox.addItem("RJ");
+		combobox.addItem("RN");
+		combobox.addItem("RS");
+		combobox.addItem("RO");
+		combobox.addItem("RR");
+		combobox.addItem("SC");
+		combobox.addItem("SP");
+		combobox.addItem("SE");
+		combobox.addItem("TO");
+		combobox.setBounds(350, 170, 80, 25);
+		getContentPane().add(combobox);
 
 	}
 

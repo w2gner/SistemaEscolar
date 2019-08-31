@@ -37,8 +37,8 @@ public class PrincipalWindow extends JFrame {
 		menuFerramentas = new JMenu("Ferramentas");
 
 		menuCurso = new JMenuItem("Curso");
-		menuDisciplina = new JMenuItem(new AbstractAction("Disciplina"){
-		
+		menuDisciplina = new JMenuItem(new AbstractAction("Disciplina") {
+
 			private static final long serialVersionUID = 1L;
 
 			@Override

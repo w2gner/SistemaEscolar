@@ -21,10 +21,9 @@ public class Login extends JFrame {
 		setLocationRelativeTo(null);
 		setTitle("Login");
 		setResizable(false);
-		// setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("logo.png"));
 
-		lblUsuario = new JLabel("Usu?rio");
+		lblUsuario = new JLabel("Usuário");
 		lblUsuario.setBounds(20, 30, 50, 25);
 		getContentPane().add(lblUsuario);
 
@@ -47,20 +46,20 @@ public class Login extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (txfUsuario.getText().isEmpty() && txfSenha.getText().isEmpty()) {
-					JOptionPane.showMessageDialog(null, "Insira o Usu?rio e a Senha");
+					JOptionPane.showMessageDialog(null, "Insira o Usuário e a Senha");
 				} else if (txfSenha.getText().isEmpty()) {
 					JOptionPane.showMessageDialog(null, "Insira a Senha");
 				} else if (txfUsuario.getText().isEmpty()) {
-					JOptionPane.showMessageDialog(null, "Insira o Usu?rio");
+					JOptionPane.showMessageDialog(null, "Insira o Usuário");
 				} else if (false) {
-					// validar se o Usu?rio e a senha estão corretos
+					/* validar se o Usuário e a senha estão corretos*/
 				} else {
 					dispose();
 					new PrincipalWindow().setVisible(true);
 				}
 			}
 		});
-		btnEntrar.setBounds(70, 175, 160, 25);
+		btnEntrar.setBounds(70, 170, 160, 25);
 		getContentPane().add(btnEntrar);
 
 	}
