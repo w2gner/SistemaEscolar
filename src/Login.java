@@ -24,7 +24,7 @@ public class Login extends JFrame {
 		// setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("logo.png"));
 
-		lblUsuario = new JLabel("Usuário");
+		lblUsuario = new JLabel("Usu?rio");
 		lblUsuario.setBounds(20, 30, 50, 25);
 		getContentPane().add(lblUsuario);
 
@@ -47,13 +47,13 @@ public class Login extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (txfUsuario.getText().isEmpty() && txfSenha.getText().isEmpty()) {
-					JOptionPane.showMessageDialog(null, "Insira o Usuário e a Senha");
+					JOptionPane.showMessageDialog(null, "Insira o Usu?rio e a Senha");
 				} else if (txfSenha.getText().isEmpty()) {
 					JOptionPane.showMessageDialog(null, "Insira a Senha");
 				} else if (txfUsuario.getText().isEmpty()) {
-					JOptionPane.showMessageDialog(null, "Insira o Usuário");
+					JOptionPane.showMessageDialog(null, "Insira o Usu?rio");
 				} else if (false) {
-					// validar se o usuário e a senha estão corretos
+					// validar se o Usu?rio e a senha estão corretos
 				} else {
 					dispose();
 					new PrincipalWindow().setVisible(true);

@@ -6,15 +6,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import Database.Model.Aluno;
 
 public class AlunoDAO extends MFLDao {
 
 	private Connection conection;
 	private String select = "select * from tb_alunos";
-	private String insert = "insert into tb_alunos(nm_aluno) VALUES (?) ";
-	private String delete = "delete from tb_alunos";
+	// private String insert = "insert into tb_alunos(nm_aluno) VALUES (?) ";
+	// private String delete = "delete from tb_alunos";
 	// private String update = "delete from tb_alunos";
 	private PreparedStatement pstSelect;
 

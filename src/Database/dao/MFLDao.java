@@ -1,18 +1,14 @@
 package Database.dao;
 
-import java.awt.List;
 import java.sql.SQLException;
+import java.util.List;
 
 public abstract class MFLDao {
-	public abstract
-	java.util.List<Object>	Select() throws SQLException;
-	
-	public abstract
-	int	Delete();
-	
-	public abstract
-	int	Insert();
-	
-	public abstract
-	int	Update();
+	public abstract List<Object> Select() throws SQLException;
+
+	public abstract int Delete();
+
+	public abstract int Insert();
+
+	public abstract int Update();
 }

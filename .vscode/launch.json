@@ -2,6 +2,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - AlunoWindow",
+            "request": "launch",
+            "mainClass": "Graphic.AlunoWindow",
+            "projectName": "Sistema"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Disciplina",
+            "request": "launch",
+            "mainClass": "Graphic.Disciplina",
+            "projectName": "Sistema"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - teste",
             "request": "launch",
             "mainClass": "Database.teste",
