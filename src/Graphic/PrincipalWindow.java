@@ -18,6 +18,7 @@ public class PrincipalWindow extends JFrame {
 	public PrincipalWindow() {
 		setSize(1150, 650);
 		setTitle("Sistema");
+		setLocationRelativeTo(null);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("logo.png"));
 		menuBar = new JMenuBar();
 		menuSistema = new JMenu("Sistema");
