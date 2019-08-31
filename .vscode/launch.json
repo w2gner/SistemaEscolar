@@ -1,0 +1,25 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - teste",
+            "request": "launch",
+            "mainClass": "Database.teste",
+            "projectName": "Sistema"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Login",
+            "request": "launch",
+            "mainClass": "Login",
+            "projectName": "Sistema"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - PrincipalWindow",
+            "request": "launch",
+            "mainClass": "Graphic.PrincipalWindow",
+            "projectName": "Sistema"
+        }
+    ]
+}

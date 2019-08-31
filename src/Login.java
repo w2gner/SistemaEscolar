@@ -1,44 +1,68 @@
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import Graphic.PrincipalWindow;
 
-import Graphic.AlunoWindow;
+public class Login extends JFrame {
 
-public class Login extends JFrame{
-	
-	private JLabel lblUsuario;
-	private JTextField txtLegendaUsuario;
-	private JLabel lblSenha;
-	private JTextField txtLegendaSenha;
+	private static final long serialVersionUID = 1L;
+	private JLabel lblUsuario, lblSenha;
+	private JTextField txfSenha, txfUsuario;
 	private JButton btnEntrar;
-	
+
 	public Login() {
-		setSize(400, 500);
+		setSize(320, 250);
 		setLayout(null);
 		setLocationRelativeTo(null);
 		setTitle("Login");
 		setResizable(false);
-		
-		lblUsuario = new JLabel("Usuario");
-		lblUsuario.setBounds(70,200,50,25);
+		// setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setIconImage(Toolkit.getDefaultToolkit().getImage("logo.png"));
+
+		lblUsuario = new JLabel("Usuário");
+		lblUsuario.setBounds(20, 30, 50, 25);
 		getContentPane().add(lblUsuario);
-		
-		txtLegendaUsuario = new JTextField();
-		txtLegendaUsuario.setBounds(70, 220,250, 25);
-		getContentPane().add(txtLegendaUsuario);
-		
+
+		txfUsuario = new JTextField();
+		txfUsuario.setBounds(20, 50, 250, 25);
+		getContentPane().add(txfUsuario);
+
 		lblSenha = new JLabel("Senha");
-		lblSenha.setBounds(70,250,50,25);
+		lblSenha.setBounds(20, 100, 50, 25);
 		getContentPane().add(lblSenha);
-		
-		txtLegendaSenha = new JTextField();
-		txtLegendaSenha.setBounds(70, 270,250, 25);
-		getContentPane().add(txtLegendaSenha);
-		
-		btnEntrar = new JButton("Entrar");
-		btnEntrar.setBounds(220, 320, 150, 25);
+
+		txfSenha = new JTextField();
+		txfSenha.setBounds(20, 120, 250, 25);
+		getContentPane().add(txfSenha);
+
+		btnEntrar = new JButton(new AbstractAction("Entrar") {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (txfUsuario.getText().isEmpty() && txfSenha.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Insira o Usuário e a Senha");
+				} else if (txfSenha.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Insira a Senha");
+				} else if (txfUsuario.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Insira o Usuário");
+				} else if (false) {
+					// validar se o usuário e a senha estão corretos
+				} else {
+					dispose();
+					new PrincipalWindow().setVisible(true);
+				}
+			}
+		});
+		btnEntrar.setBounds(70, 175, 160, 25);
 		getContentPane().add(btnEntrar);
+
 	}
 
 	public static void main(String[] args) {
