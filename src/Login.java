@@ -51,8 +51,6 @@ public class Login extends JFrame {
 					JOptionPane.showMessageDialog(null, "Insira a Senha");
 				} else if (txfUsuario.getText().isEmpty()) {
 					JOptionPane.showMessageDialog(null, "Insira o Usuário");
-				} else if (false) {
-					/* validar se o Usuário e a senha estão corretos*/
 				} else {
 					dispose();
 					new PrincipalWindow().setVisible(true);

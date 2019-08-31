@@ -1,12 +1,10 @@
 package Graphic;
 
 import java.awt.Toolkit;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
 
 public class MatricularWindow extends JFrame {
     private static final long serialVersionUID = 1L;
