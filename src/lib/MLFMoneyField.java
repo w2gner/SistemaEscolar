@@ -81,7 +81,7 @@ public class MLFMoneyField extends JFormattedTextField {
 							mascarado.deleteCharAt(i);
 						}
 					}
-
+					@SuppressWarnings("deprecation")
 					Long number = new Long(mascarado.toString());
 
 					mascarado.replace(0, mascarado.length(), number.toString());

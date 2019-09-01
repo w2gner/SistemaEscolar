@@ -42,19 +42,16 @@ public class AlunoDAO extends MFLDao {
 
 	@Override
 	public int Delete() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int Insert() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int Update() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
