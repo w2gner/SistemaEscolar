@@ -2,6 +2,34 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - MatricularWindow",
+            "request": "launch",
+            "mainClass": "graphic.MatricularWindow",
+            "projectName": "Sistema"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - PrincipalWindow",
+            "request": "launch",
+            "mainClass": "graphic.PrincipalWindow",
+            "projectName": "Sistema"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - teste",
+            "request": "launch",
+            "mainClass": "graphic.teste",
+            "projectName": "Sistema"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - UsuarioWindow",
+            "request": "launch",
+            "mainClass": "graphic.UsuarioWindow",
+            "projectName": "Sistema"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - BackupWindow",
             "request": "launch",
             "mainClass": "graphic.BackupWindow",

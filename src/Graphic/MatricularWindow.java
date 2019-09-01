@@ -2,7 +2,6 @@ package graphic;
 
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
-
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -16,12 +15,12 @@ public class MatricularWindow extends JFrame {
     private JButton btnSalvar, btnCancelar;
 
     public MatricularWindow() {
-        setSize(750, 400);
         setLayout(null);
-        setLocationRelativeTo(null);
-        setTitle(" Matricular");
+        setSize(750, 400);
         setResizable(false);
-        setIconImage(Toolkit.getDefaultToolkit().getImage("logo.png"));
+        setTitle(" Matricular");
+        setLocationRelativeTo(null);
+        setIconImage(Toolkit.getDefaultToolkit().getImage("icons/logo.png"));
 
         lblCurso = new JLabel("Curso");
         lblCurso.setBounds(35, 35, 90, 25);
@@ -56,7 +55,7 @@ public class MatricularWindow extends JFrame {
         getContentPane().add(cmbDisciplina);
 
         btnSalvar = new JButton("Salvar");
-        btnSalvar.setBounds(220, 320, 115, 25);
+        btnSalvar.setBounds(220, 310, 115, 25);
         getContentPane().add(btnSalvar);
 
         btnCancelar = new JButton(new AbstractAction("Cancelar") {
@@ -68,7 +67,7 @@ public class MatricularWindow extends JFrame {
                 dispose();
             }
         });
-        btnCancelar.setBounds(390, 320, 115, 25);
+        btnCancelar.setBounds(390, 310, 115, 25);
         getContentPane().add(btnCancelar);
     }
 

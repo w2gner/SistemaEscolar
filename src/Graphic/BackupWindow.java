@@ -1,5 +1,6 @@
 package graphic;
 
+import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
@@ -14,21 +15,24 @@ public class BackupWindow extends JFrame {
     private JButton btnSim, btNao;
     private JLabel lblTexto;
     private JProgressBar progressBar;
+    private Font fonte = new Font("Microsoft JhengHei UI", Font.PLAIN, 15); 
+
 
     public BackupWindow() {
-        setSize(600, 300);
         setLayout(null);
-        setLocationRelativeTo(null);
+        setSize(600, 270);
         setTitle(" Backup");
         setResizable(false);
-        setIconImage(Toolkit.getDefaultToolkit().getImage("logo.png"));
+        setLocationRelativeTo(null);
+        setIconImage(Toolkit.getDefaultToolkit().getImage("icons/logo.png"));
 
         lblTexto = new JLabel("Você deseja fazer backup agora?");
-        lblTexto.setBounds(200, 50, 250, 25);
+        lblTexto.setBounds(180, 50, 250, 25);
+        lblTexto.setFont(fonte);
         getContentPane().add(lblTexto);
 
         btnSim = new JButton("Sim");
-        btnSim.setBounds(190, 200, 100, 25);
+        btnSim.setBounds(190, 180, 100, 25);
         getContentPane().add(btnSim);
 
         btNao = new JButton(new AbstractAction("Não") {
@@ -40,11 +44,11 @@ public class BackupWindow extends JFrame {
                 dispose();
             }
         });
-        btNao.setBounds(310, 200, 100, 25);
+        btNao.setBounds(310, 180, 100, 25);
         getContentPane().add(btNao);
 
         progressBar = new JProgressBar();
-        progressBar.setBounds(150, 125, 300, 25);
+        progressBar.setBounds(150, 115, 300, 25);
         getContentPane().add(progressBar);
     }
 

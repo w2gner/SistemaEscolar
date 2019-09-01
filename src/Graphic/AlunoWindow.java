@@ -44,14 +44,15 @@ public class AlunoWindow extends JFrame {
 	private JButton btnLimpar;
 	private JRadioButton rdbSexoM, rdbSexoF;
 	private JComboBox<String> cbxEstado;
+	private ButtonGroup btnGroup;
 
 	public AlunoWindow() {
-		setSize(750, 400);
 		setLayout(null);
+		setSize(750, 400);
+		setResizable(false);
 		setLocationRelativeTo(null);
 		setTitle(" Cadastro de Aluno");
-		setResizable(false);
-		setIconImage(Toolkit.getDefaultToolkit().getImage("logo.png"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage("icons/logo.png"));
 
 		lblNasc = new JLabel("Nascimento");
 		lblNasc.setBounds(405, 15, 80, 25);
@@ -61,7 +62,7 @@ public class AlunoWindow extends JFrame {
 		txtLegendaNasc.setBounds(405, 35, 130, 25);
 		getContentPane().add(txtLegendaNasc);
 
-		lblMatricula = new JLabel("Matricula");
+		lblMatricula = new JLabel("Matrícula");
 		lblMatricula.setBounds(20, 15, 60, 25);
 		getContentPane().add(lblMatricula);
 
@@ -89,7 +90,7 @@ public class AlunoWindow extends JFrame {
 		rdbSexoF.setBounds(585, 35, 45, 25);
 		getContentPane().add(rdbSexoF);
 
-		ButtonGroup btnGroup = new ButtonGroup();
+		btnGroup = new ButtonGroup();
 		btnGroup.add(rdbSexoM);
 		btnGroup.add(rdbSexoF);
 
@@ -170,7 +171,7 @@ public class AlunoWindow extends JFrame {
 		getContentPane().add(txtLegendaEmail);
 
 		btnSalvar = new JButton("Salvar");
-		btnSalvar.setBounds(220, 320, 115, 25);
+		btnSalvar.setBounds(220, 310, 115, 25);
 		getContentPane().add(btnSalvar);
 
 		btnLimpar = new JButton(new AbstractAction("Cancelar") {
@@ -182,7 +183,7 @@ public class AlunoWindow extends JFrame {
 				dispose();
 			}
 		});
-		btnLimpar.setBounds(390, 320, 115, 25);
+		btnLimpar.setBounds(390, 310, 115, 25);
 		getContentPane().add(btnLimpar);
 
 		cbxEstado = new JComboBox<String>();

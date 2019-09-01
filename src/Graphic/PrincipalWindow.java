@@ -17,18 +17,27 @@ public class PrincipalWindow extends JFrame {
 
 	public PrincipalWindow() {
 		setSize(1150, 650);
+		setLayout(null);
 		setTitle("Sistema");
 		setLocationRelativeTo(null);
-		setIconImage(Toolkit.getDefaultToolkit().getImage("logo.png"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage("icons/logo.png"));
 
 		menuBar = new JMenuBar();
 		menuSistema = new JMenu("Sistema");
 		menuCasdastro = new JMenu("Cadastro");
 		menuProcessos = new JMenu("Processos");
 		menuFerramentas = new JMenu("Ferramentas");
-		
+
 		menuCurso = new JMenuItem("Curso");
-		menuUsuarios = new JMenuItem("Usuários");
+		menuUsuarios = new JMenuItem(new AbstractAction("Usuários"){
+		
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new UsuarioWindow().setVisible(true);
+			}
+		});
 		menuSair = new JMenuItem(new AbstractAction("Sair") {
 			private static final long serialVersionUID = 1L;
 
@@ -48,8 +57,8 @@ public class PrincipalWindow extends JFrame {
 				new AlunoWindow().setVisible(true);
 			}
 		});
-		menuMatricular = new JMenuItem(new AbstractAction("Matricular"){
-		
+		menuMatricular = new JMenuItem(new AbstractAction("Matricular") {
+
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -57,8 +66,8 @@ public class PrincipalWindow extends JFrame {
 				new MatricularWindow().setVisible(true);
 			}
 		});
-		menuBackup = new JMenuItem(new AbstractAction("Backup"){
-		
+		menuBackup = new JMenuItem(new AbstractAction("Backup") {
+
 			private static final long serialVersionUID = 1L;
 
 			@Override
