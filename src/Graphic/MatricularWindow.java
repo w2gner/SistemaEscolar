@@ -1,6 +1,9 @@
-package Graphic;
+package graphic;
 
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+
+import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -56,7 +59,15 @@ public class MatricularWindow extends JFrame {
         btnSalvar.setBounds(220, 320, 115, 25);
         getContentPane().add(btnSalvar);
 
-        btnCancelar = new JButton("Cancelar");
+        btnCancelar = new JButton(new AbstractAction("Cancelar") {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
         btnCancelar.setBounds(390, 320, 115, 25);
         getContentPane().add(btnCancelar);
     }

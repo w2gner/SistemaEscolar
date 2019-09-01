@@ -2,6 +2,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - BackupWindow",
+            "request": "launch",
+            "mainClass": "graphic.BackupWindow",
+            "projectName": "Sistema"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - AlunoWindow",
+            "request": "launch",
+            "mainClass": "graphic.AlunoWindow",
+            "projectName": "Sistema"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - MatricularWindow",
             "request": "launch",
             "mainClass": "Graphic.MatricularWindow",

@@ -1,6 +1,8 @@
-package Graphic;
+package graphic;
 
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -41,6 +43,7 @@ public class AlunoWindow extends JFrame {
 	private JButton btnSalvar;
 	private JButton btnLimpar;
 	private JRadioButton rdbSexoM, rdbSexoF;
+	private JComboBox<String> cbxEstado;
 
 	public AlunoWindow() {
 		setSize(750, 400);
@@ -170,41 +173,48 @@ public class AlunoWindow extends JFrame {
 		btnSalvar.setBounds(220, 320, 115, 25);
 		getContentPane().add(btnSalvar);
 
-		btnLimpar = new JButton("Limpar");
+		btnLimpar = new JButton(new AbstractAction("Cancelar") {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 		btnLimpar.setBounds(390, 320, 115, 25);
 		getContentPane().add(btnLimpar);
 
-		JComboBox<String> combobox = new JComboBox<String>();
-
-		combobox.addItem("AC");
-		combobox.addItem("AL");
-		combobox.addItem("AP");
-		combobox.addItem("AM");
-		combobox.addItem("BA");
-		combobox.addItem("CE");
-		combobox.addItem("DF");
-		combobox.addItem("ES");
-		combobox.addItem("GO");
-		combobox.addItem("MA");
-		combobox.addItem("MT");
-		combobox.addItem("MS");
-		combobox.addItem("MG");
-		combobox.addItem("PA");
-		combobox.addItem("PB");
-		combobox.addItem("PR");
-		combobox.addItem("PE");
-		combobox.addItem("PI");
-		combobox.addItem("RJ");
-		combobox.addItem("RN");
-		combobox.addItem("RS");
-		combobox.addItem("RO");
-		combobox.addItem("RR");
-		combobox.addItem("SC");
-		combobox.addItem("SP");
-		combobox.addItem("SE");
-		combobox.addItem("TO");
-		combobox.setBounds(350, 170, 80, 25);
-		getContentPane().add(combobox);
+		cbxEstado = new JComboBox<String>();
+		cbxEstado.addItem("AC");
+		cbxEstado.addItem("AL");
+		cbxEstado.addItem("AP");
+		cbxEstado.addItem("AM");
+		cbxEstado.addItem("BA");
+		cbxEstado.addItem("CE");
+		cbxEstado.addItem("DF");
+		cbxEstado.addItem("ES");
+		cbxEstado.addItem("GO");
+		cbxEstado.addItem("MA");
+		cbxEstado.addItem("MT");
+		cbxEstado.addItem("MS");
+		cbxEstado.addItem("MG");
+		cbxEstado.addItem("PA");
+		cbxEstado.addItem("PB");
+		cbxEstado.addItem("PR");
+		cbxEstado.addItem("PE");
+		cbxEstado.addItem("PI");
+		cbxEstado.addItem("RJ");
+		cbxEstado.addItem("RN");
+		cbxEstado.addItem("RS");
+		cbxEstado.addItem("RO");
+		cbxEstado.addItem("RR");
+		cbxEstado.addItem("SC");
+		cbxEstado.addItem("SP");
+		cbxEstado.addItem("SE");
+		cbxEstado.addItem("TO");
+		cbxEstado.setBounds(350, 170, 80, 25);
+		getContentPane().add(cbxEstado);
 
 	}
 

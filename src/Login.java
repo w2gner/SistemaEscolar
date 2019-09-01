@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import Graphic.PrincipalWindow;
+import graphic.PrincipalWindow;
 
 public class Login extends JFrame {
 

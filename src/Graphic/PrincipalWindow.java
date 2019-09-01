@@ -1,4 +1,4 @@
-package Graphic;
+package graphic;
 
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -57,7 +57,15 @@ public class PrincipalWindow extends JFrame {
 				new MatricularWindow().setVisible(true);
 			}
 		});
-		menuBackup = new JMenuItem("Backup");
+		menuBackup = new JMenuItem(new AbstractAction("Backup"){
+		
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new BackupWindow().setVisible(true);
+			}
+		});
 		menuReplicador = new JMenuItem("Replicador");
 
 		menuSistema.add(menuUsuarios);

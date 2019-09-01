@@ -1,4 +1,4 @@
-package Database.Model;
+package database.model;
 
 public class Aluno {
 	private int cd_aluno;
