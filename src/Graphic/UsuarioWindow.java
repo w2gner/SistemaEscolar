@@ -25,27 +25,27 @@ public class UsuarioWindow extends JFrame {
         setIconImage(Toolkit.getDefaultToolkit().getImage("icons/logo.png"));
 
         lblUsuario = new JLabel("Usuário");
-        lblUsuario.setBounds(35, 35, 50, 25);
+        lblUsuario.setBounds(50, 35, 50, 25);
         getContentPane().add(lblUsuario);
 
         lblSenha = new JLabel("Senha");
-        lblSenha.setBounds(35, 70, 50, 25);
+        lblSenha.setBounds(50, 70, 50, 25);
         getContentPane().add(lblSenha);
 
         lblPerfil = new JLabel("Perfil");
-        lblPerfil.setBounds(35, 105, 30, 25);
+        lblPerfil.setBounds(50, 105, 30, 25);
         getContentPane().add(lblPerfil);
 
         txfUsuario = new JTextField();
-        txfUsuario.setBounds(95, 35, 300, 25);
+        txfUsuario.setBounds(110, 35, 300, 25);
         getContentPane().add(txfUsuario);
 
         pwfSenha = new JPasswordField();
-        pwfSenha.setBounds(95, 70, 300, 25);
+        pwfSenha.setBounds(110, 70, 300, 25);
         getContentPane().add(pwfSenha);
 
         cbxPerfil = new JComboBox<String>();
-        cbxPerfil.setBounds(95, 105, 300, 25);
+        cbxPerfil.setBounds(110, 105, 300, 25);
         getContentPane().add(cbxPerfil);
         cbxPerfil.addItem("Administrador");
         cbxPerfil.addItem("Convidado");

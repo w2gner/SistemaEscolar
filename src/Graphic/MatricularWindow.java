@@ -23,35 +23,35 @@ public class MatricularWindow extends JFrame {
         setIconImage(Toolkit.getDefaultToolkit().getImage("icons/logo.png"));
 
         lblCurso = new JLabel("Curso");
-        lblCurso.setBounds(35, 35, 90, 25);
+        lblCurso.setBounds(50, 35, 90, 25);
         getContentPane().add(lblCurso);
 
         lblAluno = new JLabel("Professor");
-        lblAluno.setBounds(35, 85, 90, 25);
+        lblAluno.setBounds(50, 85, 90, 25);
         getContentPane().add(lblAluno);
 
         lblProfessor = new JLabel("Aluno");
-        lblProfessor.setBounds(35, 135, 90, 25);
+        lblProfessor.setBounds(50, 135, 90, 25);
         getContentPane().add(lblProfessor);
 
         lblDisciplina = new JLabel("Disciplina");
-        lblDisciplina.setBounds(35, 185, 90, 25);
+        lblDisciplina.setBounds(50, 185, 90, 25);
         getContentPane().add(lblDisciplina);
 
         cmbCurso = new JComboBox<String>();
-        cmbCurso.setBounds(100, 35, 300, 25);
+        cmbCurso.setBounds(110, 35, 300, 25);
         getContentPane().add(cmbCurso);
 
         cmbProfessor = new JComboBox<String>();
-        cmbProfessor.setBounds(100, 85, 300, 25);
+        cmbProfessor.setBounds(110, 85, 300, 25);
         getContentPane().add(cmbProfessor);
 
         cmbAluno = new JComboBox<String>();
-        cmbAluno.setBounds(100, 135, 300, 25);
+        cmbAluno.setBounds(110, 135, 300, 25);
         getContentPane().add(cmbAluno);
 
         cmbDisciplina = new JComboBox<String>();
-        cmbDisciplina.setBounds(100, 185, 300, 25);
+        cmbDisciplina.setBounds(110, 185, 300, 25);
         getContentPane().add(cmbDisciplina);
 
         btnSalvar = new JButton("Salvar");

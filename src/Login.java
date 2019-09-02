@@ -2,22 +2,28 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.util.HashMap;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import graphic.PrincipalWindow;
+import database.model.*;
 
 public class Login extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private JLabel lblUsuario, lblSenha;
-	private JTextField txfSenha, txfUsuario;
 	private JButton btnEntrar;
+	private JTextField txfUsuario;
+	private JLabel lblUsuario, lblSenha;
+	private JPasswordField pwfPassword;
+	private Usuario teste;
+	HashMap<String, Usuario> Usuario;
 
 	public Login() {
 		setLayout(null);
@@ -26,6 +32,11 @@ public class Login extends JFrame {
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("icons/logo.png"));
+
+		// teste.setNome("teste");
+		// teste.setSenha("wagner");
+		// teste.setIs_Admin(true);
+		// Usuario.put("wagner", teste);
 
 		lblUsuario = new JLabel("Usuário");
 		lblUsuario.setBounds(40, 20, 50, 25);
@@ -39,9 +50,9 @@ public class Login extends JFrame {
 		lblSenha.setBounds(40, 80, 50, 25);
 		getContentPane().add(lblSenha);
 
-		txfSenha = new JTextField();
-		txfSenha.setBounds(40, 100, 227, 25);
-		getContentPane().add(txfSenha);
+		pwfPassword = new JPasswordField();
+		pwfPassword.setBounds(40, 100, 227, 25);
+		getContentPane().add(pwfPassword);
 
 		btnEntrar = new JButton(new AbstractAction("Entrar") {
 
@@ -49,13 +60,18 @@ public class Login extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (txfUsuario.getText().isEmpty() && txfSenha.getText().isEmpty()) {
+				if (txfUsuario.getText().isEmpty() && pwfPassword.getPassword().length == 0) {
 					JOptionPane.showMessageDialog(null, "Insira o Usuário e a Senha");
-				} else if (txfSenha.getText().isEmpty()) {
+				} else if (pwfPassword.getPassword().length == 0) {
 					JOptionPane.showMessageDialog(null, "Insira a Senha");
 				} else if (txfUsuario.getText().isEmpty()) {
 					JOptionPane.showMessageDialog(null, "Insira o Usuário");
-				} else {
+				} /*
+					 * else if (Usuario.containsKey(pwfPassword.getText().toString())) {
+					 * System.out.println("Usuário encontrado!"); }
+					 */else {
+					// String teste2 = pwfPassword.getText().toString();
+					// System.out.println("A senha digitada foi: " + teste2);
 					dispose();
 					new PrincipalWindow().setVisible(true);
 				}

@@ -2,6 +2,27 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - DisciplinaWindow",
+            "request": "launch",
+            "mainClass": "graphic.DisciplinaWindow",
+            "projectName": "Sistema"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - CursoWindow",
+            "request": "launch",
+            "mainClass": "graphic.CursoWindow",
+            "projectName": "Sistema"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - ProfessorWindow",
+            "request": "launch",
+            "mainClass": "graphic.ProfessorWindow",
+            "projectName": "Sistema"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - MatricularWindow",
             "request": "launch",
             "mainClass": "graphic.MatricularWindow",
@@ -12,13 +33,6 @@
             "name": "CodeLens (Launch) - PrincipalWindow",
             "request": "launch",
             "mainClass": "graphic.PrincipalWindow",
-            "projectName": "Sistema"
-        },
-        {
-            "type": "java",
-            "name": "CodeLens (Launch) - teste",
-            "request": "launch",
-            "mainClass": "graphic.teste",
             "projectName": "Sistema"
         },
         {
@@ -44,44 +58,9 @@
         },
         {
             "type": "java",
-            "name": "CodeLens (Launch) - MatricularWindow",
-            "request": "launch",
-            "mainClass": "Graphic.MatricularWindow",
-            "projectName": "Sistema"
-        },
-        {
-            "type": "java",
-            "name": "CodeLens (Launch) - AlunoWindow",
-            "request": "launch",
-            "mainClass": "Graphic.AlunoWindow",
-            "projectName": "Sistema"
-        },
-        {
-            "type": "java",
-            "name": "CodeLens (Launch) - Disciplina",
-            "request": "launch",
-            "mainClass": "Graphic.Disciplina",
-            "projectName": "Sistema"
-        },
-        {
-            "type": "java",
-            "name": "CodeLens (Launch) - teste",
-            "request": "launch",
-            "mainClass": "Database.teste",
-            "projectName": "Sistema"
-        },
-        {
-            "type": "java",
             "name": "CodeLens (Launch) - Login",
             "request": "launch",
             "mainClass": "Login",
-            "projectName": "Sistema"
-        },
-        {
-            "type": "java",
-            "name": "CodeLens (Launch) - PrincipalWindow",
-            "request": "launch",
-            "mainClass": "Graphic.PrincipalWindow",
             "projectName": "Sistema"
         }
     ]

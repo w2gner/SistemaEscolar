@@ -20,6 +20,7 @@ public class PrincipalWindow extends JFrame {
 		setLayout(null);
 		setTitle("Sistema");
 		setLocationRelativeTo(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("icons/logo.png"));
 
 		menuBar = new JMenuBar();
@@ -28,9 +29,17 @@ public class PrincipalWindow extends JFrame {
 		menuProcessos = new JMenu("Processos");
 		menuFerramentas = new JMenu("Ferramentas");
 
-		menuCurso = new JMenuItem("Curso");
-		menuUsuarios = new JMenuItem(new AbstractAction("Usuários"){
-		
+		menuCurso = new JMenuItem(new AbstractAction("Curso") {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new CursoWindow().setVisible(true);
+			}
+		});
+		menuUsuarios = new JMenuItem(new AbstractAction("Usuários") {
+
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -46,8 +55,24 @@ public class PrincipalWindow extends JFrame {
 				System.exit(0);
 			}
 		});
-		menuDisciplina = new JMenuItem("Disciplina");
-		menuProfessores = new JMenuItem("Professores");
+		menuDisciplina = new JMenuItem(new AbstractAction("Disciplina") {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new DisciplinaWindow().setVisible(true);
+			}
+		});
+		menuProfessores = new JMenuItem(new AbstractAction("Professores") {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new ProfessorWindow().setVisible(true);
+			}
+		});
 		menuAlunos = new JMenuItem(new AbstractAction("Alunos") {
 
 			private static final long serialVersionUID = 1L;
