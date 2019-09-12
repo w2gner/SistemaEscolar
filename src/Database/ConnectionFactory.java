@@ -1,4 +1,5 @@
 package database;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -13,26 +14,13 @@ public class ConnectionFactory {
 	 * @param as_pass     Connection p455w0rd.
 	 * @return PostgreSQL Connecttion.
 	 */
-	public static Connection getConnection
-				(
-					String			as_database,
-					String			as_user,
-					String			as_pass
-				)
-	{
+	public static Connection getConnection(String as_database, String as_user, String as_pass) {
 		//
 		// Returns database connection
 		//
-		return	getConnection
-			(
-				"localhost",
-				"5432",
-				as_database,
-				as_user,
-				as_pass
-			);
+		return getConnection("localhost", "5432", as_database, as_user, as_pass);
 	}
-	
+
 	/**
 	 * Returns a PostgreSQL database connection.
 	 * 
@@ -43,33 +31,15 @@ public class ConnectionFactory {
 	 * @param as_pass     Connection p455w0rd.
 	 * @return PostgreSQL Connecttion.
 	 */
-	public static Connection getConnection
-				(
-					String			as_adress,
-					String			as_port,
-					String			as_database,
-					String			as_user,
-					String			as_pass
-				)
-	{
-		try
-		{
+	public static Connection getConnection(String as_adress, String as_port, String as_database, String as_user,
+			String as_pass) {
+		try {
 			//
 			// Returns database connection
 			//
-			return	DriverManager.getConnection
-				(
-					"jdbc:postgresql://"
-						+	as_adress
-						+	":"
-						+	as_port
-						+	"/"
-						+	as_database,
-					as_user,
-					as_pass
-				);
-		}
-		catch (SQLException e) {
+			return DriverManager.getConnection("jdbc:postgresql://" + as_adress + ":" + as_port + "/" + as_database,
+					as_user, as_pass);
+		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 

@@ -2,6 +2,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - CreateToolbar",
+            "request": "launch",
+            "mainClass": "CreateToolbar",
+            "projectName": "Sistema"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Teste",
+            "request": "launch",
+            "mainClass": "database.dao.Teste",
+            "projectName": "Sistema"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - DisciplinaWindow",
             "request": "launch",
             "mainClass": "graphic.DisciplinaWindow",

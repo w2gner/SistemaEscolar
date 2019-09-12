@@ -1,5 +1,6 @@
 package graphic;
 
+import java.awt.BorderLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
@@ -7,13 +8,15 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JToolBar;
 
 public class PrincipalWindow extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JMenuBar menuBar;
 	private JMenu menuSistema, menuCasdastro, menuProcessos, menuFerramentas;
-	private JMenuItem menuUsuarios, menuSair, menuCurso, menuDisciplina, menuProfessores, menuAlunos, menuMatricular, menuBackup, menuReplicador;
+	private JMenuItem menuUsuarios, menuSair, menuCurso, menuDisciplina, menuProfessores, menuAlunos, menuMatricular,
+			menuBackup, menuReplicador;
 
 	public PrincipalWindow() {
 		setSize(1150, 650);
@@ -118,6 +121,10 @@ public class PrincipalWindow extends JFrame {
 		menuBar.add(menuFerramentas);
 
 		setJMenuBar(menuBar);
+
+		JToolBar toolbar = new JToolBar();
+		getContentPane().add(toolbar, BorderLayout.PAGE_START);
+
 	}
 
 	public static void main(String[] args) {

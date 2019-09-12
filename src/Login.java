@@ -4,6 +4,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.util.HashMap;
 import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -22,7 +23,6 @@ public class Login extends JFrame {
 	private JTextField txfUsuario;
 	private JLabel lblUsuario, lblSenha;
 	private JPasswordField pwfPassword;
-	private Usuario teste;
 	HashMap<String, Usuario> Usuario;
 
 	public Login() {
@@ -33,10 +33,14 @@ public class Login extends JFrame {
 		setLocationRelativeTo(null);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("icons/logo.png"));
 
-		// teste.setNome("teste");
-		// teste.setSenha("wagner");
-		// teste.setIs_Admin(true);
-		// Usuario.put("wagner", teste);
+		Action enterClick = new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				btnEntrar.doClick();
+			}
+		};
 
 		lblUsuario = new JLabel("Usuário");
 		lblUsuario.setBounds(40, 20, 50, 25);
@@ -44,6 +48,7 @@ public class Login extends JFrame {
 
 		txfUsuario = new JTextField();
 		txfUsuario.setBounds(40, 40, 227, 25);
+		txfUsuario.addActionListener(enterClick);
 		getContentPane().add(txfUsuario);
 
 		lblSenha = new JLabel("Senha");
@@ -52,6 +57,7 @@ public class Login extends JFrame {
 
 		pwfPassword = new JPasswordField();
 		pwfPassword.setBounds(40, 100, 227, 25);
+		pwfPassword.addActionListener(enterClick);
 		getContentPane().add(pwfPassword);
 
 		btnEntrar = new JButton(new AbstractAction("Entrar") {
@@ -66,10 +72,7 @@ public class Login extends JFrame {
 					JOptionPane.showMessageDialog(null, "Insira a Senha");
 				} else if (txfUsuario.getText().isEmpty()) {
 					JOptionPane.showMessageDialog(null, "Insira o Usuário");
-				} /*
-					 * else if (Usuario.containsKey(pwfPassword.getText().toString())) {
-					 * System.out.println("Usuário encontrado!"); }
-					 */else {
+				} else {
 					// String teste2 = pwfPassword.getText().toString();
 					// System.out.println("A senha digitada foi: " + teste2);
 					dispose();
@@ -84,18 +87,19 @@ public class Login extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-				} catch (ClassNotFoundException ex) {
-				} catch (InstantiationException ex) {
-				} catch (IllegalAccessException ex) {
-				} catch (UnsupportedLookAndFeelException ex) {
-				}
-			}
-		});
+
+//		EventQueue.invokeLater(new Runnable() {
+//			@Override
+//			public void run() {
+//				try {
+//					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//				} catch (ClassNotFoundException ex) {
+//				} catch (InstantiationException ex) {
+//				} catch (IllegalAccessException ex) {
+//				} catch (UnsupportedLookAndFeelException ex) {
+//				}
+//			}
+//		});
 
 		new Login().setVisible(true);
 
