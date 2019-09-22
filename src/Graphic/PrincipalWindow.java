@@ -3,6 +3,8 @@ package graphic;
 import java.awt.BorderLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.sql.Connection;
+
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -18,7 +20,7 @@ public class PrincipalWindow extends JFrame {
 	private JMenuItem menuUsuarios, menuSair, menuCurso, menuDisciplina, menuProfessores, menuAlunos, menuMatricular,
 			menuBackup, menuReplicador;
 
-	public PrincipalWindow() {
+	public PrincipalWindow(Connection conn) {
 		setSize(1150, 650);
 		setLayout(null);
 		setTitle("Sistema");
@@ -82,7 +84,7 @@ public class PrincipalWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new AlunoWindow().setVisible(true);
+				new AlunoWindow(conn).setVisible(true);
 			}
 		});
 		menuMatricular = new JMenuItem(new AbstractAction("Matricular") {
@@ -125,9 +127,5 @@ public class PrincipalWindow extends JFrame {
 		JToolBar toolbar = new JToolBar();
 		getContentPane().add(toolbar, BorderLayout.PAGE_START);
 
-	}
-
-	public static void main(String[] args) {
-		new PrincipalWindow().setVisible(true);
 	}
 }

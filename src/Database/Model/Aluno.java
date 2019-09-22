@@ -15,6 +15,7 @@ public class Aluno {
 	private String telefone_aluno;
 	private String celular_aluno;
 	private String email_aluno;
+	private int mat_aluno;
 
 	public int getCd_aluno() {
 		return cd_aluno;
@@ -126,6 +127,14 @@ public class Aluno {
 
 	public void setEmail_aluno(String email_aluno) {
 		this.email_aluno = email_aluno;
+	}
+
+	public int getMat_aluno() {
+		return mat_aluno;
+	}
+
+	public void setMat_aluno(int mat_aluno) {
+		this.mat_aluno = mat_aluno;
 	}
 
 }

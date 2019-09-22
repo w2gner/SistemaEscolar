@@ -13,33 +13,26 @@ public class Teste {
 		conn.setAutoCommit(false);
 
 		AlunoDAO dao = new AlunoDAO(conn);
-				
-		// List<Object> alunos = dao.Select(null);
+		List<Object> alunos = dao.Select(null);
+		Aluno teste = new Aluno();
 
-		// for (Object obj : alunos) {
-		// 	Aluno a = (Aluno) obj;
-		// 	System.out.println("Código: " + a.getCd_aluno());
-		// 	System.out.println("Nome: " + a.getNm_aluno());
-		// }
-//		
-//		Aluno teste = new Aluno();
-//		teste.setCd_aluno(2);
-//		dao.Delete(teste);
-//
-//		alunos = dao.Select(null);
-//
-//		for (Object obj : alunos) {
-//			Aluno a = (Aluno) obj;
-//			System.out.println("Código: " + a.getCd_aluno());
-//			System.out.println("Nome: " + a.getNm_aluno());
-//		}
+		// teste.setCd_aluno(1);
+		// dao.Delete(teste);
 
-		
-//		Aluno teste = new Aluno();
-//		//teste.setCd_aluno(3);
-//		teste.setNm_aluno("teste123");
-//		dao.Insert(teste);
-		
+		// alunos = dao.Select(null);
+		// teste.setNm_aluno("Aluno 1");
+		// dao.Insert(teste);
+
+		// teste.setCd_aluno(9);
+		// teste.setNm_aluno("Aluno 9 atualizado");
+		// dao.Update(teste);
+
+		for (Object obj : alunos) {
+			Aluno a = (Aluno) obj;
+			System.out.println("Código: " + a.getCd_aluno());
+			System.out.println("Nome: " + a.getNm_aluno());
+		}
+
 	}
 
 }

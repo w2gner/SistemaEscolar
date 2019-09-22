@@ -41,7 +41,7 @@ public class ProfessorWindow extends JFrame {
     private JLabel lblEmail;
     private JTextField txfEmail;
     private JButton btnSalvar;
-    private JButton btnLimpar;
+    private JButton btnCancelar;
     private JRadioButton rdbSexoM, rdbSexoF;
     private JComboBox<String> cbxEstado;
     private ButtonGroup btnGroup;
@@ -174,7 +174,7 @@ public class ProfessorWindow extends JFrame {
         btnSalvar.setBounds(220, 310, 115, 25);
         getContentPane().add(btnSalvar);
 
-        btnLimpar = new JButton(new AbstractAction("Cancelar") {
+        btnCancelar = new JButton(new AbstractAction("Cancelar") {
 
             private static final long serialVersionUID = 1L;
 
@@ -183,8 +183,8 @@ public class ProfessorWindow extends JFrame {
                 dispose();
             }
         });
-        btnLimpar.setBounds(390, 310, 115, 25);
-        getContentPane().add(btnLimpar);
+        btnCancelar.setBounds(390, 310, 115, 25);
+        getContentPane().add(btnCancelar);
 
         cbxEstado = new JComboBox<String>();
         cbxEstado.addItem("AC");

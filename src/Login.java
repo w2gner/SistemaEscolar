@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.sql.Connection;
 import java.util.HashMap;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -14,6 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import graphic.PrincipalWindow;
+import database.ConnectionFactory;
 import database.model.*;
 
 public class Login extends JFrame {
@@ -76,7 +78,17 @@ public class Login extends JFrame {
 					// String teste2 = pwfPassword.getText().toString();
 					// System.out.println("A senha digitada foi: " + teste2);
 					dispose();
-					new PrincipalWindow().setVisible(true);
+
+					try {
+						Connection conn = ConnectionFactory.getConnection("localhost", "5432", "SistemaDBA", "postgres", "manager");
+
+						conn.setAutoCommit(false);
+
+						new PrincipalWindow(conn).setVisible(true);
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
+
 				}
 			}
 		});
@@ -88,20 +100,20 @@ public class Login extends JFrame {
 
 	public static void main(String[] args) {
 
-//		EventQueue.invokeLater(new Runnable() {
-//			@Override
-//			public void run() {
-//				try {
-//					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-//				} catch (ClassNotFoundException ex) {
-//				} catch (InstantiationException ex) {
-//				} catch (IllegalAccessException ex) {
-//				} catch (UnsupportedLookAndFeelException ex) {
-//				}
-//			}
-//		});
-
-		new Login().setVisible(true);
+		EventQueue.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					UIManager.setLookAndFeel((UIManager.getSystemLookAndFeelClassName()));
+					new Login().setVisible(true);
+				} catch (ClassNotFoundException ex) {
+				} catch (InstantiationException ex) {
+				} catch (IllegalAccessException ex) {
+				} catch (UnsupportedLookAndFeelException ex) {
+				}
+			}
+		});
 
 	}
+
 }

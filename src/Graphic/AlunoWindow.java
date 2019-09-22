@@ -2,24 +2,30 @@ package graphic;
 
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.sql.Connection;
 import javax.swing.AbstractAction;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import database.dao.AlunoDAO;
+import database.model.Aluno;
+import lib.MLFDataTextField;
 
 public class AlunoWindow extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+	private Connection connection;
 	private JLabel lblSexo;
 	private JLabel lblMatricula;
 	private JTextField txfMat;
 	private JLabel lblAluno;
 	private JLabel lblNasc;
-	private JTextField txfNasc;
+	private MLFDataTextField txfNasc;
 	private JTextField txfNome;
 	private JLabel lblCpf;
 	private JTextField txfCpf;
@@ -41,12 +47,16 @@ public class AlunoWindow extends JFrame {
 	private JLabel lblEmail;
 	private JTextField txfEmail;
 	private JButton btnSalvar;
-	private JButton btnLimpar;
+	private JButton btnCancelar;
+	private JButton btnPesquisar;
+	private JButton btnExcluir;
 	private JRadioButton rdbSexoM, rdbSexoF;
 	private JComboBox<String> cbxEstado;
 	private ButtonGroup btnGroup;
+	AlunoDAO io_aluno_dao;
 
-	public AlunoWindow() {
+	public AlunoWindow(Connection conn) {
+		this.connection = conn;
 		setLayout(null);
 		setSize(750, 400);
 		setResizable(false);
@@ -58,7 +68,7 @@ public class AlunoWindow extends JFrame {
 		lblNasc.setBounds(445, 35, 80, 25);
 		getContentPane().add(lblNasc);
 
-		txfNasc = new JTextField();
+		txfNasc = new MLFDataTextField();
 		txfNasc.setBounds(445, 55, 130, 25);
 		getContentPane().add(txfNasc);
 
@@ -170,11 +180,61 @@ public class AlunoWindow extends JFrame {
 		txfEmail.setBounds(330, 240, 250, 25);
 		getContentPane().add(txfEmail);
 
-		btnSalvar = new JButton("Salvar");
-		btnSalvar.setBounds(220, 310, 115, 25);
+		btnSalvar = new JButton(new AbstractAction("Salvar") {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				if (txfNome.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Campo nome requerido!");
+				} else {
+					try {
+						AlunoDAO alunoIO = new AlunoDAO(connection);
+						Aluno aluno = new Aluno();
+
+						aluno.setNm_aluno(txfNome.getText().toString());
+						if (!txfNasc.getText().toString().contains("  /  /    ")) {
+							aluno.setNasc_aluno(txfNasc.getText().toString().replace("/", " "));
+						}
+
+						if (!txfMat.getText().isEmpty()) {
+							aluno.setMat_aluno(Integer.parseInt(txfMat.getText()));
+						}
+
+						if (rdbSexoF.isSelected()) {
+							aluno.setSexo_aluno('F');
+						} else {
+							aluno.setSexo_aluno('M');
+						}
+
+						aluno.setCpf_aluno(txfCpf.getText().toString());
+						aluno.setRg_aluno(txfRg.getText().toString());
+						aluno.setCep_aluno(txfCep.getText().toString());
+						aluno.setEnd_aluno(txfEndereco.getText().toString());
+						aluno.setBairo_aluno(txfBairro.getText().toString());
+						aluno.setCidade_aluno(txfCidade.getText().toString());
+						aluno.setUf_aluno(cbxEstado.getSelectedItem().toString());
+						aluno.setTelefone_aluno(txfTelefone.getText().toString());
+						aluno.setCelular_aluno(txfCelular.getText().toString());
+						aluno.setEmail_aluno(txfEmail.getText().toString());
+
+						alunoIO.Insert(aluno);
+
+						JOptionPane.showMessageDialog(null, "Aluno salvo com sucesso!");
+						LimpaTela();
+
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+				}
+			}
+		});
+		btnSalvar.setBounds(125, 310, 115, 25);
 		getContentPane().add(btnSalvar);
 
-		btnLimpar = new JButton(new AbstractAction("Cancelar") {
+		btnCancelar = new JButton(new AbstractAction("Cancelar") {
 
 			private static final long serialVersionUID = 1L;
 
@@ -183,8 +243,25 @@ public class AlunoWindow extends JFrame {
 				dispose();
 			}
 		});
-		btnLimpar.setBounds(390, 310, 115, 25);
-		getContentPane().add(btnLimpar);
+		btnCancelar.setBounds(500, 310, 115, 25);
+		getContentPane().add(btnCancelar);
+
+		btnPesquisar = new JButton(new AbstractAction("Pesquisar") {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Pesquisar(conn);
+
+			}
+		});
+		btnPesquisar.setBounds(375, 310, 115, 25);
+		getContentPane().add(btnPesquisar);
+
+		btnExcluir = new JButton("Excluir");
+		btnExcluir.setBounds(250, 310, 115, 25);
+		getContentPane().add(btnExcluir);
 
 		cbxEstado = new JComboBox<String>();
 		cbxEstado.addItem("AC");
@@ -219,7 +296,45 @@ public class AlunoWindow extends JFrame {
 
 	}
 
-	public static void main(String[] args) {
-		new AlunoWindow().setVisible(true);
+	public void LimpaTela() {
+		txfBairro.setText("");
+		txfCelular.setText("");
+		txfCep.setText("");
+		txfCidade.setText("");
+		txfCpf.setText("");
+		txfEmail.setText("");
+		txfEndereco.setText("");
+		txfMat.setText("");
+		txfNasc.setText("");
+		txfNome.setText("");
+		txfRg.setText("");
+		txfTelefone.setText("");
+		cbxEstado.setSelectedIndex(0);
+		rdbSexoF.setSelected(false);
+		rdbSexoM.setSelected(false);
 	}
+
+	public void Pesquisar(Connection conn) {
+		//
+		// Define as colunas da tabela de pesquisa
+		//
+		String[] la_colunas = { "Código", "Aluno" };
+
+		//
+		// Define as classes das colunas
+		//
+		Class<?>[] la_classes = { Integer.class, String.class };
+
+		//
+		// Define as larguras das colunas da tabela de pesquisa
+		//
+		int[] la_larguras = { 50, 400 };
+
+		//
+		// Cria a janela de busca
+		//
+		PesquisaWindow lo_pesquisa = new PesquisaWindow(io_aluno_dao, la_colunas, la_classes, la_larguras, this, conn);
+		lo_pesquisa.setVisible(true);
+	}
+
 }

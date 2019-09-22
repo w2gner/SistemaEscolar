@@ -12,8 +12,7 @@ public class AlunoDAO extends MasterDao {
 
 	private Connection connection;
 	private final String select = "select * from tb_alunos";
-	// private final String insert = "insert into tb_alunos (cd_aluno, nm_aluno) values (DEFAULT,?)";
-	private final String insert = "insert into tb_alunos( cd_aluno, nm_aluno, nasc_aluno, sexo_aluno, cpf_aluno, rg_aluno, cep_aluno, ende_aluno, bairro_aluno, cidade_aluno, uf_aluno,  telefone_aluno, celular_aluno, email_aluno) values (DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+	private final String insert = "insert into tb_alunos( cd_aluno, nm_aluno, nasc_aluno, sexo_aluno, cpf_aluno, rg_aluno, cep_aluno, ende_aluno, bairro_aluno, cidade_aluno, uf_aluno, telefone_aluno, celular_aluno, email_aluno, mat_aluno) values (DEFAULT, ?, ?::date, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private final String update = "update tb_alunos set cd_aluno=?, nm_aluno=?";
 	private final String delete = "delete from tb_alunos where cd_aluno = ?";
 	private final PreparedStatement pstSelect, pstInsert, pstDelete, pstUpdate;
@@ -56,6 +55,7 @@ public class AlunoDAO extends MasterDao {
 		Set(pstDelete, 1, ioAluno.getCd_aluno());
 
 		pstDelete.execute();
+		connection.commit();
 
 	}
 
@@ -67,8 +67,20 @@ public class AlunoDAO extends MasterDao {
 		@SuppressWarnings("unused")
 		Aluno ioAluno = (Aluno) ao_object;
 
-		// Set(pstInsert, 1, ioAluno.getCd_aluno());
 		Set(pstInsert, 1, ioAluno.getNm_aluno());
+		Set(pstInsert, 2, ioAluno.getNasc_aluno());
+		Set(pstInsert, 3, ioAluno.getSexo_aluno());
+		Set(pstInsert, 4, ioAluno.getCpf_aluno());
+		Set(pstInsert, 5, ioAluno.getRg_aluno());
+		Set(pstInsert, 6, ioAluno.getCep_aluno());
+		Set(pstInsert, 7, ioAluno.getEnd_aluno());
+		Set(pstInsert, 8, ioAluno.getBairo_aluno());
+		Set(pstInsert, 9, ioAluno.getCidade_aluno());
+		Set(pstInsert, 10, ioAluno.getUf_aluno());
+		Set(pstInsert, 11, ioAluno.getTelefone_aluno());
+		Set(pstInsert, 12, ioAluno.getCelular_aluno());
+		Set(pstInsert, 13, ioAluno.getEmail_aluno());
+		Set(pstInsert, 14, ioAluno.getMat_aluno());
 
 		pstInsert.execute();
 		connection.commit();
@@ -86,6 +98,7 @@ public class AlunoDAO extends MasterDao {
 		Set(pstUpdate, 2, ioAluno.getNm_aluno());
 
 		pstUpdate.execute();
+		connection.commit();
 
 	}
 
