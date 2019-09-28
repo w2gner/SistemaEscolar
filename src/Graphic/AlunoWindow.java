@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import javax.swing.AbstractAction;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -269,10 +270,14 @@ public class AlunoWindow extends JFrame implements Observer {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
+					ImageIcon icon = new ImageIcon("icons/alerta.png");
 					AlunoDAO aluno = new AlunoDAO(connection);
-					aluno.Delete(objetoSelecionado);
-					JOptionPane.showMessageDialog(null, "Excluído com sucesso!");
-					LimpaTela();
+					int opc = JOptionPane.showConfirmDialog(null, "Você tem certeza que deseja exluir", "Apagar aluno", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, icon);
+					if(opc == 0 ){
+						aluno.Delete(objetoSelecionado);
+						LimpaTela();
+					}
+					
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
