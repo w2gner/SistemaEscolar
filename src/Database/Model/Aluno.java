@@ -1,6 +1,6 @@
 package database.model;
 
-public class Aluno {
+public class Aluno implements MasterModel{
 	private int cd_aluno;
 	private String nm_aluno;
 	private String nasc_aluno;
@@ -135,6 +135,15 @@ public class Aluno {
 
 	public void setMat_aluno(int mat_aluno) {
 		this.mat_aluno = mat_aluno;
+	}
+
+	@Override
+	public Object[] getSearchLine() {
+		// TODO Auto-generated method stub
+		return new Object[] {
+				cd_aluno,
+				nm_aluno
+		};
 	}
 
 }

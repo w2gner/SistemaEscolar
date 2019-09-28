@@ -3,10 +3,14 @@ package lib;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
-
 import javax.swing.table.AbstractTableModel;
 
 public class ProjetoTableModel extends AbstractTableModel {
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private List<Object> linhas = null;
 
 	private String[] colunas = null;

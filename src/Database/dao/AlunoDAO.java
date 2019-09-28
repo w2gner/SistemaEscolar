@@ -37,6 +37,19 @@ public class AlunoDAO extends MasterDao {
 			Aluno aluno = new Aluno();
 			aluno.setCd_aluno(resultado.getInt(1));
 			aluno.setNm_aluno(resultado.getString(2));
+			aluno.setNasc_aluno(resultado.getString(3));
+			//aluno.setSexo_aluno(resultado.getString(4).charAt(0));
+			aluno.setCpf_aluno(resultado.getString(5));
+			aluno.setRg_aluno(resultado.getString(6));
+			aluno.setCep_aluno(resultado.getString(7));
+			aluno.setEnd_aluno(resultado.getString(8));
+			aluno.setBairo_aluno(resultado.getString(9));
+			aluno.setCidade_aluno(resultado.getString(10));
+			aluno.setUf_aluno(resultado.getString(11));
+			aluno.setTelefone_aluno(resultado.getString(12));
+			aluno.setCelular_aluno(resultado.getString(13));
+			aluno.setEmail_aluno(resultado.getString(14));
+			aluno.setMat_aluno(resultado.getInt(15));
 
 			arlDados.add(aluno);
 		}

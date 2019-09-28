@@ -2,79 +2,9 @@
     "configurations": [
         {
             "type": "java",
-            "name": "CodeLens (Launch) - CreateToolbar",
+            "name": "CodeLens (Launch) - Principal",
             "request": "launch",
-            "mainClass": "CreateToolbar",
-            "projectName": "Sistema"
-        },
-        {
-            "type": "java",
-            "name": "CodeLens (Launch) - Teste",
-            "request": "launch",
-            "mainClass": "database.dao.Teste",
-            "projectName": "Sistema"
-        },
-        {
-            "type": "java",
-            "name": "CodeLens (Launch) - DisciplinaWindow",
-            "request": "launch",
-            "mainClass": "graphic.DisciplinaWindow",
-            "projectName": "Sistema"
-        },
-        {
-            "type": "java",
-            "name": "CodeLens (Launch) - CursoWindow",
-            "request": "launch",
-            "mainClass": "graphic.CursoWindow",
-            "projectName": "Sistema"
-        },
-        {
-            "type": "java",
-            "name": "CodeLens (Launch) - ProfessorWindow",
-            "request": "launch",
-            "mainClass": "graphic.ProfessorWindow",
-            "projectName": "Sistema"
-        },
-        {
-            "type": "java",
-            "name": "CodeLens (Launch) - MatricularWindow",
-            "request": "launch",
-            "mainClass": "graphic.MatricularWindow",
-            "projectName": "Sistema"
-        },
-        {
-            "type": "java",
-            "name": "CodeLens (Launch) - PrincipalWindow",
-            "request": "launch",
-            "mainClass": "graphic.PrincipalWindow",
-            "projectName": "Sistema"
-        },
-        {
-            "type": "java",
-            "name": "CodeLens (Launch) - UsuarioWindow",
-            "request": "launch",
-            "mainClass": "graphic.UsuarioWindow",
-            "projectName": "Sistema"
-        },
-        {
-            "type": "java",
-            "name": "CodeLens (Launch) - BackupWindow",
-            "request": "launch",
-            "mainClass": "graphic.BackupWindow",
-            "projectName": "Sistema"
-        },
-        {
-            "type": "java",
-            "name": "CodeLens (Launch) - AlunoWindow",
-            "request": "launch",
-            "mainClass": "graphic.AlunoWindow",
-            "projectName": "Sistema"
-        },
-        {
-            "type": "java",
-            "name": "CodeLens (Launch) - Login",
-            "request": "launch",
-            "mainClass": "Login",
+            "mainClass": "Principal",
             "projectName": "Sistema"
         }
     ]

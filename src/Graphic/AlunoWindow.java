@@ -15,8 +15,9 @@ import javax.swing.JTextField;
 import database.dao.AlunoDAO;
 import database.model.Aluno;
 import lib.MLFDataTextField;
+import lib.Observer;
 
-public class AlunoWindow extends JFrame {
+public class AlunoWindow extends JFrame implements Observer{
 
 	private static final long serialVersionUID = 1L;
 	private Connection connection;
@@ -318,7 +319,7 @@ public class AlunoWindow extends JFrame {
 		//
 		// Define as colunas da tabela de pesquisa
 		//
-		String[] la_colunas = { "Código", "Aluno" };
+		String[] la_colunas = { "Codigo", "Aluno" };
 
 		//
 		// Define as classes das colunas
@@ -335,6 +336,36 @@ public class AlunoWindow extends JFrame {
 		//
 		PesquisaWindow lo_pesquisa = new PesquisaWindow(io_aluno_dao, la_colunas, la_classes, la_larguras, this, conn);
 		lo_pesquisa.setVisible(true);
+	}
+
+	@Override
+	public void update(Object arg) {
+		
+		Aluno aluno = (Aluno)arg;
+		txfMat.setText(Integer.toString(aluno.getMat_aluno()));
+		txfNome.setText(aluno.getNm_aluno());
+		txfBairro.setText(aluno.getBairo_aluno());
+		txfCelular.setText(aluno.getCelular_aluno());
+		txfCep.setText(aluno.getCelular_aluno());
+		txfCidade.setText(aluno.getCidade_aluno());
+		txfCpf.setText(aluno.getCidade_aluno());
+		txfEmail.setText(aluno.getEmail_aluno());
+		txfEndereco.setText(aluno.getEnd_aluno());
+
+		String ano = aluno.getNasc_aluno().replace("-", "/").substring(0, 4);
+		String dia = aluno.getNasc_aluno().replace("-", "/").substring(8);
+		String mes = aluno.getNasc_aluno().replace("-", "/").substring(5, 7);
+
+		txfNasc.setText(dia +"/"+mes+"/"+ano);
+		txfRg.setText(aluno.getRg_aluno());
+		txfTelefone.setText(aluno.getTelefone_aluno());
+		cbxEstado.setSelectedItem(aluno.getUf_aluno());
+		if(aluno.getSexo_aluno() == 'm'){
+			rdbSexoM.setSelected(true);
+		} else {
+			rdbSexoM.setSelected(true);
+		}
+
 	}
 
 }

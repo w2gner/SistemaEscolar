@@ -6,7 +6,6 @@ import java.awt.event.FocusEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import javax.swing.JFormattedTextField;
 import javax.swing.SwingConstants;
 import javax.swing.text.DefaultFormatterFactory;
