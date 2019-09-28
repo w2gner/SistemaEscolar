@@ -71,7 +71,4 @@ public class MatricularWindow extends JFrame {
 		getContentPane().add(btnCancelar);
 	}
 
-	public static void main(String[] args) {
-		new MatricularWindow().setVisible(true);
-	}
 }

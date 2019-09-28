@@ -67,7 +67,4 @@ public class DisciplinaWindow extends JFrame {
         getContentPane().add(btnCancelar);
     }
 
-    public static void main(String[] args) {
-        new DisciplinaWindow().setVisible(true);
-    }
 }

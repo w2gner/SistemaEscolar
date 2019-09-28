@@ -111,4 +111,5 @@ public class LoginWindow extends JFrame {
 		getContentPane().add(btnEntrar);
 
 	}
+
 }

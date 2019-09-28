@@ -218,8 +218,5 @@ public class ProfessorWindow extends JFrame {
         getContentPane().add(cbxEstado);
 
     }
-
-    public static void main(String[] args) {
-        new ProfessorWindow().setVisible(true);
-	}
+    
 }

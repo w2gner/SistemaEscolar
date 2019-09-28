@@ -52,7 +52,4 @@ public class BackupWindow extends JFrame {
         getContentPane().add(progressBar);
     }
 
-    public static void main(String[] args) {
-        new BackupWindow().setVisible(true);
-    }
 }

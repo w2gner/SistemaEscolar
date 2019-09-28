@@ -47,7 +47,4 @@ public class CursoWindow extends JFrame {
         getContentPane().add(btnCancelar);
     }
 
-    public static void main(String[] args) {
-        new CursoWindow().setVisible(true);
-    }
 }

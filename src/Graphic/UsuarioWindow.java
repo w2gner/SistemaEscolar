@@ -64,7 +64,4 @@ public class UsuarioWindow extends JFrame {
 
     }
 
-    public static void main(String[] args) {
-        new UsuarioWindow().setVisible(true);
-    }
 }
