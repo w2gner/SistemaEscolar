@@ -24,11 +24,10 @@ public class Principal {
 
                         if (user.Select(null).size() == 0) {
                             Usuario usuarioPadrao = new Usuario();
-                            usuarioPadrao.setNome("Admin");
-                            usuarioPadrao.setSenha("Admin");
+                            usuarioPadrao.setNome("admin");
+                            usuarioPadrao.setSenha("admin");
                             usuarioPadrao.setIs_Admin(true);
                             user.Insert(usuarioPadrao);
-
                         }
 
                         new LoginWindow(connection).setVisible(true);

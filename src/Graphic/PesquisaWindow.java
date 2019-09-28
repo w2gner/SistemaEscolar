@@ -108,6 +108,10 @@ public class PesquisaWindow extends JDialog implements KeyListener, MouseListene
         }
         tb_resultado.tb_padrao.getSelectionModel().setSelectionInterval(0, 0);
     }
+    
+    public PesquisaWindow(){
+
+    }
 
     private void montaTela() {
 
@@ -231,7 +235,7 @@ public class PesquisaWindow extends JDialog implements KeyListener, MouseListene
      * 
      * @return Objeto selecionado
      */
-    private Object getObjetoSelecionado() {
+    Object getObjetoSelecionado() {
         int linha = tb_resultado.tb_padrao.getSelectedRow();
 
         return lista_resultado.get(linha);

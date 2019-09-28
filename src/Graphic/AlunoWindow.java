@@ -3,6 +3,7 @@ package graphic;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
+import java.sql.SQLException;
 import javax.swing.AbstractAction;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -17,7 +18,7 @@ import database.model.Aluno;
 import lib.MLFDataTextField;
 import lib.Observer;
 
-public class AlunoWindow extends JFrame implements Observer{
+public class AlunoWindow extends JFrame implements Observer {
 
 	private static final long serialVersionUID = 1L;
 	private Connection connection;
@@ -55,6 +56,7 @@ public class AlunoWindow extends JFrame implements Observer{
 	private JComboBox<String> cbxEstado;
 	private ButtonGroup btnGroup;
 	AlunoDAO io_aluno_dao;
+	private Object objetoSelecionado;
 
 	public AlunoWindow(Connection conn) {
 		this.connection = conn;
@@ -260,7 +262,23 @@ public class AlunoWindow extends JFrame implements Observer{
 		btnPesquisar.setBounds(375, 310, 115, 25);
 		getContentPane().add(btnPesquisar);
 
-		btnExcluir = new JButton("Excluir");
+		btnExcluir = new JButton(new AbstractAction("Excluir") {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					AlunoDAO aluno = new AlunoDAO(connection);
+					aluno.Delete(objetoSelecionado);
+					JOptionPane.showMessageDialog(null, "Excluído com sucesso!");
+					LimpaTela();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+
+			}
+		});
 		btnExcluir.setBounds(250, 310, 115, 25);
 		getContentPane().add(btnExcluir);
 
@@ -336,34 +354,39 @@ public class AlunoWindow extends JFrame implements Observer{
 		//
 		PesquisaWindow lo_pesquisa = new PesquisaWindow(io_aluno_dao, la_colunas, la_classes, la_larguras, this, conn);
 		lo_pesquisa.setVisible(true);
+		objetoSelecionado = lo_pesquisa.getObjetoSelecionado();
 	}
 
 	@Override
 	public void update(Object arg) {
-		
-		Aluno aluno = (Aluno)arg;
-		txfMat.setText(Integer.toString(aluno.getMat_aluno()));
-		txfNome.setText(aluno.getNm_aluno());
-		txfBairro.setText(aluno.getBairo_aluno());
-		txfCelular.setText(aluno.getCelular_aluno());
-		txfCep.setText(aluno.getCelular_aluno());
-		txfCidade.setText(aluno.getCidade_aluno());
-		txfCpf.setText(aluno.getCidade_aluno());
-		txfEmail.setText(aluno.getEmail_aluno());
-		txfEndereco.setText(aluno.getEnd_aluno());
 
-		String ano = aluno.getNasc_aluno().replace("-", "/").substring(0, 4);
-		String dia = aluno.getNasc_aluno().replace("-", "/").substring(8);
-		String mes = aluno.getNasc_aluno().replace("-", "/").substring(5, 7);
+		try {
+			Aluno aluno = (Aluno) arg;
+			txfMat.setText(Integer.toString(aluno.getMat_aluno()));
+			txfNome.setText(aluno.getNm_aluno());
+			txfBairro.setText(aluno.getBairo_aluno());
+			txfCelular.setText(aluno.getCelular_aluno());
+			txfCep.setText(aluno.getCelular_aluno());
+			txfCidade.setText(aluno.getCidade_aluno());
+			txfCpf.setText(aluno.getCidade_aluno());
+			txfEmail.setText(aluno.getEmail_aluno());
+			txfEndereco.setText(aluno.getEnd_aluno());
 
-		txfNasc.setText(dia +"/"+mes+"/"+ano);
-		txfRg.setText(aluno.getRg_aluno());
-		txfTelefone.setText(aluno.getTelefone_aluno());
-		cbxEstado.setSelectedItem(aluno.getUf_aluno());
-		if(aluno.getSexo_aluno() == 'm'){
-			rdbSexoM.setSelected(true);
-		} else {
-			rdbSexoM.setSelected(true);
+			String ano = aluno.getNasc_aluno().replace("-", "/").substring(0, 4);
+			String dia = aluno.getNasc_aluno().replace("-", "/").substring(8);
+			String mes = aluno.getNasc_aluno().replace("-", "/").substring(5, 7);
+
+			txfNasc.setText(dia + "/" + mes + "/" + ano);
+			txfRg.setText(aluno.getRg_aluno());
+			txfTelefone.setText(aluno.getTelefone_aluno());
+			cbxEstado.setSelectedItem(aluno.getUf_aluno());
+			if (aluno.getSexo_aluno() == 'm') {
+				rdbSexoM.setSelected(true);
+			} else {
+				rdbSexoM.setSelected(true);
+			}
+
+		} catch (Exception e) {
 		}
 
 	}

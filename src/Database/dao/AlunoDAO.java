@@ -68,7 +68,6 @@ public class AlunoDAO extends MasterDao {
 		Set(pstDelete, 1, ioAluno.getCd_aluno());
 
 		pstDelete.execute();
-		connection.commit();
 
 	}
 
@@ -96,7 +95,7 @@ public class AlunoDAO extends MasterDao {
 		Set(pstInsert, 14, ioAluno.getMat_aluno());
 
 		pstInsert.execute();
-		connection.commit();
+		
 	}
 
 	@Override
