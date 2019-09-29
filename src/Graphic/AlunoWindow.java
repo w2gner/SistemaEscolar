@@ -4,6 +4,8 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -56,10 +58,11 @@ public class AlunoWindow extends JFrame implements Observer {
 	private JRadioButton rdbSexoM, rdbSexoF;
 	private JComboBox<String> cbxEstado;
 	private ButtonGroup btnGroup;
-	AlunoDAO io_aluno_dao;
+	private AlunoDAO io_aluno_dao;
 	private Object objetoSelecionado;
+	private final ImageIcon alertIcon = new ImageIcon("icons/alerta.png");
 
-	public AlunoWindow(Connection conn) {
+	public AlunoWindow(Connection conn) throws SQLException {
 		this.connection = conn;
 		setLayout(null);
 		setSize(750, 400);
@@ -187,32 +190,35 @@ public class AlunoWindow extends JFrame implements Observer {
 		btnSalvar = new JButton(new AbstractAction("Salvar") {
 
 			private static final long serialVersionUID = 1L;
+			AlunoDAO alunoIO = new AlunoDAO(connection);
+			List<Object> alunos = new ArrayList<Object>();
+			Boolean isUpdate = false;
+			
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
 				if (txfNome.getText().isEmpty()) {
-					JOptionPane.showMessageDialog(null, "Campo nome requerido!");
+					JOptionPane.showMessageDialog(null, "Campo nome requerido!", "Aviso",JOptionPane.WARNING_MESSAGE, alertIcon);
+				} else if (txfMat.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Campo matrícula requerido!", "Aviso",JOptionPane.WARNING_MESSAGE, alertIcon);
 				} else {
 					try {
-						AlunoDAO alunoIO = new AlunoDAO(connection);
+
 						Aluno aluno = new Aluno();
 
 						aluno.setNm_aluno(txfNome.getText().toString());
 						if (!txfNasc.getText().toString().contains("  /  /    ")) {
 							aluno.setNasc_aluno(txfNasc.getText().toString().replace("/", " "));
-						}
-
-						if (!txfMat.getText().isEmpty()) {
-							aluno.setMat_aluno(Integer.parseInt(txfMat.getText()));
-						}
-
+						} 
+						
 						if (rdbSexoF.isSelected()) {
-							aluno.setSexo_aluno('F');
+							aluno.setSexo_aluno("F");
 						} else {
-							aluno.setSexo_aluno('M');
+							aluno.setSexo_aluno("M");
 						}
 
+						aluno.setMat_aluno(Integer.parseInt(txfMat.getText()));
 						aluno.setCpf_aluno(txfCpf.getText().toString());
 						aluno.setRg_aluno(txfRg.getText().toString());
 						aluno.setCep_aluno(txfCep.getText().toString());
@@ -224,9 +230,24 @@ public class AlunoWindow extends JFrame implements Observer {
 						aluno.setCelular_aluno(txfCelular.getText().toString());
 						aluno.setEmail_aluno(txfEmail.getText().toString());
 
-						alunoIO.Insert(aluno);
+						alunos = alunoIO.Select(null);
 
-						JOptionPane.showMessageDialog(null, "Aluno salvo com sucesso!");
+						for (int i = 0; i < alunos.size(); i++) {
+							Aluno teste = (Aluno) alunos.get(i);
+							if (teste.getMat_aluno() == Integer.parseInt(txfMat.getText())) {
+								aluno.setCd_aluno(teste.getCd_aluno());
+								alunoIO.Update(aluno);
+								isUpdate = true;
+							}
+						}
+
+						if (!isUpdate) {
+							alunoIO.Insert(aluno);
+							JOptionPane.showMessageDialog(null, "Aluno salvo com sucesso!", "Aviso",JOptionPane.WARNING_MESSAGE, alertIcon);
+						} else {
+							JOptionPane.showMessageDialog(null, "Aluno atualizado com sucesso!", "Aviso",JOptionPane.WARNING_MESSAGE, alertIcon);
+						}
+
 						LimpaTela();
 
 					} catch (Exception e2) {
@@ -270,14 +291,13 @@ public class AlunoWindow extends JFrame implements Observer {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					ImageIcon icon = new ImageIcon("icons/alerta.png");
 					AlunoDAO aluno = new AlunoDAO(connection);
-					int opc = JOptionPane.showConfirmDialog(null, "Você tem certeza que deseja exluir", "Apagar aluno", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, icon);
-					if(opc == 0 ){
+					int opc = JOptionPane.showConfirmDialog(null, "Você tem certeza que deseja exluir", "Apagar aluno", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, alertIcon);
+					if (opc == 0) {
 						aluno.Delete(objetoSelecionado);
 						LimpaTela();
 					}
-					
+
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
@@ -342,7 +362,7 @@ public class AlunoWindow extends JFrame implements Observer {
 		//
 		// Define as colunas da tabela de pesquisa
 		//
-		String[] la_colunas = { "Codigo", "Aluno" };
+		String[] la_colunas = { "Matrícula", "Aluno" };
 
 		//
 		// Define as classes das colunas
@@ -352,7 +372,7 @@ public class AlunoWindow extends JFrame implements Observer {
 		//
 		// Define as larguras das colunas da tabela de pesquisa
 		//
-		int[] la_larguras = { 50, 400 };
+		int[] la_larguras = { 55, 400 };
 
 		//
 		// Cria a janela de busca
@@ -371,9 +391,9 @@ public class AlunoWindow extends JFrame implements Observer {
 			txfNome.setText(aluno.getNm_aluno());
 			txfBairro.setText(aluno.getBairo_aluno());
 			txfCelular.setText(aluno.getCelular_aluno());
-			txfCep.setText(aluno.getCelular_aluno());
+			txfCep.setText(aluno.getCep_aluno());
 			txfCidade.setText(aluno.getCidade_aluno());
-			txfCpf.setText(aluno.getCidade_aluno());
+			txfCpf.setText(aluno.getCpf_aluno());
 			txfEmail.setText(aluno.getEmail_aluno());
 			txfEndereco.setText(aluno.getEnd_aluno());
 
@@ -385,14 +405,13 @@ public class AlunoWindow extends JFrame implements Observer {
 			txfRg.setText(aluno.getRg_aluno());
 			txfTelefone.setText(aluno.getTelefone_aluno());
 			cbxEstado.setSelectedItem(aluno.getUf_aluno());
-			if (aluno.getSexo_aluno() == 'm') {
+			if (aluno.getSexo_aluno().toUpperCase().equals("M")) {
 				rdbSexoM.setSelected(true);
 			} else {
-				rdbSexoM.setSelected(true);
+				rdbSexoF.setSelected(true);
 			}
 
-		} catch (Exception e) {
-		}
+		} catch (Exception e) { }
 
 	}
 

@@ -15,7 +15,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.AbstractAction;
-import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
@@ -74,11 +73,6 @@ public class MasterWindowMessage extends JDialog {
 		if (ao_options == null || ao_options.length == 0) {
 			throw new IllegalArgumentException("Options must be specified");
 		}
-
-		//
-		// Set icon ...
-		//
-		Icon lo_icon = null;
 
 		switch (an_type) {
 		case QUESTION: {

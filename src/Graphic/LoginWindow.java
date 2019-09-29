@@ -6,10 +6,10 @@ import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -27,7 +27,7 @@ public class LoginWindow extends JFrame {
 	private JTextField txfUsuario;
 	private JLabel lblUsuario, lblSenha;
 	private JPasswordField pwfPassword;
-	HashMap<String, Usuario> Usuario;
+	private final ImageIcon alertIcon = new ImageIcon("icons/alerta.png");
 
 	public LoginWindow(final Connection connection) {
 		setLayout(null);
@@ -72,6 +72,7 @@ public class LoginWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
+				@SuppressWarnings("deprecation")
 				String senha = pwfPassword.getText().toString();
 				String usuario = txfUsuario.getText().toString();
 				List<Object> Usuarios = new ArrayList<Object>();
@@ -85,11 +86,11 @@ public class LoginWindow extends JFrame {
 				}
 
 				if (txfUsuario.getText().isEmpty() && pwfPassword.getPassword().length == 0) {
-					JOptionPane.showMessageDialog(null, "Insira o Usuário e a Senha");
+					JOptionPane.showMessageDialog(null, "Insira as informações de login!", "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
 				} else if (pwfPassword.getPassword().length == 0) {
-					JOptionPane.showMessageDialog(null, "Insira a Senha");
+					JOptionPane.showMessageDialog(null, "Insira a senha!", "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
 				} else if (txfUsuario.getText().isEmpty()) {
-					JOptionPane.showMessageDialog(null, "Insira o Usuário");
+					JOptionPane.showMessageDialog(null, "Insira o usuário!", "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
 				} else {
 					for (int i = 0; i < Usuarios.size(); i++) {
 						Usuario teste = (Usuario) Usuarios.get(i);
@@ -101,7 +102,8 @@ public class LoginWindow extends JFrame {
 						}
 					}
 					if (!LoginSuccessfull) {
-						JOptionPane.showMessageDialog(null, "Verifique se o Usuário ou senha estão corretos");
+						JOptionPane.showMessageDialog(null, "Verifique as informações de login!", "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
+						pwfPassword.setText("");
 					}
 				}
 			}

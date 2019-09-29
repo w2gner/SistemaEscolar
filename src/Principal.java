@@ -12,7 +12,8 @@ public class Principal {
     public static void main(String[] args) throws SQLException {
 
         Connection connection = ConnectionFactory.getConnection("localhost", "5432", "SistemaDBA", "postgres", "manager");
-
+        connection.setAutoCommit(true);
+        
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {

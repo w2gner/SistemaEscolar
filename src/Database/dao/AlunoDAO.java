@@ -13,7 +13,7 @@ public class AlunoDAO extends MasterDao {
 	private Connection connection;
 	private final String select = "select * from tb_alunos";
 	private final String insert = "insert into tb_alunos( cd_aluno, nm_aluno, nasc_aluno, sexo_aluno, cpf_aluno, rg_aluno, cep_aluno, ende_aluno, bairro_aluno, cidade_aluno, uf_aluno, telefone_aluno, celular_aluno, email_aluno, mat_aluno) values (DEFAULT, ?, ?::date, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	private final String update = "update tb_alunos set cd_aluno=?, nm_aluno=?";
+	private final String update = "update tb_alunos SET cd_aluno=?, nm_aluno=?, nasc_aluno=?::date, sexo_aluno= ?, cpf_aluno=?, rg_aluno=?, cep_aluno=?, ende_aluno=?, bairro_aluno=?, cidade_aluno=?,  uf_aluno=?, telefone_aluno=?, celular_aluno=?, email_aluno=?,  mat_aluno=? WHERE cd_aluno = ?";
 	private final String delete = "delete from tb_alunos where cd_aluno = ?";
 	private final PreparedStatement pstSelect, pstInsert, pstDelete, pstUpdate;
 
@@ -29,6 +29,8 @@ public class AlunoDAO extends MasterDao {
 	@Override
 	public List<Object> Select(Object as_parameter) throws SQLException {
 
+		pstSelect.clearParameters();
+
 		ArrayList<Object> arlDados = new ArrayList<Object>();
 
 		ResultSet resultado = pstSelect.executeQuery();
@@ -38,7 +40,7 @@ public class AlunoDAO extends MasterDao {
 			aluno.setCd_aluno(resultado.getInt(1));
 			aluno.setNm_aluno(resultado.getString(2));
 			aluno.setNasc_aluno(resultado.getString(3));
-			//aluno.setSexo_aluno(resultado.getString(4).charAt(0));
+			aluno.setSexo_aluno(resultado.getString(4));
 			aluno.setCpf_aluno(resultado.getString(5));
 			aluno.setRg_aluno(resultado.getString(6));
 			aluno.setCep_aluno(resultado.getString(7));
@@ -52,6 +54,7 @@ public class AlunoDAO extends MasterDao {
 			aluno.setMat_aluno(resultado.getInt(15));
 
 			arlDados.add(aluno);
+
 		}
 		resultado.close();
 		return arlDados;
@@ -62,7 +65,6 @@ public class AlunoDAO extends MasterDao {
 
 		pstDelete.clearParameters();
 
-		@SuppressWarnings("unused")
 		Aluno ioAluno = (Aluno) ao_object;
 
 		Set(pstDelete, 1, ioAluno.getCd_aluno());
@@ -76,7 +78,6 @@ public class AlunoDAO extends MasterDao {
 
 		pstInsert.clearParameters();
 
-		@SuppressWarnings("unused")
 		Aluno ioAluno = (Aluno) ao_object;
 
 		Set(pstInsert, 1, ioAluno.getNm_aluno());
@@ -95,22 +96,34 @@ public class AlunoDAO extends MasterDao {
 		Set(pstInsert, 14, ioAluno.getMat_aluno());
 
 		pstInsert.execute();
-		
-	}
+
+		}
 
 	@Override
 	public void Update(Object ao_object) throws SQLException {
 
 		pstUpdate.clearParameters();
 
-		@SuppressWarnings("unused")
 		Aluno ioAluno = (Aluno) ao_object;
 
 		Set(pstUpdate, 1, ioAluno.getCd_aluno());
 		Set(pstUpdate, 2, ioAluno.getNm_aluno());
+		Set(pstUpdate, 3, ioAluno.getNasc_aluno());
+		Set(pstUpdate, 4, ioAluno.getSexo_aluno());
+		Set(pstUpdate, 5, ioAluno.getCpf_aluno());
+		Set(pstUpdate, 6, ioAluno.getRg_aluno());
+		Set(pstUpdate, 7, ioAluno.getCep_aluno());
+		Set(pstUpdate, 8, ioAluno.getEnd_aluno());
+		Set(pstUpdate, 9, ioAluno.getBairo_aluno());
+		Set(pstUpdate, 10, ioAluno.getCidade_aluno());
+		Set(pstUpdate, 11, ioAluno.getUf_aluno());
+		Set(pstUpdate, 12, ioAluno.getTelefone_aluno());
+		Set(pstUpdate, 13, ioAluno.getCelular_aluno());
+		Set(pstUpdate, 14, ioAluno.getEmail_aluno());
+		Set(pstUpdate, 15, ioAluno.getMat_aluno());
+		Set(pstUpdate, 16, ioAluno.getCd_aluno());
 
 		pstUpdate.execute();
-		connection.commit();
 
 	}
 

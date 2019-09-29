@@ -18,6 +18,9 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 public class MasterMonthChooser extends JPanel {
+
+	private static final long serialVersionUID = 1L;
+
 	private GregorianCalendar gc;
 
 	private Timer timer;

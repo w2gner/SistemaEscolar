@@ -4,7 +4,7 @@ public class Aluno implements MasterModel{
 	private int cd_aluno;
 	private String nm_aluno;
 	private String nasc_aluno;
-	private char sexo_aluno;
+	private String sexo_aluno;
 	private String cpf_aluno;
 	private String rg_aluno;
 	private String cep_aluno;
@@ -41,11 +41,11 @@ public class Aluno implements MasterModel{
 		this.nasc_aluno = nasc_aluno;
 	}
 
-	public char getSexo_aluno() {
+	public String getSexo_aluno() {
 		return sexo_aluno;
 	}
 
-	public void setSexo_aluno(char sexo_aluno) {
+	public void setSexo_aluno(String sexo_aluno) {
 		this.sexo_aluno = sexo_aluno;
 	}
 
@@ -141,7 +141,7 @@ public class Aluno implements MasterModel{
 	public Object[] getSearchLine() {
 		// TODO Auto-generated method stub
 		return new Object[] {
-				cd_aluno,
+				mat_aluno,
 				nm_aluno
 		};
 	}

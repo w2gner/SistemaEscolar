@@ -42,6 +42,8 @@ import javax.swing.text.SimpleAttributeSet;
  */
 
 public class MasterMoneyField extends JFormattedTextField {
+
+	private static final long serialVersionUID = 1L;
 	private static final SimpleAttributeSet nullAttribute = new SimpleAttributeSet();
 
 	/**
@@ -68,6 +70,9 @@ public class MasterMoneyField extends JFormattedTextField {
 	}
 
 	private final class MoneyFieldDocument extends PlainDocument {
+
+		private static final long serialVersionUID = 1L;
+
 		public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
 			String original = getText(0, getLength());
 
@@ -86,7 +91,8 @@ public class MasterMoneyField extends JFormattedTextField {
 							mascarado.deleteCharAt(i);
 						}
 					}
-
+					
+					@SuppressWarnings("deprecation")
 					Long number = new Long(mascarado.toString());
 
 					mascarado.replace(0, mascarado.length(), number.toString());

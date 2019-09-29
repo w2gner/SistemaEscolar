@@ -4,11 +4,9 @@ import java.awt.Component;
 import java.awt.Font;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
-
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableCellRenderer;
 
 public class NumberCellRenderer extends ColorCellRenderer {
 

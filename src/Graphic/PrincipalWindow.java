@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
+import java.sql.SQLException;
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -83,7 +84,12 @@ public class PrincipalWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new AlunoWindow(conn).setVisible(true);
+				try {
+					new AlunoWindow(conn).setVisible(true);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+		
 			}
 		});
 		menuMatricular = new JMenuItem(new AbstractAction("Matricular") {

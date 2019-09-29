@@ -9,7 +9,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -20,7 +19,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import lib.TabelaPadrao;
-import database.model.Aluno;
 import database.model.MasterModel;
 
 public class PesquisaWindow extends JDialog implements KeyListener, MouseListener, Observable {
@@ -62,7 +60,7 @@ public class PesquisaWindow extends JDialog implements KeyListener, MouseListene
         this.colunas_tabela = colunas_tabela;
 
         this.conn = conn;
-        
+
         //
         // Seta a variavel que armazena as classes das colunas da tabela
         //
@@ -76,7 +74,7 @@ public class PesquisaWindow extends JDialog implements KeyListener, MouseListene
         //
         // Seta o observador desta classe
         //
-         addObserver(alunoWindow);
+        addObserver(alunoWindow);
 
         //
         // Metodo para construir os componentes
@@ -108,8 +106,8 @@ public class PesquisaWindow extends JDialog implements KeyListener, MouseListene
         }
         tb_resultado.tb_padrao.getSelectionModel().setSelectionInterval(0, 0);
     }
-    
-    public PesquisaWindow(){
+
+    public PesquisaWindow() {
 
     }
 
@@ -167,7 +165,7 @@ public class PesquisaWindow extends JDialog implements KeyListener, MouseListene
                 //
                 // Adiciona na tabela
                 //
-               tb_resultado.modelo.addRow(((MasterModel) model).getSearchLine());
+                tb_resultado.modelo.addRow(((MasterModel) model).getSearchLine());
             }
         }
 
@@ -217,16 +215,16 @@ public class PesquisaWindow extends JDialog implements KeyListener, MouseListene
             //
             // Se houver texto, faz a busca
             //
-             if (tf_descricao.getText().length() > 0){
-            try {
-				listaResultado(conn);
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-            // Seta a sele��o na primeira linha
-            tb_resultado.tb_padrao.getSelectionModel().setSelectionInterval(0, 0);
-             }
+            if (tf_descricao.getText().length() > 0) {
+                try {
+                    listaResultado(conn);
+                } catch (SQLException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+                // Seta a sele6��o na primeira linha
+                tb_resultado.tb_padrao.getSelectionModel().setSelectionInterval(0, 0);
+            }
         }
     }
 

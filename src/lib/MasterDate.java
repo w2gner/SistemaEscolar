@@ -13,7 +13,6 @@ package lib;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-//import			java.util.Calendar;
 
 /**
  * 
@@ -444,6 +443,7 @@ public final class MasterDate extends Date {
 	 * @param ao_period Period to be added.
 	 * @return New <b>VeSDate</b> with period added.
 	 */
+	@SuppressWarnings("deprecation")
 	public static final MasterDate add(final MasterDate ad_date, final MasterPeriod ao_period) {
 		//
 		// �rea de trabalho ...
@@ -480,6 +480,7 @@ public final class MasterDate extends Date {
 	 * @param ao_periodo Periodo a ser subtraido.
 	 * @return Um VeSDate a nova data.
 	 */
+	@SuppressWarnings("deprecation")
 	public final MasterDate subtract(final MasterPeriod ao_periodo) {
 		//
 		// �rea de trabalho ...
@@ -521,6 +522,7 @@ public final class MasterDate extends Date {
 	 * @param ao_date Other date to be used on calcule.
 	 * @return <b>MasterPeriod</b> with date's difference.
 	 */
+	@SuppressWarnings("deprecation")
 	public final MasterPeriod difference(final MasterDate ad_date) {
 		//
 		// Work areas

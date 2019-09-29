@@ -8,11 +8,8 @@ package lib;
 //
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
-import java.awt.GridBagLayout;
 import javax.swing.JToolBar;
-import java.awt.GridBagConstraints;
 import javax.swing.JButton;
-import java.awt.Insets;
 import javax.swing.JSeparator;
 
 /**
@@ -28,6 +25,8 @@ import javax.swing.JSeparator;
  */
 
 public class MasterToolbar extends JPanel {
+
+	private static final long serialVersionUID = 1L;
 	//
 	// Bot�es.
 	//

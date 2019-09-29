@@ -243,6 +243,7 @@ public final class MasterPeriod implements Serializable {
 	 * 
 	 * @param ad_date Date used to construct the period.
 	 */
+	@SuppressWarnings("deprecation")
 	public MasterPeriod(Date ad_date) {
 		this(ad_date.getYear() + 1900L, ad_date.getMonth(), ad_date.getDay(), ad_date.getHours(), ad_date.getMinutes(),
 				ad_date.getSeconds(), 0);
