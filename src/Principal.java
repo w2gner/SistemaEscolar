@@ -20,20 +20,17 @@ public class Principal {
                 try {
                     UIManager.setLookAndFeel((UIManager.getSystemLookAndFeelClassName()));
 
-                    if (connection != null) {
-                        UsuarioDAO user = new UsuarioDAO(connection);
+                    UsuarioDAO user = new UsuarioDAO(connection);
 
-                        if (user.Select(null).size() == 0) {
-                            Usuario usuarioPadrao = new Usuario();
-                            usuarioPadrao.setNome("admin");
-                            usuarioPadrao.setSenha("admin");
-                            usuarioPadrao.setIs_Admin(true);
-                            user.Insert(usuarioPadrao);
-                        }
-
-                        new LoginWindow(connection).setVisible(true);
-
+                    if (user.Select(null).size() == 0) {
+                        Usuario usuarioPadrao = new Usuario();
+                        usuarioPadrao.setNome("admin");
+                        usuarioPadrao.setSenha("admin");
+                        usuarioPadrao.setIs_Admin(true);
+                        user.Insert(usuarioPadrao);
                     }
+
+                    new LoginWindow(connection).setVisible(true);
 
                 } catch (ClassNotFoundException ex) {
                     ex.printStackTrace();

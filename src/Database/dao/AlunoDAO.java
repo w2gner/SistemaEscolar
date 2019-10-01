@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import database.model.Aluno;
 
-public class AlunoDAO extends MasterDao {
+public class AlunoDAO extends MasterDAO {
 
 	private Connection connection;
 	private final String select = "select * from tb_alunos";

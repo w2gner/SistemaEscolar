@@ -1,6 +1,6 @@
 package database.model;
 
-public class Usuario {
+public class Usuario implements MasterModel {
 	private String senha;
 	private String nome;
 	private Boolean is_Admin;
@@ -27,5 +27,10 @@ public class Usuario {
 
 	public void setIs_Admin(Boolean is_Admin) {
 		this.is_Admin = is_Admin;
+	}
+
+	@Override
+	public Object[] getSearchLine() {
+		return new Object[] { is_Admin, nome };
 	}
 }

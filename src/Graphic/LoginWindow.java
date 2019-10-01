@@ -73,8 +73,8 @@ public class LoginWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				@SuppressWarnings("deprecation")
-				String senha = pwfPassword.getText().toString();
-				String usuario = txfUsuario.getText().toString();
+				String senha = pwfPassword.getText();
+				String usuario = txfUsuario.getText();
 				List<Object> Usuarios = new ArrayList<Object>();
 				Boolean LoginSuccessfull = false;
 
@@ -86,11 +86,14 @@ public class LoginWindow extends JFrame {
 				}
 
 				if (txfUsuario.getText().isEmpty() && pwfPassword.getPassword().length == 0) {
-					JOptionPane.showMessageDialog(null, "Insira as informações de login!", "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
+					JOptionPane.showMessageDialog(null, "Insira as informações de login", "Aviso",
+							JOptionPane.WARNING_MESSAGE, alertIcon);
 				} else if (pwfPassword.getPassword().length == 0) {
-					JOptionPane.showMessageDialog(null, "Insira a senha!", "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
+					JOptionPane.showMessageDialog(null, "Insira a senha", "Aviso", JOptionPane.WARNING_MESSAGE,
+							alertIcon);
 				} else if (txfUsuario.getText().isEmpty()) {
-					JOptionPane.showMessageDialog(null, "Insira o usuário!", "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
+					JOptionPane.showMessageDialog(null, "Insira o usuário", "Aviso", JOptionPane.WARNING_MESSAGE,
+							alertIcon);
 				} else {
 					for (int i = 0; i < Usuarios.size(); i++) {
 						Usuario teste = (Usuario) Usuarios.get(i);
@@ -102,7 +105,8 @@ public class LoginWindow extends JFrame {
 						}
 					}
 					if (!LoginSuccessfull) {
-						JOptionPane.showMessageDialog(null, "Verifique as informações de login!", "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
+						JOptionPane.showMessageDialog(null, "Verifique as informações de login", "Aviso",
+								JOptionPane.WARNING_MESSAGE, alertIcon);
 						pwfPassword.setText("");
 					}
 				}

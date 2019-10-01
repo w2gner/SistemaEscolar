@@ -2,10 +2,10 @@ package lib;
 
 public interface Observable {
 	
-	public void addObserver(Observer o);
+	void addObserver(Observer o);
 	
-	public void removeObserver(Observer o);
+	void removeObserver(Observer o);
 	
-	public void notifyObservers();
+	void notifyObservers();
 
 }

@@ -1,6 +1,6 @@
 package database.model;
 
-public class Aluno implements MasterModel{
+public class Aluno implements MasterModel {
 	private int cd_aluno;
 	private String nm_aluno;
 	private String nasc_aluno;
@@ -139,11 +139,7 @@ public class Aluno implements MasterModel{
 
 	@Override
 	public Object[] getSearchLine() {
-		// TODO Auto-generated method stub
-		return new Object[] {
-				mat_aluno,
-				nm_aluno
-		};
+		return new Object[] { mat_aluno, nm_aluno };
 	}
 
 }

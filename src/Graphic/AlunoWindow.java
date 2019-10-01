@@ -4,6 +4,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.AbstractAction;
@@ -11,11 +12,13 @@ import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.text.NumberFormatter;
 import database.dao.AlunoDAO;
 import database.model.Aluno;
 import lib.MLFDataTextField;
@@ -27,7 +30,7 @@ public class AlunoWindow extends JFrame implements Observer {
 	private Connection connection;
 	private JLabel lblSexo;
 	private JLabel lblMatricula;
-	private JTextField txfMat;
+	private JFormattedTextField txfMat;
 	private JLabel lblAluno;
 	private JLabel lblNasc;
 	private MLFDataTextField txfNasc;
@@ -71,6 +74,11 @@ public class AlunoWindow extends JFrame implements Observer {
 		setTitle(" Cadastro de Aluno");
 		setIconImage(Toolkit.getDefaultToolkit().getImage("icons/logo.png"));
 
+		NumberFormat longFormat = NumberFormat.getIntegerInstance();
+		NumberFormatter numberFormatter = new NumberFormatter(longFormat);
+		numberFormatter.setValueClass(Long.class);
+		numberFormatter.setAllowsInvalid(false); 
+	
 		lblNasc = new JLabel("Nascimento");
 		lblNasc.setBounds(445, 35, 80, 25);
 		getContentPane().add(lblNasc);
@@ -83,7 +91,7 @@ public class AlunoWindow extends JFrame implements Observer {
 		lblMatricula.setBounds(50, 35, 60, 25);
 		getContentPane().add(lblMatricula);
 
-		txfMat = new JTextField();
+		txfMat =  new JFormattedTextField(numberFormatter);
 		txfMat.setBounds(50, 55, 75, 25);
 		getContentPane().add(txfMat);
 
@@ -193,25 +201,26 @@ public class AlunoWindow extends JFrame implements Observer {
 			AlunoDAO alunoIO = new AlunoDAO(connection);
 			List<Object> alunos = new ArrayList<Object>();
 			Boolean isUpdate = false;
-			
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
 				if (txfNome.getText().isEmpty()) {
-					JOptionPane.showMessageDialog(null, "Campo nome requerido!", "Aviso",JOptionPane.WARNING_MESSAGE, alertIcon);
+					JOptionPane.showMessageDialog(null, "Campo nome requerido", "Aviso", JOptionPane.WARNING_MESSAGE,
+							alertIcon);
 				} else if (txfMat.getText().isEmpty()) {
-					JOptionPane.showMessageDialog(null, "Campo matrícula requerido!", "Aviso",JOptionPane.WARNING_MESSAGE, alertIcon);
+					JOptionPane.showMessageDialog(null, "Campo matrícula requerido", "Aviso",
+							JOptionPane.WARNING_MESSAGE, alertIcon);
 				} else {
 					try {
 
 						Aluno aluno = new Aluno();
 
-						aluno.setNm_aluno(txfNome.getText().toString());
-						if (!txfNasc.getText().toString().contains("  /  /    ")) {
-							aluno.setNasc_aluno(txfNasc.getText().toString().replace("/", " "));
-						} 
-						
+						aluno.setNm_aluno(txfNome.getText());
+						if (!txfNasc.getText().contains("  /  /    ")) {
+							aluno.setNasc_aluno(txfNasc.getText().replace("/", " "));
+						}
+
 						if (rdbSexoF.isSelected()) {
 							aluno.setSexo_aluno("F");
 						} else {
@@ -219,16 +228,16 @@ public class AlunoWindow extends JFrame implements Observer {
 						}
 
 						aluno.setMat_aluno(Integer.parseInt(txfMat.getText()));
-						aluno.setCpf_aluno(txfCpf.getText().toString());
-						aluno.setRg_aluno(txfRg.getText().toString());
-						aluno.setCep_aluno(txfCep.getText().toString());
-						aluno.setEnd_aluno(txfEndereco.getText().toString());
-						aluno.setBairo_aluno(txfBairro.getText().toString());
-						aluno.setCidade_aluno(txfCidade.getText().toString());
+						aluno.setCpf_aluno(txfCpf.getText());
+						aluno.setRg_aluno(txfRg.getText());
+						aluno.setCep_aluno(txfCep.getText());
+						aluno.setEnd_aluno(txfEndereco.getText());
+						aluno.setBairo_aluno(txfBairro.getText());
+						aluno.setCidade_aluno(txfCidade.getText());
 						aluno.setUf_aluno(cbxEstado.getSelectedItem().toString());
-						aluno.setTelefone_aluno(txfTelefone.getText().toString());
-						aluno.setCelular_aluno(txfCelular.getText().toString());
-						aluno.setEmail_aluno(txfEmail.getText().toString());
+						aluno.setTelefone_aluno(txfTelefone.getText());
+						aluno.setCelular_aluno(txfCelular.getText());
+						aluno.setEmail_aluno(txfEmail.getText());
 
 						alunos = alunoIO.Select(null);
 
@@ -243,9 +252,12 @@ public class AlunoWindow extends JFrame implements Observer {
 
 						if (!isUpdate) {
 							alunoIO.Insert(aluno);
-							JOptionPane.showMessageDialog(null, "Aluno salvo com sucesso!", "Aviso",JOptionPane.WARNING_MESSAGE, alertIcon);
+							JOptionPane.showMessageDialog(null, "Aluno salvo com sucesso", "Aviso",
+									JOptionPane.WARNING_MESSAGE, alertIcon);
 						} else {
-							JOptionPane.showMessageDialog(null, "Aluno atualizado com sucesso!", "Aviso",JOptionPane.WARNING_MESSAGE, alertIcon);
+							JOptionPane.showMessageDialog(null, "Aluno atualizado com sucesso", "Aviso",
+									JOptionPane.WARNING_MESSAGE, alertIcon);
+							isUpdate = false;
 						}
 
 						LimpaTela();
@@ -292,7 +304,8 @@ public class AlunoWindow extends JFrame implements Observer {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					AlunoDAO aluno = new AlunoDAO(connection);
-					int opc = JOptionPane.showConfirmDialog(null, "Você tem certeza que deseja exluir", "Apagar aluno", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, alertIcon);
+					int opc = JOptionPane.showConfirmDialog(null, "Você tem certeza que deseja exluir", "Apagar aluno",
+							JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, alertIcon);
 					if (opc == 0) {
 						aluno.Delete(objetoSelecionado);
 						LimpaTela();
@@ -354,8 +367,7 @@ public class AlunoWindow extends JFrame implements Observer {
 		txfRg.setText("");
 		txfTelefone.setText("");
 		cbxEstado.setSelectedIndex(0);
-		rdbSexoF.setSelected(false);
-		rdbSexoM.setSelected(false);
+		btnGroup.clearSelection();
 	}
 
 	public void Pesquisar(Connection conn) {
@@ -411,7 +423,8 @@ public class AlunoWindow extends JFrame implements Observer {
 				rdbSexoF.setSelected(true);
 			}
 
-		} catch (Exception e) { }
+		} catch (Exception e) {
+		}
 
 	}
 

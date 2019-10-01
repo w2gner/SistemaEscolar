@@ -214,7 +214,7 @@ public class ProjetoTableModel extends AbstractTableModel {
 	public void setValueAt(Object value, int row, int col) {
 		Object[] linha = (Object[]) getLinhas().get(row);
 
-		linha[col] = (Object) value;
+		linha[col] = value;
 
 		fireTableCellUpdated(row, col);
 	}

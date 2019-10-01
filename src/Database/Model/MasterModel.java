@@ -23,5 +23,5 @@ public interface MasterModel {
 	//
 	// Retorna uma linha contendo os valores retornados para pesquisa
 	//
-	public Object[] getSearchLine();
+    Object[] getSearchLine();
 }

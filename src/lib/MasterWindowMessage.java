@@ -265,7 +265,7 @@ public class MasterWindowMessage extends JDialog {
 								//
 								// Requisita foco aos bot�es.
 								//
-								((JButton) lo_button_panel.getComponent(ln)).requestFocusInWindow();
+								lo_button_panel.getComponent(ln).requestFocusInWindow();
 							}
 
 							break;

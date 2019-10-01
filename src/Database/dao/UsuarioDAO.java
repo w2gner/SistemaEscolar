@@ -9,14 +9,13 @@ import java.util.List;
 
 import database.model.Usuario;
 
-public class UsuarioDAO extends MasterDao {
+public class UsuarioDAO extends MasterDAO {
 
     private Connection connection;
     private final String select = "select * from tb_usuarios";
-    private final String insert = "insert into tb_usuarios (cod_usuario, usuario, senha) VALUES (DEFAULT, ?, ?)";
-    //private final String insert = "insert into tb_usuarios(cod_usuario, usuario, senha, is_admin) VALUES (DEFAULT, ?, ?, ?)";
-    private final String update = "update tb_alunos set cd_aluno=?, nm_aluno=?";
-    private final String delete = "delete from tb_alunos where cd_aluno = ?";
+    private final String insert = "insert into tb_usuarios (cod_usuario, usuario, senha, is_admin) VALUES (DEFAULT, ?, ?, ?)";
+    private final String update = "update tb_usuarios SET cod_usuario=?, usuario=?, senha=?, is_admin=true WHERE usuario=?";
+    private final String delete = "delete from tb_usuarios where usuario = ?";
     private final PreparedStatement pstSelect, pstInsert, pstDelete, pstUpdate;
 
     public UsuarioDAO(final Connection connection) throws SQLException {
@@ -58,22 +57,37 @@ public class UsuarioDAO extends MasterDao {
 		
         Set(pstInsert, 1, ioUsuario.getNome());
         Set(pstInsert, 2, ioUsuario.getSenha());
-        //Set(pstInsert, 3, ioUsuario.getIs_Admin());
+        pstInsert.setBoolean(3, ioUsuario.getIs_Admin());
 
-        System.out.println(pstInsert);
         pstInsert.execute();
 
     }
 
     @Override
     public void Update(Object ao_object) throws SQLException {
-        // TODO Auto-generated method stub
+
+        pstUpdate.clearParameters();
+
+        Usuario ioUsuario = (Usuario) ao_object;
+        
+        Set(pstInsert, 1, ioUsuario.getNome());
+        Set(pstInsert, 2, ioUsuario.getSenha());
+        pstInsert.setBoolean(3, ioUsuario.getIs_Admin());
+
+        pstUpdate.execute();
 
     }
 
     @Override
     public void Delete(Object ao_object) throws SQLException {
-        // TODO Auto-generated method stub
+        
+        pstDelete.clearParameters();
+
+        Usuario ioUsuario = (Usuario) ao_object;
+
+        Set(pstDelete, 1, ioUsuario.getNome());
+
+        pstDelete.execute();
 
     }
 }

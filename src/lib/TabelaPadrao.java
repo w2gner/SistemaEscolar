@@ -19,7 +19,6 @@ public class TabelaPadrao {
 	 * Construtor padr�o da classe
 	 * 
 	 * @param colunas
-	 * @param edicao
 	 * @param largura_colunas
 	 */
 	public TabelaPadrao(String[] colunas, Class<?>[] classes, int[] largura_colunas) {

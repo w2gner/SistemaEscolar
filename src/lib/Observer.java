@@ -2,6 +2,6 @@ package lib;
 
 public interface Observer {
 	
-	public void update(Object arg);
+	void update(Object arg);
 
 }

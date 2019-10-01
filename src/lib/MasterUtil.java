@@ -154,7 +154,7 @@ public class MasterUtil {
 					// Carrega alinhando a direita ...
 					//
 					ls_result = new StringBuffer(as_source
-							.substring(ln_diference >= 0 ? 0 : as_source.length() - an_length, as_source.length()));
+							.substring(ln_diference >= 0 ? 0 : as_source.length() - an_length));
 
 					while (ls_result.length() < an_length) {
 						ls_result.insert(0, as_filler);

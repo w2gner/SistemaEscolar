@@ -234,7 +234,7 @@ public class MasterMonthChooser extends JPanel {
 	private void setDaysAndFill() {
 		gc.set(Calendar.DAY_OF_MONTH, 1);
 		String monthText = month[gc.get(Calendar.MONTH)];
-		dateLabel.setText(String.valueOf(monthText + ", " + gc.get(Calendar.YEAR)));
+		dateLabel.setText(monthText + ", " + gc.get(Calendar.YEAR));
 	}
 
 	public void prepare(boolean rollYear, boolean rollMonth, boolean up, boolean instantiateGc) {

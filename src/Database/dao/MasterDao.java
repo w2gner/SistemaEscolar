@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.List;
 
-public abstract class MasterDao {
+public abstract class MasterDAO {
 
 	/**
 	 * Select Method.

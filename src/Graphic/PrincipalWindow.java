@@ -49,7 +49,7 @@ public class PrincipalWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new UsuarioWindow().setVisible(true);
+				new UsuarioWindow(conn).setVisible(true);
 			}
 		});
 		menuSair = new JMenuItem(new AbstractAction("Sair") {
