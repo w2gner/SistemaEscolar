@@ -4,6 +4,7 @@ public class Usuario implements MasterModel {
 	private String senha;
 	private String nome;
 	private Boolean is_Admin;
+	private int id;
 
 	public String getSenha() {
 		return senha;
@@ -27,6 +28,14 @@ public class Usuario implements MasterModel {
 
 	public void setIs_Admin(Boolean is_Admin) {
 		this.is_Admin = is_Admin;
+	}
+
+	public int getID() {
+		return id;
+	}
+
+	public void setID(int id) {
+		this.id = id;
 	}
 
 	@Override

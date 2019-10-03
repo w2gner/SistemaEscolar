@@ -28,15 +28,16 @@ public class UsuarioDAO extends MasterDAO {
 
     @Override
     public List<Object> Select(Object as_parameter) throws SQLException {
-        
+
         pstSelect.clearParameters();
-        
+
         ArrayList<Object> usuarios = new ArrayList<Object>();
 
         ResultSet resultado = pstSelect.executeQuery();
 
-        while(resultado.next()){
+        while (resultado.next()) {
             Usuario user = new Usuario();
+            user.setID(resultado.getInt("cod_usuario"));
             user.setIs_Admin(resultado.getBoolean("is_admin"));
             user.setNome(resultado.getString("usuario"));
             user.setSenha(resultado.getString("senha"));
@@ -53,8 +54,8 @@ public class UsuarioDAO extends MasterDAO {
 
         pstInsert.clearParameters();
 
-		Usuario ioUsuario = (Usuario) ao_object;
-		
+        Usuario ioUsuario = (Usuario) ao_object;
+
         Set(pstInsert, 1, ioUsuario.getNome());
         Set(pstInsert, 2, ioUsuario.getSenha());
         pstInsert.setBoolean(3, ioUsuario.getIs_Admin());
@@ -69,10 +70,12 @@ public class UsuarioDAO extends MasterDAO {
         pstUpdate.clearParameters();
 
         Usuario ioUsuario = (Usuario) ao_object;
-        
-        Set(pstInsert, 1, ioUsuario.getNome());
-        Set(pstInsert, 2, ioUsuario.getSenha());
-        pstInsert.setBoolean(3, ioUsuario.getIs_Admin());
+
+        Set(pstUpdate, 1, ioUsuario.getID());
+        Set(pstUpdate, 2, ioUsuario.getNome());
+        Set(pstUpdate, 3, ioUsuario.getSenha());
+        pstUpdate.setBoolean(4, ioUsuario.getIs_Admin());
+        Set(pstUpdate, 5, ioUsuario.getNome());
 
         pstUpdate.execute();
 
@@ -80,7 +83,7 @@ public class UsuarioDAO extends MasterDAO {
 
     @Override
     public void Delete(Object ao_object) throws SQLException {
-        
+
         pstDelete.clearParameters();
 
         Usuario ioUsuario = (Usuario) ao_object;

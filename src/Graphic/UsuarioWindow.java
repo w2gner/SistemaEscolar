@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -76,22 +77,27 @@ public class UsuarioWindow extends JFrame implements Observer {
 
 		btnRemover = new JButton(new AbstractAction("Excluir") {
 
-            private static final long serialVersionUID = 1L;
+			private static final long serialVersionUID = 1L;
 
-            @Override
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Usuario usuario = (Usuario) selectedObject;
-				UsuarioDAO usuarioIO;
+
 				try {
-					usuarioIO = new UsuarioDAO(connection);
-					usuarioIO.Delete(usuario);
-				} catch (SQLException e) {
+					if (txfSenha.getText().isEmpty() || txfUsuario.getText().isEmpty()) {
+
+					} else {
+						UsuarioDAO usuarioIO = new UsuarioDAO(connection);
+						int opc = JOptionPane.showConfirmDialog(null, "Você tem certeza que deseja exluir",
+								"Apagar aluno", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, alertIcon);
+						if (opc == 0) {
+							usuarioIO.Delete(selectedObject);
+							LimpaTela();
+						}
+					}
+
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
-
-				JOptionPane.showMessageDialog(null, "Usuário excluído", "Aviso", JOptionPane.WARNING_MESSAGE,
-						alertIcon);
-				LimpaTela();
 
 			}
 		});
@@ -102,9 +108,9 @@ public class UsuarioWindow extends JFrame implements Observer {
 			btnSalvar = new JButton(new AbstractAction("Salvar") {
 
 				private static final long serialVersionUID = 1L;
-				UsuarioDAO usuarioIO = new UsuarioDAO(connection);
-				private ArrayList<Object> usuarios = new ArrayList<>();
-				private Boolean isUpdate;
+				private UsuarioDAO usuarioIO = new UsuarioDAO(connection);
+				private List<Object> usuarios = new ArrayList<Object>();
+				private Boolean isUpdate = false;
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -128,9 +134,27 @@ public class UsuarioWindow extends JFrame implements Observer {
 								usuario.setIs_Admin(false);
 							}
 
-							usuarioIO.Insert(usuario);
-							JOptionPane.showMessageDialog(null, "Usuário salvo com sucesso", "Aviso",
-									JOptionPane.WARNING_MESSAGE, alertIcon);
+							usuarios = usuarioIO.Select(null);
+
+							for (int i = 0; i < usuarios.size(); i++) {
+								Usuario teste = (Usuario) usuarios.get(i);
+								if (teste.getID() == usuario.getID()) {
+									usuario.setID(teste.getID());
+									usuarioIO.Update(usuario);
+									isUpdate = true;
+								}
+							}
+
+							if (!isUpdate) {
+								usuarioIO.Insert(usuario);
+								JOptionPane.showMessageDialog(null, "Usuário salvo com sucesso", "Aviso",
+										JOptionPane.WARNING_MESSAGE, alertIcon);
+							} else {
+								JOptionPane.showMessageDialog(null, "Usuário atualizado com sucesso", "Aviso",
+										JOptionPane.WARNING_MESSAGE, alertIcon);
+								isUpdate = false;
+							}
+
 							LimpaTela();
 
 						} catch (SQLException e1) {

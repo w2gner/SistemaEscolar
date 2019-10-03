@@ -77,7 +77,6 @@ public class AlunoWindow extends JFrame implements Observer {
 		NumberFormat longFormat = NumberFormat.getIntegerInstance();
 		NumberFormatter numberFormatter = new NumberFormatter(longFormat);
 		numberFormatter.setValueClass(Long.class);
-		numberFormatter.setAllowsInvalid(false); 
 	
 		lblNasc = new JLabel("Nascimento");
 		lblNasc.setBounds(445, 35, 80, 25);
@@ -198,9 +197,9 @@ public class AlunoWindow extends JFrame implements Observer {
 		btnSalvar = new JButton(new AbstractAction("Salvar") {
 
 			private static final long serialVersionUID = 1L;
-			AlunoDAO alunoIO = new AlunoDAO(connection);
-			List<Object> alunos = new ArrayList<Object>();
-			Boolean isUpdate = false;
+			private AlunoDAO alunoIO = new AlunoDAO(connection);
+			private List<Object> alunos = new ArrayList<Object>();
+			private Boolean isUpdate = false;
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
