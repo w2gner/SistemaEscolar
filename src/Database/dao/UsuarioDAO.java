@@ -14,7 +14,7 @@ public class UsuarioDAO extends MasterDAO {
     private Connection connection;
     private final String select = "select * from tb_usuarios";
     private final String insert = "insert into tb_usuarios (cod_usuario, usuario, senha, is_admin) VALUES (DEFAULT, ?, ?, ?)";
-    private final String update = "update tb_usuarios SET cod_usuario=?, usuario=?, senha=?, is_admin=true WHERE usuario=?";
+    private final String update = "update tb_usuarios SET  usuario=?, senha=?, is_admin=? WHERE cod_usuario = ?";
     private final String delete = "delete from tb_usuarios where usuario = ?";
     private final PreparedStatement pstSelect, pstInsert, pstDelete, pstUpdate;
 
@@ -71,11 +71,10 @@ public class UsuarioDAO extends MasterDAO {
 
         Usuario ioUsuario = (Usuario) ao_object;
 
-        Set(pstUpdate, 1, ioUsuario.getID());
-        Set(pstUpdate, 2, ioUsuario.getNome());
-        Set(pstUpdate, 3, ioUsuario.getSenha());
-        pstUpdate.setBoolean(4, ioUsuario.getIs_Admin());
-        Set(pstUpdate, 5, ioUsuario.getNome());
+        Set(pstUpdate, 1, ioUsuario.getNome());
+        Set(pstUpdate, 2, ioUsuario.getSenha());
+        pstUpdate.setBoolean(3, ioUsuario.getIs_Admin());
+        Set(pstUpdate, 4, ioUsuario.getID());
 
         pstUpdate.execute();
 

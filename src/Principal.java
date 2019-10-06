@@ -9,11 +9,10 @@ import graphic.LoginWindow;
 import database.model.Usuario;
 
 public class Principal {
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) {
 
         Connection connection = ConnectionFactory.getConnection("localhost", "5432", "SistemaDBA", "postgres", "manager");
-        connection.setAutoCommit(true);
-        
+
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -22,26 +21,22 @@ public class Principal {
 
                     UsuarioDAO user = new UsuarioDAO(connection);
 
-                    if (user.Select(null).size() == 0) {
-                        Usuario usuarioPadrao = new Usuario();
-                        usuarioPadrao.setNome("admin");
-                        usuarioPadrao.setSenha("admin");
-                        usuarioPadrao.setIs_Admin(true);
-                        user.Insert(usuarioPadrao);
+                    if (connection != null) {
+                        if (user.Select(null).size() == 0) {
+                            Usuario usuarioPadrao = new Usuario();
+                            usuarioPadrao.setNome("admin");
+                            usuarioPadrao.setSenha("admin");
+                            usuarioPadrao.setIs_Admin(true);
+                            user.Insert(usuarioPadrao);
+                        }
+                    } else {
+                        System.out.println("Não foi possível estabelecer conexão");
                     }
 
                     new LoginWindow(connection).setVisible(true);
 
-                } catch (ClassNotFoundException ex) {
+                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException | SQLException ex) {
                     ex.printStackTrace();
-                } catch (InstantiationException ex) {
-                    ex.printStackTrace();
-                } catch (IllegalAccessException ex) {
-                    ex.printStackTrace();
-                } catch (UnsupportedLookAndFeelException ex) {
-                    ex.printStackTrace();
-                } catch (SQLException e) {
-                    e.printStackTrace();
                 }
             }
         });

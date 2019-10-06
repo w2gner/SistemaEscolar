@@ -1,240 +1,251 @@
 package graphic;
 
-import java.awt.Toolkit;
+import database.dao.UsuarioDAO;
+import database.model.Usuario;
+import lib.Observer;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.AbstractAction;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import database.dao.UsuarioDAO;
-import database.model.Usuario;
-import lib.Observer;
 
 public class UsuarioWindow extends JFrame implements Observer {
-	private static final long serialVersionUID = 1L;
-	private JComboBox<String> cbxPerfil;
-	private JTextField txfUsuario, txfSenha;
-	private JLabel lblUsuario, lblSenha, lblPerfil;
-	private JButton btnCancelar, btnRemover, btnSalvar, btnPesquisar;
-	private UsuarioDAO io_usuario_dao;
-	private final ImageIcon alertIcon = new ImageIcon("icons/alerta.png");
-	private Object selectedObject;
+    private static final long serialVersionUID = 1L;
+    private JComboBox<String> cbxPerfil;
+    private JTextField txfUsuario, txfSenha;
+    private JLabel lblUsuario, lblSenha, lblPerfil, lblimagemcurso;
+    private JButton btnNovo, btnRemover, btnSalvar, btnPesquisar;
+    private UsuarioDAO io_usuario_dao;
+    private final ImageIcon alertIcon = new ImageIcon("icons/alerta.png");
+    private Object selectedObject = null;
 
-	UsuarioWindow(final Connection connection) {
-		setLayout(null);
-		setSize(750, 400);
-		setResizable(false);
-		setLocationRelativeTo(null);
-		setTitle(" Cadastro de Usuário");
-		setIconImage(Toolkit.getDefaultToolkit().getImage("icons/logo.png"));
+    UsuarioWindow(final Connection connection) {
+        setLayout(null);
+        setSize(750, 400);
+        setResizable(false);
+        setLocationRelativeTo(null);
+        setTitle(" Cadastro de Usuário");
+        setIconImage(Toolkit.getDefaultToolkit().getImage("icons/logo.png"));
 
-		lblUsuario = new JLabel("Usuário");
-		lblUsuario.setBounds(50, 35, 50, 25);
-		getContentPane().add(lblUsuario);
+        lblimagemcurso = new JLabel(new ImageIcon("icons/usuários.png"));
+        lblimagemcurso.setBounds(450, 20, 256, 256);
+        getContentPane().add(lblimagemcurso);
 
-		lblSenha = new JLabel("Senha");
-		lblSenha.setBounds(50, 70, 50, 25);
-		getContentPane().add(lblSenha);
+        lblUsuario = new JLabel("Usuário");
+        lblUsuario.setBounds(50, 70, 50, 25);
+        getContentPane().add(lblUsuario);
 
-		lblPerfil = new JLabel("Perfil");
-		lblPerfil.setBounds(50, 105, 30, 25);
-		getContentPane().add(lblPerfil);
+        lblSenha = new JLabel("Senha");
+        lblSenha.setBounds(50, 135, 50, 25);
+        getContentPane().add(lblSenha);
 
-		txfUsuario = new JTextField();
-		txfUsuario.setBounds(110, 35, 300, 25);
-		getContentPane().add(txfUsuario);
+        lblPerfil = new JLabel("Perfil");
+        lblPerfil.setBounds(50, 200, 30, 25);
+        getContentPane().add(lblPerfil);
 
-		txfSenha = new JPasswordField();
-		txfSenha.setBounds(110, 70, 300, 25);
-		getContentPane().add(txfSenha);
+        txfUsuario = new JTextField();
+        txfUsuario.setBounds(110, 70, 300, 25);
+        getContentPane().add(txfUsuario);
 
-		cbxPerfil = new JComboBox<String>();
-		cbxPerfil.setBounds(110, 105, 300, 25);
-		getContentPane().add(cbxPerfil);
-		cbxPerfil.addItem("Administrador");
-		cbxPerfil.addItem("Convidado");
+        txfSenha = new JPasswordField();
+        txfSenha.setBounds(110, 135, 300, 25);
+        getContentPane().add(txfSenha);
 
-		btnCancelar = new JButton(new AbstractAction("Cancelar") {
+        cbxPerfil = new JComboBox<String>();
+        cbxPerfil.setBounds(110, 200, 300, 25);
+        getContentPane().add(cbxPerfil);
+        cbxPerfil.addItem("Administrador");
+        cbxPerfil.addItem("Convidado");
 
-			private static final long serialVersionUID = 1L;
+        btnNovo = new JButton(new AbstractAction("Novo") {
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
-		btnCancelar.setBounds(500, 310, 115, 25);
-		getContentPane().add(btnCancelar);
+            private static final long serialVersionUID = 1L;
 
-		btnRemover = new JButton(new AbstractAction("Excluir") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                LimpaTela();
+                selectedObject = null;
+                setTitle(" Cadastro de Usuário");
+            }
+        });
+        btnNovo.setBounds(500, 310, 115, 25);
+        getContentPane().add(btnNovo);
 
-			private static final long serialVersionUID = 1L;
+        btnRemover = new JButton(new AbstractAction("Excluir") {
 
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
+            private static final long serialVersionUID = 1L;
 
-				try {
-					if (txfSenha.getText().isEmpty() || txfUsuario.getText().isEmpty()) {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
 
-					} else {
-						UsuarioDAO usuarioIO = new UsuarioDAO(connection);
-						int opc = JOptionPane.showConfirmDialog(null, "Você tem certeza que deseja exluir",
-								"Apagar aluno", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, alertIcon);
-						if (opc == 0) {
-							usuarioIO.Delete(selectedObject);
-							LimpaTela();
-						}
-					}
+                try {
+                    if (selectedObject == null) {
+                        JOptionPane.showMessageDialog(null, "Nenhum usuário selecionado",
+                                "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
+                    } else {
+                        UsuarioDAO usuarioIO = new UsuarioDAO(connection);
+                        int opc = JOptionPane.showConfirmDialog(null, "Você tem certeza que " +
+                                        "deseja exluir", "Apagar aluno", JOptionPane.OK_CANCEL_OPTION,
+                                JOptionPane.QUESTION_MESSAGE, alertIcon);
+                        if (opc == 0) {
+                            LimpaTela();
+                            usuarioIO.Delete(selectedObject);
+                            setTitle(" Cadastro de Usuário");
+                            selectedObject = null;
+                        }
+                    }
 
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
-			}
-		});
-		btnRemover.setBounds(250, 310, 115, 25);
-		getContentPane().add(btnRemover);
+            }
+        });
+        btnRemover.setBounds(250, 310, 115, 25);
+        getContentPane().add(btnRemover);
 
-		try {
-			btnSalvar = new JButton(new AbstractAction("Salvar") {
+        try {
+            btnSalvar = new JButton(new AbstractAction("Salvar") {
 
-				private static final long serialVersionUID = 1L;
-				private UsuarioDAO usuarioIO = new UsuarioDAO(connection);
-				private List<Object> usuarios = new ArrayList<Object>();
-				private Boolean isUpdate = false;
+                private static final long serialVersionUID = 1L;
+                private UsuarioDAO usuarioIO = new UsuarioDAO(connection);
+                private List<Object> usuarios = new ArrayList<Object>();
+                private Boolean isUpdate = false;
 
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					if (txfUsuario.getText().isEmpty() && txfSenha.getText().isEmpty()) {
-						JOptionPane.showMessageDialog(null, "Insira as informações do usuário", "Aviso",
-								JOptionPane.WARNING_MESSAGE, alertIcon);
-					} else if (txfUsuario.getText().isEmpty()) {
-						JOptionPane.showMessageDialog(null, "Nome do usuário requerido", "Aviso",
-								JOptionPane.WARNING_MESSAGE, alertIcon);
-					} else if (txfSenha.getText().isEmpty()) {
-						JOptionPane.showMessageDialog(null, "Senha do usuário requerida", "Aviso",
-								JOptionPane.WARNING_MESSAGE, alertIcon);
-					} else {
-						try {
-							Usuario usuario = new Usuario();
-							usuario.setNome(txfUsuario.getText());
-							usuario.setSenha(txfSenha.getText());
-							if (cbxPerfil.getSelectedItem().equals("Administrador")) {
-								usuario.setIs_Admin(true);
-							} else {
-								usuario.setIs_Admin(false);
-							}
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (txfUsuario.getText().isEmpty() && txfSenha.getText().isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Insira as informações do usuário",
+                                "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
+                    } else if (txfUsuario.getText().isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Nome do usuário requerido",
+                                "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
+                    } else if (txfSenha.getText().isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Senha do usuário requerida",
+                                "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
+                    } else {
+                        try {
+                            Usuario usuario = new Usuario();
+                            usuario.setNome(txfUsuario.getText());
+                            usuario.setSenha(txfSenha.getText());
+                            if (cbxPerfil.getSelectedItem().equals("Administrador")) {
+                                usuario.setIs_Admin(true);
+                            } else {
+                                usuario.setIs_Admin(false);
+                            }
 
-							usuarios = usuarioIO.Select(null);
+                            io_usuario_dao = new UsuarioDAO(connection);
+                            usuarios = io_usuario_dao.Select(null);
+                            Usuario usuarioSelecionado = (Usuario) selectedObject;
 
-							for (int i = 0; i < usuarios.size(); i++) {
-								Usuario teste = (Usuario) usuarios.get(i);
-								if (teste.getID() == usuario.getID()) {
-									usuario.setID(teste.getID());
-									usuarioIO.Update(usuario);
-									isUpdate = true;
-								}
-							}
+                            for (Object o : usuarios) {
+                                Usuario teste = (Usuario) o;
+                                if (selectedObject != null) {
+                                    if (teste.getID() == usuarioSelecionado.getID()) {
+                                        usuario.setID(teste.getID());
+                                        usuarioIO.Update(usuario);
+                                        isUpdate = true;
+                                    }
+                                }
+                            }
 
-							if (!isUpdate) {
-								usuarioIO.Insert(usuario);
-								JOptionPane.showMessageDialog(null, "Usuário salvo com sucesso", "Aviso",
-										JOptionPane.WARNING_MESSAGE, alertIcon);
-							} else {
-								JOptionPane.showMessageDialog(null, "Usuário atualizado com sucesso", "Aviso",
-										JOptionPane.WARNING_MESSAGE, alertIcon);
-								isUpdate = false;
-							}
+                            if (!isUpdate) {
+                                usuarioIO.Insert(usuario);
+                                JOptionPane.showMessageDialog(null, "Usuário salvo com " +
+                                        "sucesso", "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Usuário atualizado com " +
+                                        "sucesso", "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
+                                isUpdate = false;
+                            }
 
-							LimpaTela();
+                        } catch (SQLException e1) {
+                            e1.printStackTrace();
+                        }
 
-						} catch (SQLException e1) {
-							e1.printStackTrace();
-						}
+                    }
 
-					}
+                }
+            });
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+        }
+        btnSalvar.setBounds(125, 310, 115, 25);
+        getContentPane().add(btnSalvar);
 
-				}
-			});
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		btnSalvar.setBounds(125, 310, 115, 25);
-		getContentPane().add(btnSalvar);
+        btnPesquisar = new JButton(new AbstractAction("Pesquisar") {
 
-		btnPesquisar = new JButton(new AbstractAction("Pesquisar") {
+            private static final long serialVersionUID = 1L;
 
-			private static final long serialVersionUID = 1L;
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pesquisar(connection);
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				pesquisar(connection);
+            }
+        });
+        btnPesquisar.setBounds(375, 310, 115, 25);
+        getContentPane().add(btnPesquisar);
 
-			}
-		});
-		btnPesquisar.setBounds(375, 310, 115, 25);
-		getContentPane().add(btnPesquisar);
+    }
 
-	}
+    public void pesquisar(Connection connection) {
+        //
+        // Define as colunas da tabela de pesquisa
+        //
+        String[] la_colunas = {"Admin", "Aluno"};
 
-	public void pesquisar(Connection connection) {
-		//
-		// Define as colunas da tabela de pesquisa
-		//
-		String[] la_colunas = { "Admin", "Aluno" };
+        //
+        // Define as classes das colunas
+        //
+        Class<?>[] la_classes = {Integer.class, String.class};
 
-		//
-		// Define as classes das colunas
-		//
-		Class<?>[] la_classes = { Integer.class, String.class };
+        //
+        // Define as larguras das colunas da tabela de pesquisa
+        //
+        int[] la_larguras = {55, 400};
 
-		//
-		// Define as larguras das colunas da tabela de pesquisa
-		//
-		int[] la_larguras = { 55, 400 };
+        //
+        // Cria a janela de busca
+        //
+        PesquisaWindow lo_pesquisa = new PesquisaWindow(io_usuario_dao, la_colunas, la_classes, la_larguras,
+                this, connection);
+        lo_pesquisa.setVisible(true);
 
-		//
-		// Cria a janela de busca
-		//
-		PesquisaWindow lo_pesquisa = new PesquisaWindow(io_usuario_dao, la_colunas, la_classes, la_larguras, this,
-				connection);
-		lo_pesquisa.setVisible(true);
-		selectedObject = lo_pesquisa.getObjetoSelecionado();
-	}
+        try {
+            selectedObject = lo_pesquisa.getObjetoSelecionado();
+            setTitle(" Editando usuário: " + ((Usuario) selectedObject).getNome());
+        } catch (Exception ignored) {
+            selectedObject = null;
+        }
 
-	public void LimpaTela() {
-		txfSenha.setText("");
-		txfUsuario.setText("");
-		cbxPerfil.setSelectedItem(0);
-	}
+    }
 
-	@Override
-	public void update(Object arg) {
+    public void LimpaTela() {
+        txfSenha.setText("");
+        txfUsuario.setText("");
+        cbxPerfil.setSelectedIndex(0);
+    }
 
-		try {
-			Usuario usuario = (Usuario) arg;
+    @Override
+    public void update(Object arg) {
 
-			txfSenha.setText(usuario.getSenha());
-			txfUsuario.setText(usuario.getNome());
+        try {
+            Usuario usuario = (Usuario) arg;
 
-			if (usuario.getIs_Admin()) {
-				cbxPerfil.setSelectedItem(0);
-			} else {
-				cbxPerfil.setSelectedItem(1);
-			}
-		} catch (Exception e) {
-		}
+            txfSenha.setText(usuario.getSenha());
+            txfUsuario.setText(usuario.getNome());
 
-	}
+            if (usuario.getIs_Admin()) {
+                cbxPerfil.setSelectedItem(0);
+            } else {
+                cbxPerfil.setSelectedItem(1);
+            }
+        } catch (Exception e) {
+        }
+
+    }
 
 }

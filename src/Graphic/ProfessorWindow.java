@@ -1,25 +1,30 @@
 package graphic;
 
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import javax.swing.AbstractAction;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
+import database.dao.ProfessorDAO;
+import database.model.Professor;
+import lib.MLFDataTextField;
+import lib.Observer;
 
-public class ProfessorWindow extends JFrame {
+import javax.swing.*;
+import javax.swing.text.NumberFormatter;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+public class ProfessorWindow extends JFrame implements Observer {
 
     private static final long serialVersionUID = 1L;
+    private Connection connection;
     private JLabel lblSexo;
     private JLabel lblMatricula;
-    private JTextField txfMat;
-    private JLabel lblAluno;
+    private JFormattedTextField txfMat;
+    private JLabel lblProfessor;
     private JLabel lblNasc;
-    private JTextField txfNasc;
+    private MLFDataTextField txfNasc;
     private JTextField txfNome;
     private JLabel lblCpf;
     private JTextField txfCpf;
@@ -39,14 +44,21 @@ public class ProfessorWindow extends JFrame {
     private JLabel lblCelular;
     private JTextField txfCelular;
     private JLabel lblEmail;
+    private JLabel lblimagemcurso;
     private JTextField txfEmail;
     private JButton btnSalvar;
-    private JButton btnCancelar;
+    private JButton btnNovo;
+    private JButton btnPesquisar;
+    private JButton btnExcluir;
     private JRadioButton rdbSexoM, rdbSexoF;
     private JComboBox<String> cbxEstado;
     private ButtonGroup btnGroup;
+    private ProfessorDAO io_professor_dao;
+    private Object selectedObject = null;
+    private final ImageIcon alertIcon = new ImageIcon("icons/alerta.png");
 
-    public ProfessorWindow() {
+    public ProfessorWindow(Connection conn) throws SQLException {
+        this.connection = conn;
         setLayout(null);
         setSize(750, 400);
         setResizable(false);
@@ -54,11 +66,19 @@ public class ProfessorWindow extends JFrame {
         setTitle(" Cadastro de Professor");
         setIconImage(Toolkit.getDefaultToolkit().getImage("icons/logo.png"));
 
+        lblimagemcurso = new JLabel(new ImageIcon("icons/cadastro.png"));
+        lblimagemcurso.setBounds(495, 65, 256, 256);
+        getContentPane().add(lblimagemcurso);
+
+        NumberFormat longFormat = NumberFormat.getIntegerInstance();
+        NumberFormatter numberFormatter = new NumberFormatter(longFormat);
+        numberFormatter.setValueClass(Long.class);
+
         lblNasc = new JLabel("Nascimento");
         lblNasc.setBounds(445, 35, 80, 25);
         getContentPane().add(lblNasc);
 
-        txfNasc = new JTextField();
+        txfNasc = new MLFDataTextField();
         txfNasc.setBounds(445, 55, 130, 25);
         getContentPane().add(txfNasc);
 
@@ -66,13 +86,13 @@ public class ProfessorWindow extends JFrame {
         lblMatricula.setBounds(50, 35, 60, 25);
         getContentPane().add(lblMatricula);
 
-        txfMat = new JTextField();
+        txfMat = new JFormattedTextField(numberFormatter);
         txfMat.setBounds(50, 55, 75, 25);
         getContentPane().add(txfMat);
 
-        lblAluno = new JLabel("Nome");
-        lblAluno.setBounds(135, 35, 300, 25);
-        getContentPane().add(lblAluno);
+        lblProfessor = new JLabel("Nome");
+        lblProfessor.setBounds(135, 35, 300, 25);
+        getContentPane().add(lblProfessor);
 
         txfNome = new JTextField();
         txfNome.setBounds(135, 55, 300, 25);
@@ -102,13 +122,13 @@ public class ProfessorWindow extends JFrame {
         txfCpf.setBounds(50, 100, 170, 25);
         getContentPane().add(txfCpf);
 
-        lblRg = new JLabel("RG");
-        lblRg.setBounds(230, 80, 30, 25);
-        getContentPane().add(lblRg);
+        lblEmail = new JLabel("Email");
+        lblEmail.setBounds(230, 80, 30, 25);
+        getContentPane().add(lblEmail);
 
-        txfRg = new JTextField();
-        txfRg.setBounds(230, 100, 170, 25);
-        getContentPane().add(txfRg);
+        txfEmail = new JTextField();
+        txfEmail.setBounds(230, 100, 260, 25);
+        getContentPane().add(txfEmail);
 
         lblCep = new JLabel("CEP");
         lblCep.setBounds(50, 130, 30, 25);
@@ -162,29 +182,150 @@ public class ProfessorWindow extends JFrame {
         txfCelular.setBounds(190, 240, 130, 25);
         getContentPane().add(txfCelular);
 
-        lblEmail = new JLabel("Email");
-        lblEmail.setBounds(330, 220, 80, 25);
-        getContentPane().add(lblEmail);
+        lblRg = new JLabel("RG");
+        lblRg.setBounds(330, 220, 80, 25);
+        getContentPane().add(lblRg);
 
-        txfEmail = new JTextField();
-        txfEmail.setBounds(330, 240, 250, 25);
-        getContentPane().add(txfEmail);
+        txfRg = new JTextField();
+        txfRg.setBounds(330, 240, 160, 25);
+        getContentPane().add(txfRg);
 
-        btnSalvar = new JButton("Salvar");
-        btnSalvar.setBounds(220, 310, 115, 25);
+        btnSalvar = new JButton(new AbstractAction("Salvar") {
+
+            private static final long serialVersionUID = 1L;
+            private ProfessorDAO professorIO = new ProfessorDAO(connection);
+            private List<Object> professores = new ArrayList<Object>();
+            private Boolean isUpdate = false;
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                if (txfNome.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Campo nome requerido", "Aviso",
+                            JOptionPane.WARNING_MESSAGE, alertIcon);
+                } else if (txfMat.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Campo matrícula requerido",
+                            "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
+                } else {
+                    try {
+
+                        Professor professor = new Professor();
+
+                        professor.setNm_professor(txfNome.getText());
+                        if (!txfNasc.getText().contains("  /  /    ")) {
+                            professor.setNasc_professor(txfNasc.getText().replace("/", " "));
+                        }
+
+                        if (rdbSexoF.isSelected()) {
+                            professor.setSexo_professor("F");
+                        } else {
+                            professor.setSexo_professor("M");
+                        }
+
+                        professor.setMat_professor(Integer.parseInt(txfMat.getText()));
+                        professor.setCpf_professor(txfCpf.getText());
+                        professor.setRg_professor(txfRg.getText());
+                        professor.setCep_professor(txfCep.getText());
+                        professor.setEnd_professor(txfEndereco.getText());
+                        professor.setBairo_professor(txfBairro.getText());
+                        professor.setCidade_professor(txfCidade.getText());
+                        professor.setUf_professor(cbxEstado.getSelectedItem().toString());
+                        professor.setTelefone_professor(txfTelefone.getText());
+                        professor.setCelular_professor(txfCelular.getText());
+                        professor.setEmail_professor(txfEmail.getText());
+
+                        professores = professorIO.Select(null);
+
+                        for (Object o : professores) {
+                            Professor teste = (Professor) o;
+                            if (selectedObject != null) {
+                                if (teste.getMat_professor() == Integer.parseInt(txfMat.getText())) {
+                                    professor.setcd_professor(teste.getcd_professor());
+                                    professorIO.Update(professor);
+                                    isUpdate = true;
+                                }
+                            }
+                        }
+
+                        if (!isUpdate) {
+                            professorIO.Insert(professor);
+                            JOptionPane.showMessageDialog(null, "Professor salvo com sucesso",
+                                    "Aviso",
+                                    JOptionPane.WARNING_MESSAGE, alertIcon);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Professor atualizado com " +
+                                            "sucesso", "Aviso",
+                                    JOptionPane.WARNING_MESSAGE, alertIcon);
+                            isUpdate = false;
+                        }
+
+                    } catch (Exception e2) {
+                        e2.printStackTrace();
+                    }
+                }
+            }
+        });
+        btnSalvar.setBounds(125, 310, 115, 25);
         getContentPane().add(btnSalvar);
 
-        btnCancelar = new JButton(new AbstractAction("Cancelar") {
+        btnNovo = new JButton(new AbstractAction("Novo") {
 
             private static final long serialVersionUID = 1L;
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose();
+                LimpaTela();
+                selectedObject = null;
+                setTitle(" Cadastro de Professor");
             }
         });
-        btnCancelar.setBounds(390, 310, 115, 25);
-        getContentPane().add(btnCancelar);
+        btnNovo.setBounds(500, 310, 115, 25);
+        getContentPane().add(btnNovo);
+
+        btnPesquisar = new JButton(new AbstractAction("Pesquisar") {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Pesquisar(conn);
+
+            }
+        });
+        btnPesquisar.setBounds(375, 310, 115, 25);
+        getContentPane().add(btnPesquisar);
+
+        btnExcluir = new JButton(new AbstractAction("Excluir") {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    if (selectedObject == null) {
+                        JOptionPane.showMessageDialog(null, "Nenhum professor selecionado",
+                                "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
+                    } else {
+                        ProfessorDAO professorIO = new ProfessorDAO(connection);
+                        int opc = JOptionPane.showConfirmDialog(null, "Você tem certeza que" +
+                                        " deseja exluir", "Apagar professor",
+                                JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, alertIcon);
+                        if (opc == 0) {
+                            professorIO.Delete(selectedObject);
+                            LimpaTela();
+                            selectedObject = null;
+                            setTitle(" Cadastro de Professor");
+                        }
+                    }
+
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+
+            }
+        });
+        btnExcluir.setBounds(250, 310, 115, 25);
+        getContentPane().add(btnExcluir);
 
         cbxEstado = new JComboBox<String>();
         cbxEstado.addItem("AC");
@@ -218,5 +359,86 @@ public class ProfessorWindow extends JFrame {
         getContentPane().add(cbxEstado);
 
     }
-    
+
+    public void LimpaTela() {
+        txfBairro.setText("");
+        txfCelular.setText("");
+        txfCep.setText("");
+        txfCidade.setText("");
+        txfCpf.setText("");
+        txfEmail.setText("");
+        txfEndereco.setText("");
+        txfMat.setText("");
+        txfNasc.setText("");
+        txfNome.setText("");
+        txfRg.setText("");
+        txfTelefone.setText("");
+        cbxEstado.setSelectedIndex(0);
+        btnGroup.clearSelection();
+    }
+
+    public void Pesquisar(Connection conn) {
+        //
+        // Define as colunas da tabela de pesquisa
+        //
+        String[] la_colunas = {"Matrícula", "Professor"};
+
+        //
+        // Define as classes das colunas
+        //
+        Class<?>[] la_classes = {Integer.class, String.class};
+
+        //
+        // Define as larguras das colunas da tabela de pesquisa
+        //
+        int[] la_larguras = {55, 400};
+
+        //
+        // Cria a janela de busca
+        //
+        PesquisaWindow lo_pesquisa = new PesquisaWindow(io_professor_dao, la_colunas, la_classes, la_larguras,
+                this, conn);
+        lo_pesquisa.setVisible(true);
+        try {
+            selectedObject = lo_pesquisa.getObjetoSelecionado();
+            setTitle(" Editando professor: " + ((Professor) selectedObject).getNm_professor());
+        } catch (Exception ignored) {
+            selectedObject = null;
+        }
+    }
+
+    @Override
+    public void update(Object arg) {
+
+        try {
+            Professor professor = (Professor) arg;
+            txfMat.setText(Integer.toString(professor.getMat_professor()));
+            txfNome.setText(professor.getNm_professor());
+            txfBairro.setText(professor.getBairo_professor());
+            txfCelular.setText(professor.getCelular_professor());
+            txfCep.setText(professor.getCep_professor());
+            txfCidade.setText(professor.getCidade_professor());
+            txfCpf.setText(professor.getCpf_professor());
+            txfEmail.setText(professor.getEmail_professor());
+            txfEndereco.setText(professor.getEnd_professor());
+
+            String ano = professor.getNasc_professor().replace("-", "/").substring(0, 4);
+            String dia = professor.getNasc_professor().replace("-", "/").substring(8);
+            String mes = professor.getNasc_professor().replace("-", "/").substring(5, 7);
+
+            txfNasc.setText(dia + "/" + mes + "/" + ano);
+            txfRg.setText(professor.getRg_professor());
+            txfTelefone.setText(professor.getTelefone_professor());
+            cbxEstado.setSelectedItem(professor.getUf_professor());
+            if (professor.getSexo_professor().toUpperCase().equals("M")) {
+                rdbSexoM.setSelected(true);
+            } else {
+                rdbSexoF.setSelected(true);
+            }
+
+        } catch (Exception e) {
+        }
+
+    }
+
 }

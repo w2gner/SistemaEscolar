@@ -1,12 +1,12 @@
 package database.dao;
 
+import database.model.Aluno;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import database.model.Aluno;
 
 public class AlunoDAO extends MasterDAO {
 
@@ -32,7 +32,6 @@ public class AlunoDAO extends MasterDAO {
 		pstSelect.clearParameters();
 
 		ArrayList<Object> arlDados = new ArrayList<Object>();
-
 		ResultSet resultado = pstSelect.executeQuery();
 
 		while (resultado.next()) {

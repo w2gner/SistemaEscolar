@@ -1,9 +1,9 @@
 package graphic;
 
-import database.dao.AlunoDAO;
-import database.dao.UsuarioDAO;
+import database.dao.*;
 import lib.Observable;
 import lib.Observer;
+
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
@@ -19,6 +19,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
 import lib.TabelaPadrao;
 import database.model.MasterModel;
 
@@ -51,15 +52,15 @@ public class PesquisaWindow extends JDialog implements KeyListener, MouseListene
 
     private String selectedWindow;
 
-    PesquisaWindow(AlunoDAO io_aluno_dao, String[] colunas_tabela, Class<?>[] classes_colunas,
-                   int[] largura_colunas, AlunoWindow alunoWindow, Connection connection) {
-        
-    	selectedWindow = "AlunoWindow";
-    	
-    	// Seta a referencia do objeto dao para esta classe
+    PesquisaWindow(AlunoDAO io_aluno_dao, String[] colunas_tabela, Class<?>[] classes_colunas, int[] largura_colunas,
+                   AlunoWindow alunoWindow, Connection connection) {
+
+        selectedWindow = "AlunoWindow";
+
+        // Seta a referencia do objeto dao para esta classe
         //
         setIconImage(Toolkit.getDefaultToolkit().getImage("icons/logo.png"));
-        
+
         //
         // Seta a variavel que armazena as colunas da tabela
         //
@@ -116,10 +117,10 @@ public class PesquisaWindow extends JDialog implements KeyListener, MouseListene
 
     PesquisaWindow(UsuarioDAO dao, String[] colunas_tabela, Class<?>[] classes_colunas, int[] largura_colunas,
                    UsuarioWindow UsuarioWindow, Connection connection) {
-        
-    	selectedWindow = "UsuarioWindow";
-    	
-    	// Seta a referencia do objeto dao para esta classe
+
+        selectedWindow = "UsuarioWindow";
+
+        // Seta a referencia do objeto dao para esta classe
         //
         setIconImage(Toolkit.getDefaultToolkit().getImage("icons/logo.png"));
         //
@@ -173,7 +174,251 @@ public class PesquisaWindow extends JDialog implements KeyListener, MouseListene
             e.printStackTrace();
         }
         tb_resultado.tb_padrao.getSelectionModel().setSelectionInterval(0, 0);
-        
+
+    }
+
+    PesquisaWindow(ProfessorDAO dao, String[] colunas_tabela, Class<?>[] classes_colunas, int[] largura_colunas,
+                   ProfessorWindow ProfessorWindow, Connection connection) {
+        selectedWindow = "ProfessorWindow";
+
+        // Seta a referencia do objeto dao para esta classe
+        //
+        setIconImage(Toolkit.getDefaultToolkit().getImage("icons/logo.png"));
+        //
+        // Seta a variavel que armazena as colunas da tabela
+        //
+        this.colunas_tabela = colunas_tabela;
+
+        this.connection = connection;
+
+        //
+        // Seta a variavel que armazena as classes das colunas da tabela
+        //
+        this.classes_colunas = classes_colunas;
+
+        //
+        // Seta a variavel que armazena as larguras das colunas
+        //
+        this.largura_colunas = largura_colunas;
+
+        //
+        // Seta o observador desta classe
+        //
+        addObserver(ProfessorWindow);
+
+        //
+        // Metodo para construir os componentes
+        //
+        montaTela();
+
+        pack();
+
+        //
+        // Centraliza a janela
+        //
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        setLocation((screenSize.width - (this.getWidth())) / 2, (screenSize.height - (this.getHeight())) / 2);
+
+        //
+        // Atributos do JDialog
+        //
+        setTitle("Pesquisar");
+        setResizable(false);
+        setModal(true);
+
+        //
+        // Inicializa conte�do da tabela com todos os registros
+        //
+        try {
+            listaResultado(connection);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        tb_resultado.tb_padrao.getSelectionModel().setSelectionInterval(0, 0);
+
+    }
+
+    PesquisaWindow(DisciplinaDAO io_disciplina_dao, String[] colunas_tabela, Class<?>[] classes_colunas, int[] largura_colunas,
+                   DisciplinaWindow disciplinaWindow, Connection connection) {
+        selectedWindow = "disciplinaWindow";
+
+        // Seta a referencia do objeto dao para esta classe
+        //
+        setIconImage(Toolkit.getDefaultToolkit().getImage("icons/logo.png"));
+        //
+        // Seta a variavel que armazena as colunas da tabela
+        //
+        this.colunas_tabela = colunas_tabela;
+
+        this.connection = connection;
+
+        //
+        // Seta a variavel que armazena as classes das colunas da tabela
+        //
+        this.classes_colunas = classes_colunas;
+
+        //
+        // Seta a variavel que armazena as larguras das colunas
+        //
+        this.largura_colunas = largura_colunas;
+
+        //
+        // Seta o observador desta classe
+        //
+        addObserver(disciplinaWindow);
+
+        //
+        // Metodo para construir os componentes
+        //
+        montaTela();
+
+        pack();
+
+        //
+        // Centraliza a janela
+        //
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        setLocation((screenSize.width - (this.getWidth())) / 2, (screenSize.height - (this.getHeight())) / 2);
+
+        //
+        // Atributos do JDialog
+        //
+        setTitle("Pesquisar");
+        setResizable(false);
+        setModal(true);
+
+        //
+        // Inicializa conte�do da tabela com todos os registros
+        //
+        try {
+            listaResultado(connection);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        tb_resultado.tb_padrao.getSelectionModel().setSelectionInterval(0, 0);
+
+    }
+
+    PesquisaWindow(CursoDAO io_curso_dao, String[] colunas_tabela, Class<?>[] classes_colunas, int[] largura_colunas,
+                   CursoWindow CursoWindow, Connection connection) {
+        selectedWindow = "CursoWindow";
+
+        // Seta a referencia do objeto dao para esta classe
+        //
+        setIconImage(Toolkit.getDefaultToolkit().getImage("icons/logo.png"));
+        //
+        // Seta a variavel que armazena as colunas da tabela
+        //
+        this.colunas_tabela = colunas_tabela;
+
+        this.connection = connection;
+
+        //
+        // Seta a variavel que armazena as classes das colunas da tabela
+        //
+        this.classes_colunas = classes_colunas;
+
+        //
+        // Seta a variavel que armazena as larguras das colunas
+        //
+        this.largura_colunas = largura_colunas;
+
+        //
+        // Seta o observador desta classe
+        //
+        addObserver(CursoWindow);
+
+        //
+        // Metodo para construir os componentes
+        //
+        montaTela();
+
+        pack();
+
+        //
+        // Centraliza a janela
+        //
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        setLocation((screenSize.width - (this.getWidth())) / 2, (screenSize.height - (this.getHeight())) / 2);
+
+        //
+        // Atributos do JDialog
+        //
+        setTitle("Pesquisar");
+        setResizable(false);
+        setModal(true);
+
+        //
+        // Inicializa conte�do da tabela com todos os registros
+        //
+        try {
+            listaResultado(connection);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        tb_resultado.tb_padrao.getSelectionModel().setSelectionInterval(0, 0);
+
+    }
+
+    PesquisaWindow(MatriculaDAO io_matricula_dao, String[] colunas_tabela, Class<?>[] classes_colunas, int[] largura_colunas,
+                   MatriculaWindow matriculaWindow, Connection connection) {
+        selectedWindow = "matriculaWindow";
+
+        // Seta a referencia do objeto dao para esta classe
+        //
+        setIconImage(Toolkit.getDefaultToolkit().getImage("icons/logo.png"));
+        //
+        // Seta a variavel que armazena as colunas da tabela
+        //
+        this.colunas_tabela = colunas_tabela;
+
+        this.connection = connection;
+
+        //
+        // Seta a variavel que armazena as classes das colunas da tabela
+        //
+        this.classes_colunas = classes_colunas;
+
+        //
+        // Seta a variavel que armazena as larguras das colunas
+        //
+        this.largura_colunas = largura_colunas;
+
+        //
+        // Seta o observador desta classe
+        //
+        addObserver(matriculaWindow);
+
+        //
+        // Metodo para construir os componentes
+        //
+        montaTela();
+
+        pack();
+
+        //
+        // Centraliza a janela
+        //
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        setLocation((screenSize.width - (this.getWidth())) / 2, (screenSize.height - (this.getHeight())) / 2);
+
+        //
+        // Atributos do JDialog
+        //
+        setTitle("Pesquisar");
+        setResizable(false);
+        setModal(true);
+
+        //
+        // Inicializa conte�do da tabela com todos os registros
+        //
+        try {
+            listaResultado(connection);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        tb_resultado.tb_padrao.getSelectionModel().setSelectionInterval(0, 0);
+
     }
 
     public PesquisaWindow() {
@@ -217,12 +462,12 @@ public class PesquisaWindow extends JDialog implements KeyListener, MouseListene
         pn_principal.add(tb_resultado.sp_padrao);
 
         getContentPane().add(pn_principal);
-        
+
     }
 
     /**
      * Consulta na base de dados e mostra na tabela.
-     * 
+     *
      * @throws SQLException
      */
     private void listaResultado(Connection connection) throws SQLException {
@@ -255,6 +500,59 @@ public class PesquisaWindow extends JDialog implements KeyListener, MouseListene
                 }
             }
 
+        } else if (selectedWindow.equals("ProfessorWindow")) {
+
+            ProfessorDAO connect = new ProfessorDAO(connection);
+            lista_resultado = connect.Select(null);
+
+            if (!lista_resultado.isEmpty()) {
+                for (Object model : lista_resultado) {
+                    //
+                    // Adiciona na tabela
+                    //
+                    tb_resultado.modelo.addRow(((MasterModel) model).getSearchLine());
+                }
+            }
+        } else if (selectedWindow.equals("disciplinaWindow")) {
+
+        	DisciplinaDAO connect = new DisciplinaDAO(connection);
+            lista_resultado = connect.Select(null);
+
+            if (!lista_resultado.isEmpty()) {
+                for (Object model : lista_resultado) {
+                    //
+                    // Adiciona na tabela
+                    //
+                    tb_resultado.modelo.addRow(((MasterModel) model).getSearchLine());
+                }
+            }
+        } else if (selectedWindow.equals("CursoWindow")){
+
+            CursoDAO connect = new CursoDAO(connection);
+            lista_resultado = connect.Select(null);
+
+            if (!lista_resultado.isEmpty()) {
+                for (Object model : lista_resultado) {
+                    //
+                    // Adiciona na tabela
+                    //
+                    tb_resultado.modelo.addRow(((MasterModel) model).getSearchLine());
+                }
+            }
+        } else if (selectedWindow.equals("matriculaWindow")){
+
+            MatriculaDAO connect = new MatriculaDAO(connection);
+            lista_resultado = connect.Select(null);
+
+            if (!lista_resultado.isEmpty()) {
+                for (Object model : lista_resultado) {
+                    //
+                    // Adiciona na tabela
+                    //
+                    tb_resultado.modelo.addRow(((MasterModel) model).getSearchLine());
+                }
+
+            }
         }
 
     }
@@ -262,7 +560,7 @@ public class PesquisaWindow extends JDialog implements KeyListener, MouseListene
     /**
      * Método responsável por controlar a seleção dos registros da tabela através do
      * teclado.
-     * 
+     *
      * @param tecla Tecla acionada no teclado.
      */
     private void selecionaLinha(int tecla) {
@@ -317,7 +615,7 @@ public class PesquisaWindow extends JDialog implements KeyListener, MouseListene
 
     /**
      * Retorna o objeto selecionado da consulta.
-     * 
+     *
      * @return Objeto selecionado
      */
     Object getObjetoSelecionado() {
