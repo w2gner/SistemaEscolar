@@ -4,7 +4,6 @@ import database.dao.AlunoDAO;
 import database.model.Aluno;
 import lib.MLFDataTextField;
 import lib.Observer;
-
 import javax.swing.*;
 import javax.swing.text.NumberFormatter;
 import java.awt.*;
