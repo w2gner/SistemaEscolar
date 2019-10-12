@@ -67,7 +67,7 @@ public class ProfessorWindow extends JFrame implements Observer {
         setIconImage(Toolkit.getDefaultToolkit().getImage("icons/logo.png"));
 
         lblimagemcurso = new JLabel(new ImageIcon("icons/cadastro.png"));
-        lblimagemcurso.setBounds(495, 65, 256, 256);
+        lblimagemcurso.setBounds(515, 90, 200, 200);
         getContentPane().add(lblimagemcurso);
 
         NumberFormat longFormat = NumberFormat.getIntegerInstance();
@@ -196,6 +196,7 @@ public class ProfessorWindow extends JFrame implements Observer {
             private ProfessorDAO professorIO = new ProfessorDAO(connection);
             private List<Object> professores = new ArrayList<Object>();
             private Boolean isUpdate = false;
+            private Boolean alreadyExists = false;
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -241,22 +242,40 @@ public class ProfessorWindow extends JFrame implements Observer {
                             if (selectedObject != null) {
                                 if (teste.getMat_professor() == Integer.parseInt(txfMat.getText())) {
                                     professor.setcd_professor(teste.getcd_professor());
-                                    professorIO.Update(professor);
                                     isUpdate = true;
                                 }
                             }
+
                         }
 
                         if (!isUpdate) {
-                            professorIO.Insert(professor);
-                            JOptionPane.showMessageDialog(null, "Professor salvo com sucesso",
-                                    "Aviso",
-                                    JOptionPane.WARNING_MESSAGE, alertIcon);
+                            try {
+                                professorIO.Insert(professor);
+                                JOptionPane.showMessageDialog(null, "Professor salvo com sucesso",
+                                        "Aviso",
+                                        JOptionPane.WARNING_MESSAGE, alertIcon);
+                            } catch (Exception ex) {
+                                JOptionPane.showMessageDialog(null, "Um professor com esse " +
+                                                "CPF já foi cadastrado",
+                                        "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
+                            }
+
+                            setTitle(" Editando aluno: " + professor.getNm_professor());
+
                         } else {
-                            JOptionPane.showMessageDialog(null, "Professor atualizado com " +
-                                            "sucesso", "Aviso",
-                                    JOptionPane.WARNING_MESSAGE, alertIcon);
-                            isUpdate = false;
+                            try {
+                                professorIO.Update(professor);
+                                JOptionPane.showMessageDialog(null, "Professor atualizado com " +
+                                                "sucesso", "Aviso",
+                                        JOptionPane.WARNING_MESSAGE, alertIcon);
+                                isUpdate = false;
+                            } catch (Exception e1) {
+                                JOptionPane.showMessageDialog(null, "Um professor com esse " +
+                                                "CPF já foi cadastrado",
+                                        "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
+                            }
+
+                            setTitle(" Editando aluno: " + professor.getNm_professor());
                         }
 
                     } catch (Exception e2) {

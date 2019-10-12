@@ -43,7 +43,7 @@ public class MatriculaWindow extends JFrame implements Observer {
         List<Object> professores = professorIO.Select(null);
         List<Object> disciplinas = disciplinaIO.Select(null);
 
-        lblimagemcurso = new JLabel(new ImageIcon("icons/matrícula.png"));
+        lblimagemcurso = new JLabel(new ImageIcon("icons/registro.png"));
         lblimagemcurso.setBounds(450, 20, 256, 256);
         getContentPane().add(lblimagemcurso);
 
@@ -90,7 +90,6 @@ public class MatriculaWindow extends JFrame implements Observer {
             public void actionPerformed(ActionEvent e) {
 
                 try {
-
                     if ((cmbCurso.getItemCount() == 0) || cmbProfessor.getItemCount() == 0 ||
                             cmbAluno.getItemCount() == 0 || cmbDisciplina.getItemCount() == 0) {
 
@@ -100,25 +99,20 @@ public class MatriculaWindow extends JFrame implements Observer {
                     } else {
                         for (Object Curso : cursos) {
                             Curso teste = (Curso) Curso;
-
                             if ((Objects.requireNonNull(cmbCurso.getSelectedItem())).equals(teste.getNome())) {
                                 matricula.setIdCurso(teste.getId());
                             }
-
                         }
 
                         for (Object Professor : professores) {
                             Professor teste = (Professor) Professor;
-
                             if (Objects.requireNonNull(cmbProfessor.getSelectedItem()).equals(teste.getNm_professor())) {
                                 matricula.setIdProfessor(teste.getcd_professor());
                             }
-
                         }
 
                         for (Object Aluno : alunos) {
                             Aluno teste = (Aluno) Aluno;
-
                             if (Objects.requireNonNull(cmbAluno.getSelectedItem()).equals(teste.getNm_aluno())) {
                                 matricula.setIdAluno(teste.getCd_aluno());
                             }
@@ -130,7 +124,6 @@ public class MatriculaWindow extends JFrame implements Observer {
                             if (Objects.requireNonNull(cmbDisciplina.getSelectedItem()).equals(teste.getDisciplina())) {
                                 matricula.setIdDisciplina(teste.getCod_disciplina());
                             }
-
                         }
 
                         matriculas = matriculaIO.Select(null);
@@ -139,23 +132,32 @@ public class MatriculaWindow extends JFrame implements Observer {
                         for (Object o : matriculas) {
                             Matricula teste = (Matricula) o;
                             if (selectedObject != null) {
-
                                 if (teste.getIdMatricula() == matriculaSelecionada.getIdMatricula()) {
                                     matricula.setIdMatricula(teste.getIdMatricula());
-                                    matriculaIO.Update(matricula);
                                     isUpdate = true;
                                 }
-
                             }
                         }
 
                         if (!isUpdate) {
-                            JOptionPane.showMessageDialog(null, "Matrícula salva com " +
-                                    "sucesso", "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
-                            matriculaIO.Insert(matricula);
+                            try {
+                                matriculaIO.Insert(matricula);
+                                JOptionPane.showMessageDialog(null, "Matrícula salva com " +
+                                        "sucesso", "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
+                            } catch (Exception e1) {
+                                JOptionPane.showMessageDialog(null, "Aluno já matriculado ",
+                                        "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
+                                isUpdate = false;
+                            }
                         } else {
-                            JOptionPane.showMessageDialog(null, "Matrícula atualizada " +
-                                    "com sucesso", "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
+                            try {
+                                matriculaIO.Update(matricula);
+                                JOptionPane.showMessageDialog(null, "Matrícula atualizada " +
+                                        "com sucesso", "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
+                            } catch (Exception e2) {
+                                JOptionPane.showMessageDialog(null, "Aluno já matriculado ",
+                                        "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
+                            }
                         }
                     }
 
@@ -167,13 +169,9 @@ public class MatriculaWindow extends JFrame implements Observer {
         });
         btnSalvar.setBounds(125, 310, 115, 25);
 
-        getContentPane().
+        getContentPane().add(btnSalvar);
 
-                add(btnSalvar);
-
-        btnNovo = new
-
-                JButton(new AbstractAction("Novo") {
+        btnNovo = new JButton(new AbstractAction("Novo") {
 
             private static final long serialVersionUID = 1L;
 
@@ -297,7 +295,7 @@ public class MatriculaWindow extends JFrame implements Observer {
         lo_pesquisa.setVisible(true);
         try {
             selectedObject = lo_pesquisa.getObjetoSelecionado();
-            setTitle(" Editando matrícula: " + ((Matricula) selectedObject).getIdMatricula());
+            setTitle(" Editando matrícula: " + ((Matricula) selectedObject).getNomeAluno());
         } catch (Exception ignored) {
             selectedObject = null;
         }

@@ -5,6 +5,7 @@ import database.dao.ProfessorDAO;
 import database.model.Disciplina;
 import database.model.Professor;
 import lib.Observer;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -31,7 +32,7 @@ public class DisciplinaWindow extends JFrame implements Observer {
         setLocationRelativeTo(null);
         setIconImage(Toolkit.getDefaultToolkit().getImage("icons/logo.png"));
 
-        lblimagemcurso = new JLabel(new ImageIcon("icons/disciplina.png"));
+        lblimagemcurso = new JLabel(new ImageIcon("icons/registro.png"));
         lblimagemcurso.setBounds(450, 20, 256, 256);
         getContentPane().add(lblimagemcurso);
 
@@ -47,7 +48,7 @@ public class DisciplinaWindow extends JFrame implements Observer {
         lblcargahoraria.setBounds(50, 165, 90, 25);
         getContentPane().add(lblcargahoraria);
 
-        lblinvestimento = new JLabel("Investimento");
+        lblinvestimento = new JLabel("Nº de créditos");
         lblinvestimento.setBounds(50, 230, 90, 25);
         getContentPane().add(lblinvestimento);
 
@@ -99,14 +100,7 @@ public class DisciplinaWindow extends JFrame implements Observer {
                                 "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
                     } else {
 
-                        if (txfinvestimento.getText().contains(",")) {
-                            disciplina.setInvestimento(Double.parseDouble(txfinvestimento.getText().replace(",",
-                                    ".")));
-                            System.out.println(disciplina.getInvestimento());
-                        } else {
-                            disciplina.setInvestimento(Double.parseDouble(txfinvestimento.getText()));
-                        }
-
+                        disciplina.setQtdCreditos(Integer.parseInt(txfinvestimento.getText()));
                         disciplina.setDisciplina(txfDisciplina.getText());
                         disciplina.setCargaHoraria(txtcargahoraria.getText());
                         disciplina.setProfessor_disciplina(cbxprofessor.getSelectedItem().toString());
@@ -119,17 +113,22 @@ public class DisciplinaWindow extends JFrame implements Observer {
                             if (selectedObject != null) {
                                 if (teste.getCod_disciplina() == disciplinaSelecionado.getCod_disciplina()) {
                                     disciplina.setCod_disciplina(teste.getCod_disciplina());
-                                    disciplinaIO.Update(disciplina);
                                     isUpdate = true;
                                 }
                             }
                         }
 
                         if (!isUpdate) {
-                            JOptionPane.showMessageDialog(null, "Usuário salvo com sucesso",
-                                    "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
-                            disciplinaIO.Insert(disciplina);
+                            try {
+                                disciplinaIO.Insert(disciplina);
+                                JOptionPane.showMessageDialog(null, "Disciplina salva com sucesso",
+                                        "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
+                            } catch (Exception e1) {
+                                JOptionPane.showMessageDialog(null, "Disciplina já cadastrada",
+                                        "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
+                            }
                         } else {
+                            disciplinaIO.Update(disciplina);
                             JOptionPane.showMessageDialog(null, "Usuário atualizado com" +
                                     " sucesso", "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
                         }
@@ -178,7 +177,7 @@ public class DisciplinaWindow extends JFrame implements Observer {
                                 "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
                     } else {
                         int opc = JOptionPane.showConfirmDialog(null, "Você tem certeza que " +
-                                "deseja exluir", "Apagar disciplina", JOptionPane.OK_CANCEL_OPTION,
+                                        "deseja exluir", "Apagar disciplina", JOptionPane.OK_CANCEL_OPTION,
                                 JOptionPane.QUESTION_MESSAGE, alertIcon);
                         if (opc == 0) {
                             disciplinaIO.Delete(selectedObject);
@@ -239,7 +238,7 @@ public class DisciplinaWindow extends JFrame implements Observer {
     public void update(Object arg) {
         Disciplina disciplina = (Disciplina) arg;
         txfDisciplina.setText(disciplina.getDisciplina());
-        txfinvestimento.setText(String.valueOf(disciplina.getInvestimento()));
+        txfinvestimento.setText(String.valueOf(disciplina.getQtdCreditos()));
         cbxprofessor.setSelectedItem(disciplina.getProfessor_disciplina());
         txtcargahoraria.setText(disciplina.getCargaHoraria());
     }

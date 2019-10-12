@@ -6,6 +6,15 @@ public class Matricula implements MasterModel {
     private int idAluno;
     private int idDisciplina;
     private int idMatricula;
+    private String nomeAluno;
+
+    public String getNomeAluno() {
+        return nomeAluno;
+    }
+
+    public void setNomeAluno(String nomeAluno) {
+        this.nomeAluno = nomeAluno;
+    }
 
     public int getIdCurso() {
         return idCurso;
@@ -49,6 +58,6 @@ public class Matricula implements MasterModel {
 
     @Override
     public Object[] getSearchLine() {
-        return new Object[]{idMatricula, idAluno};
+        return new Object[]{idMatricula, nomeAluno};
     }
 }

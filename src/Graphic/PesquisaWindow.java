@@ -1,27 +1,21 @@
 package graphic;
 
 import database.dao.*;
+import database.model.Aluno;
+import database.model.MasterModel;
+import database.model.Matricula;
 import lib.Observable;
 import lib.Observer;
+import lib.TabelaPadrao;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
-import lib.TabelaPadrao;
-import database.model.MasterModel;
 
 public class PesquisaWindow extends JDialog implements KeyListener, MouseListener, Observable {
 
@@ -51,6 +45,8 @@ public class PesquisaWindow extends JDialog implements KeyListener, MouseListene
     private Connection connection;
 
     private String selectedWindow;
+
+    private boolean ibClosed = false;
 
     PesquisaWindow(AlunoDAO io_aluno_dao, String[] colunas_tabela, Class<?>[] classes_colunas, int[] largura_colunas,
                    AlunoWindow alunoWindow, Connection connection) {
@@ -112,6 +108,13 @@ public class PesquisaWindow extends JDialog implements KeyListener, MouseListene
             e.printStackTrace();
         }
         tb_resultado.tb_padrao.getSelectionModel().setSelectionInterval(0, 0);
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                ibClosed = true;
+            }
+        });
 
     }
 
@@ -175,6 +178,13 @@ public class PesquisaWindow extends JDialog implements KeyListener, MouseListene
         }
         tb_resultado.tb_padrao.getSelectionModel().setSelectionInterval(0, 0);
 
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                ibClosed = true;
+            }
+        });
+
     }
 
     PesquisaWindow(ProfessorDAO dao, String[] colunas_tabela, Class<?>[] classes_colunas, int[] largura_colunas,
@@ -235,6 +245,13 @@ public class PesquisaWindow extends JDialog implements KeyListener, MouseListene
             e.printStackTrace();
         }
         tb_resultado.tb_padrao.getSelectionModel().setSelectionInterval(0, 0);
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                ibClosed = true;
+            }
+        });
 
     }
 
@@ -297,6 +314,13 @@ public class PesquisaWindow extends JDialog implements KeyListener, MouseListene
         }
         tb_resultado.tb_padrao.getSelectionModel().setSelectionInterval(0, 0);
 
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                ibClosed = true;
+            }
+        });
+
     }
 
     PesquisaWindow(CursoDAO io_curso_dao, String[] colunas_tabela, Class<?>[] classes_colunas, int[] largura_colunas,
@@ -358,6 +382,13 @@ public class PesquisaWindow extends JDialog implements KeyListener, MouseListene
         }
         tb_resultado.tb_padrao.getSelectionModel().setSelectionInterval(0, 0);
 
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                ibClosed = true;
+            }
+        });
+
     }
 
     PesquisaWindow(MatriculaDAO io_matricula_dao, String[] colunas_tabela, Class<?>[] classes_colunas, int[] largura_colunas,
@@ -418,6 +449,13 @@ public class PesquisaWindow extends JDialog implements KeyListener, MouseListene
             e.printStackTrace();
         }
         tb_resultado.tb_padrao.getSelectionModel().setSelectionInterval(0, 0);
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                ibClosed = true;
+            }
+        });
 
     }
 
@@ -515,7 +553,7 @@ public class PesquisaWindow extends JDialog implements KeyListener, MouseListene
             }
         } else if (selectedWindow.equals("disciplinaWindow")) {
 
-        	DisciplinaDAO connect = new DisciplinaDAO(connection);
+            DisciplinaDAO connect = new DisciplinaDAO(connection);
             lista_resultado = connect.Select(null);
 
             if (!lista_resultado.isEmpty()) {
@@ -526,7 +564,7 @@ public class PesquisaWindow extends JDialog implements KeyListener, MouseListene
                     tb_resultado.modelo.addRow(((MasterModel) model).getSearchLine());
                 }
             }
-        } else if (selectedWindow.equals("CursoWindow")){
+        } else if (selectedWindow.equals("CursoWindow")) {
 
             CursoDAO connect = new CursoDAO(connection);
             lista_resultado = connect.Select(null);
@@ -539,10 +577,26 @@ public class PesquisaWindow extends JDialog implements KeyListener, MouseListene
                     tb_resultado.modelo.addRow(((MasterModel) model).getSearchLine());
                 }
             }
-        } else if (selectedWindow.equals("matriculaWindow")){
+        } else if (selectedWindow.equals("matriculaWindow")) {
 
             MatriculaDAO connect = new MatriculaDAO(connection);
+            AlunoDAO connect2 = new AlunoDAO(connection);
+            Aluno teste = new Aluno();
+            List<Object> alunos = new ArrayList<Object>();
+
+            alunos = connect2.Select(null);
+
             lista_resultado = connect.Select(null);
+
+            for (int i = 0; i < lista_resultado.size(); i++) {
+                Matricula aluno2 = (Matricula) lista_resultado.get(i);
+                for (int j = 0; j < alunos.size(); j++) {
+                    Aluno aluno = (Aluno) alunos.get(j);
+                    if (aluno.getCd_aluno() == aluno2.getIdAluno()) {
+                        aluno2.setNomeAluno(aluno.getNm_aluno());
+                    }
+                }
+            }
 
             if (!lista_resultado.isEmpty()) {
                 for (Object model : lista_resultado) {
@@ -621,7 +675,7 @@ public class PesquisaWindow extends JDialog implements KeyListener, MouseListene
     Object getObjetoSelecionado() {
         int linha = tb_resultado.tb_padrao.getSelectedRow();
 
-        return lista_resultado.get(linha);
+        return ibClosed ? null : lista_resultado.get(linha);
     }
 
     @Override

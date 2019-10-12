@@ -4,6 +4,7 @@ import database.dao.AlunoDAO;
 import database.model.Aluno;
 import lib.MLFDataTextField;
 import lib.Observer;
+
 import javax.swing.*;
 import javax.swing.text.NumberFormatter;
 import java.awt.*;
@@ -66,7 +67,7 @@ public class AlunoWindow extends JFrame implements Observer {
         setIconImage(Toolkit.getDefaultToolkit().getImage("icons/logo.png"));
 
         lblimagemcurso = new JLabel(new ImageIcon("icons/cadastro.png"));
-        lblimagemcurso.setBounds(495, 65, 256, 256);
+        lblimagemcurso.setBounds(515, 90, 200, 200);
         getContentPane().add(lblimagemcurso);
 
         NumberFormat longFormat = NumberFormat.getIntegerInstance();
@@ -199,6 +200,8 @@ public class AlunoWindow extends JFrame implements Observer {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                Aluno aluno = new Aluno();
+
                 if (txfNome.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Campo nome requerido", "Aviso",
                             JOptionPane.WARNING_MESSAGE, alertIcon);
@@ -208,7 +211,6 @@ public class AlunoWindow extends JFrame implements Observer {
                 } else {
                     try {
 
-                        Aluno aluno = new Aluno();
 
                         aluno.setNm_aluno(txfNome.getText());
                         if (!txfNasc.getText().contains("  /  /    ")) {
@@ -240,20 +242,37 @@ public class AlunoWindow extends JFrame implements Observer {
                             if (selectedObject != null) {
                                 if (teste.getMat_aluno() == Integer.parseInt(txfMat.getText())) {
                                     aluno.setCd_aluno(teste.getCd_aluno());
-                                    alunoIO.Update(aluno);
                                     isUpdate = true;
                                 }
                             }
                         }
 
                         if (!isUpdate) {
-                            alunoIO.Insert(aluno);
-                            JOptionPane.showMessageDialog(null, "Aluno salvo com sucesso",
-                                    "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
+                            try {
+                                alunoIO.Insert(aluno);
+                                JOptionPane.showMessageDialog(null, "Aluno salvo com sucesso",
+                                        "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
+                            } catch (SQLException ex) {
+                                JOptionPane.showMessageDialog(null, "Um aluno com esse CPF" +
+                                                " já foi cadastrado",
+                                        "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
+                            }
+
+                            setTitle(" Editando aluno: " + aluno.getNm_aluno());
+
                         } else {
-                            JOptionPane.showMessageDialog(null, "Aluno atualizado com sucesso",
-                                    "Aviso",JOptionPane.WARNING_MESSAGE, alertIcon);
-                            isUpdate = false;
+                            try {
+                                alunoIO.Update(aluno);
+                                JOptionPane.showMessageDialog(null, "Aluno atualizado com sucesso",
+                                        "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
+                                isUpdate = false;
+                            } catch (Exception e1) {
+                                JOptionPane.showMessageDialog(null, "Um aluno com esse CPF" +
+                                                " já foi cadastrado",
+                                        "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
+                            }
+
+                            setTitle(" Editando aluno: " + aluno.getNm_aluno());
                         }
 
                     } catch (Exception e2) {
@@ -397,7 +416,8 @@ public class AlunoWindow extends JFrame implements Observer {
         lo_pesquisa.setVisible(true);
         try {
             selectedObject = lo_pesquisa.getObjetoSelecionado();
-            setTitle(" Editando aluno: " + ((Aluno) selectedObject).getNm_aluno());
+            if (selectedObject != null)
+                setTitle(" Editando aluno: " + ((Aluno) selectedObject).getNm_aluno());
         } catch (Exception ignored) {
             selectedObject = null;
         }

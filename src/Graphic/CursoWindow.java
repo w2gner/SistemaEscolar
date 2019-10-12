@@ -2,6 +2,7 @@ package graphic;
 
 import database.dao.CursoDAO;
 import database.model.Curso;
+import lib.MasterMoneyField;
 import lib.Observer;
 
 import javax.swing.*;
@@ -15,7 +16,8 @@ import java.util.List;
 public class CursoWindow extends JFrame implements Observer {
     private static final long serialVersionUID = 1L;
     private JLabel lblCurso, lblimagemcurso, lblValorCreditos, lblQtdCreditos;
-    private JTextField txfCurso, txfValorCreditos, txfQtdCreditos;
+    private JTextField txfCurso;
+    private MasterMoneyField valorCreditos, valorMatricula;
     private JButton btnSalvar, btnNovo, btnPesquisar, btnExcluir;
     private Object selectedObject;
     private CursoDAO io_curso_dao;
@@ -29,7 +31,7 @@ public class CursoWindow extends JFrame implements Observer {
         setLocationRelativeTo(null);
         setIconImage(Toolkit.getDefaultToolkit().getImage("icons/logo.png"));
 
-        lblimagemcurso = new JLabel(new ImageIcon("icons/curso.png"));
+        lblimagemcurso = new JLabel(new ImageIcon("icons/registro.png"));
         lblimagemcurso.setBounds(450, 20, 256, 256);
         getContentPane().add(lblimagemcurso);
 
@@ -37,11 +39,11 @@ public class CursoWindow extends JFrame implements Observer {
         lblCurso.setBounds(50, 70, 90, 25);
         getContentPane().add(lblCurso);
 
-        lblQtdCreditos = new JLabel("Nº de créditos");
+        lblQtdCreditos = new JLabel("Valor da matrícula");
         lblQtdCreditos.setBounds(50, 135, 90, 25);
         getContentPane().add(lblQtdCreditos);
 
-        lblValorCreditos = new JLabel("Valor dos créditos");
+        lblValorCreditos = new JLabel("Valor do crédito");
         lblValorCreditos.setBounds(50, 200, 90, 25);
         getContentPane().add(lblValorCreditos);
 
@@ -49,13 +51,13 @@ public class CursoWindow extends JFrame implements Observer {
         txfCurso.setBounds(145, 70, 275, 25);
         getContentPane().add(txfCurso);
 
-        txfQtdCreditos = new JTextField();
-        txfQtdCreditos.setBounds(145, 135, 275, 25);
-        getContentPane().add(txfQtdCreditos);
+        valorMatricula = new MasterMoneyField();
+        valorMatricula.setBounds(145, 135, 275, 25);
+        getContentPane().add(valorMatricula);
 
-        txfValorCreditos = new JTextField();
-        txfValorCreditos.setBounds(145, 200, 275, 25);
-        getContentPane().add(txfValorCreditos);
+        valorCreditos = new MasterMoneyField();
+        valorCreditos.setBounds(145, 200, 275, 25);
+        getContentPane().add(valorCreditos);
 
         btnSalvar = new JButton(new AbstractAction("Salvar") {
 
@@ -67,21 +69,15 @@ public class CursoWindow extends JFrame implements Observer {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    if (txfCurso.getText().isEmpty() || txfQtdCreditos.getText().isEmpty() ||
-                            txfValorCreditos.getText().isEmpty()) {
+                    if (txfCurso.getText().isEmpty() || valorMatricula.getText().isEmpty() ||
+                            valorCreditos.getText().isEmpty()) {
                         JOptionPane.showMessageDialog(null, "Preencha todos os campos",
                                 "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
                     } else {
 
-                        if (txfValorCreditos.getText().contains(",")) {
-                            curso.setValorCreditos(Double.parseDouble(txfValorCreditos.getText().replace(",",
-                                    ".")));
-                        } else {
-                            curso.setValorCreditos(Double.parseDouble(txfValorCreditos.getText()));
-                        }
-
                         curso.setNome(txfCurso.getText());
-                        curso.setQtdCreditos(Integer.parseInt(txfQtdCreditos.getText()));
+                        curso.setValorMatricula(Double.parseDouble(valorMatricula.getText().replace(".", "").replace(",", ".")));
+                        curso.setValorCreditos(Double.parseDouble(valorCreditos.getText().replace(".", "").replace(",", ".")));
 
                         cursos = cursoIO.Select(null);
                         Curso cursoSelecionado = (Curso) selectedObject;
@@ -168,8 +164,8 @@ public class CursoWindow extends JFrame implements Observer {
     }
 
     public void LimpaTela() {
-        txfValorCreditos.setText("");
-        txfQtdCreditos.setText("");
+        valorCreditos.setText("");
+        valorMatricula.setText("");
         txfCurso.setText("");
     }
 
@@ -209,8 +205,8 @@ public class CursoWindow extends JFrame implements Observer {
         try {
             Curso curso = (Curso) arg;
             txfCurso.setText(curso.getNome());
-            txfQtdCreditos.setText(Integer.toString(curso.getQtdCreditos()));
-            txfValorCreditos.setText(Double.toString(curso.getValorCreditos()));
+            valorMatricula.setText(Double.toString(curso.getValorMatricula()));
+            valorCreditos.setText(curso.getValorCreditos().toString());
         } catch (Exception ignored) {
 
         }
