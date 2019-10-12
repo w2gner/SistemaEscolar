@@ -39,7 +39,7 @@ public class DisciplinaDAO extends MasterDAO{
             Disciplina disciplina = new Disciplina();
             disciplina.setDisciplina(resultado.getString("nm_disciplina"));
             disciplina.setCargaHoraria(resultado.getString("qtd_cargahoraria"));
-            disciplina.setInvestimento(resultado.getDouble("investimento"));
+            disciplina.setQtdCreditos(resultado.getInt("investimento"));
             disciplina.setProfessor_disciplina(resultado.getString("professor_disciplina"));
             disciplina.setCod_disciplina(resultado.getInt("id_disciplina"));
 
@@ -59,7 +59,7 @@ public class DisciplinaDAO extends MasterDAO{
 
         Set(pstInsert, 1, ioDisciplina.getDisciplina());
         Set(pstInsert, 2, ioDisciplina.getCargaHoraria());
-        Set(pstInsert, 3, ioDisciplina.getInvestimento());
+        Set(pstInsert, 3, ioDisciplina.getQtdCreditos());
         Set(pstInsert, 4, ioDisciplina.getProfessor_disciplina());
 
         pstInsert.execute();
@@ -75,7 +75,7 @@ public class DisciplinaDAO extends MasterDAO{
 
         Set(pstUpdate, 1, ioDisciplina.getDisciplina());
         Set(pstUpdate, 2, ioDisciplina.getCargaHoraria());
-        Set(pstUpdate, 3, ioDisciplina.getInvestimento());
+        Set(pstUpdate, 3, ioDisciplina.getQtdCreditos());
         Set(pstUpdate, 4, ioDisciplina.getCod_disciplina());
 
         pstUpdate.execute();

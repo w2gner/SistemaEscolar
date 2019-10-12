@@ -3,7 +3,7 @@ package database.model;
 public class Curso implements MasterModel {
     private int id;
     private String nome;
-    private int qtdCreditos;
+    private Double valorMatricula;
     private Double valorCreditos;
 
     public Double getValorCreditos() {
@@ -14,12 +14,12 @@ public class Curso implements MasterModel {
         this.valorCreditos = valorCreditos;
     }
 
-    public int getQtdCreditos() {
-        return qtdCreditos;
+    public Double getValorMatricula() {
+        return valorMatricula;
     }
 
-    public void setQtdCreditos(int qtdCreditos) {
-        this.qtdCreditos = qtdCreditos;
+    public void setValorMatricula(Double valorMatricula) {
+        this.valorMatricula = valorMatricula;
     }
 
     public int getId() {

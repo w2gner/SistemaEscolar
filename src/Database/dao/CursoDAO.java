@@ -36,7 +36,7 @@ public class CursoDAO extends MasterDAO {
             Curso curso = new Curso();
             curso.setId(resultado.getInt("id_curso"));
             curso.setNome(resultado.getString("nm_curso"));
-            curso.setQtdCreditos(resultado.getInt("num_creditos"));
+            curso.setValorMatricula(resultado.getDouble("num_creditos"));
             curso.setValorCreditos(resultado.getDouble("valor_creditos"));
 
             arlDados.add(curso);
@@ -54,7 +54,7 @@ public class CursoDAO extends MasterDAO {
         Curso ioDisciplina = (Curso) ao_object;
 
         Set(pstInsert, 1, ioDisciplina.getNome());
-        Set(pstInsert, 2, ioDisciplina.getQtdCreditos());
+        Set(pstInsert, 2, ioDisciplina.getValorMatricula());
         Set(pstInsert, 3, ioDisciplina.getValorCreditos());
 
         pstInsert.execute();
@@ -69,7 +69,7 @@ public class CursoDAO extends MasterDAO {
         Curso ioCurso = (Curso) ao_object;
 
         Set(pstUpdate, 1, ioCurso.getNome());
-        Set(pstUpdate, 2, ioCurso.getQtdCreditos());
+        Set(pstUpdate, 2, ioCurso.getValorMatricula());
         Set(pstUpdate, 3, ioCurso.getValorCreditos());
         Set(pstUpdate, 4, ioCurso.getId());
 

@@ -1,10 +1,20 @@
 package database.model;
 
 public class Disciplina implements MasterModel {
-    private Double investimento;
+
+    private int qtdCreditos;
     private int cod_disciplina;
     private String disciplina;
     private String cargaHoraria;
+    private String professor_disciplina;
+
+    public int getQtdCreditos() {
+        return qtdCreditos;
+    }
+
+    public void setQtdCreditos(int qtdCreditos) {
+        this.qtdCreditos = qtdCreditos;
+    }
 
     public String getProfessor_disciplina() {
         return professor_disciplina;
@@ -12,16 +22,6 @@ public class Disciplina implements MasterModel {
 
     public void setProfessor_disciplina(String professor_disciplina) {
         this.professor_disciplina = professor_disciplina;
-    }
-
-    private String professor_disciplina;
-
-    public void setInvestimento(Double investimento) {
-        this.investimento = investimento;
-    }
-
-    public Double getInvestimento() {
-        return investimento;
     }
 
     public String getDisciplina() {
