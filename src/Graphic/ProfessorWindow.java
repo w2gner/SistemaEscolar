@@ -21,7 +21,7 @@ public class ProfessorWindow extends JFrame implements Observer {
     private Connection connection;
     private JLabel lblSexo;
     private JLabel lblMatricula;
-    private JFormattedTextField txfMat;
+    private JTextField txfMat;
     private JLabel lblProfessor;
     private JLabel lblNasc;
     private MLFDataTextField txfNasc;
@@ -70,10 +70,6 @@ public class ProfessorWindow extends JFrame implements Observer {
         lblimagemcurso.setBounds(515, 90, 200, 200);
         getContentPane().add(lblimagemcurso);
 
-        NumberFormat longFormat = NumberFormat.getIntegerInstance();
-        NumberFormatter numberFormatter = new NumberFormatter(longFormat);
-        numberFormatter.setValueClass(Long.class);
-
         lblNasc = new JLabel("Nascimento");
         lblNasc.setBounds(445, 35, 80, 25);
         getContentPane().add(lblNasc);
@@ -86,7 +82,7 @@ public class ProfessorWindow extends JFrame implements Observer {
         lblMatricula.setBounds(50, 35, 60, 25);
         getContentPane().add(lblMatricula);
 
-        txfMat = new JFormattedTextField(numberFormatter);
+        txfMat = new JTextField();
         txfMat.setBounds(50, 55, 75, 25);
         getContentPane().add(txfMat);
 
@@ -201,7 +197,11 @@ public class ProfessorWindow extends JFrame implements Observer {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if (txfNome.getText().isEmpty()) {
+                if (!txfMat.getText().matches("^[0-9]*$")) {
+                    JOptionPane.showMessageDialog(null, "Campo matrícula deve conter apenas números",
+                            "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
+                    txfMat.setText("");
+                } else if (txfNome.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Campo nome requerido", "Aviso",
                             JOptionPane.WARNING_MESSAGE, alertIcon);
                 } else if (txfMat.getText().isEmpty()) {
