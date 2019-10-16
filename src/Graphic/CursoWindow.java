@@ -80,26 +80,35 @@ public class CursoWindow extends JFrame implements Observer {
                         curso.setValorCreditos(Double.parseDouble(valorCreditos.getText().replace(".", "").replace(",", ".")));
 
                         cursos = cursoIO.Select(null);
-                        Curso cursoSelecionado = (Curso) selectedObject;
 
                         for (Object o : cursos) {
                             Curso teste = (Curso) o;
                             if (selectedObject != null) {
-                                if (teste.getId() == cursoSelecionado.getId()) {
+                                if (teste.getId() == ((Curso) selectedObject).getId()) {
                                     curso.setId(teste.getId());
-                                    cursoIO.Update(curso);
                                     isUpdate = true;
                                 }
                             }
                         }
 
                         if (!isUpdate) {
-                            JOptionPane.showMessageDialog(null, "Curso salvo com sucesso",
-                                    "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
-                            cursoIO.Insert(curso);
+                            try {
+                                cursoIO.Insert(curso);
+                                JOptionPane.showMessageDialog(null, "Curso salvo com sucesso",
+                                        "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
+                            } catch (Exception e1) {
+                                JOptionPane.showMessageDialog(null, "Este curso já foi cadastrado",
+                                        "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
+                            }
                         } else {
-                            JOptionPane.showMessageDialog(null, "Curso atualizado com sucesso",
-                                    "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
+                            try {
+                                cursoIO.Update(curso);
+                                JOptionPane.showMessageDialog(null, "Curso atualizado com sucesso",
+                                        "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
+                            } catch (Exception e2) {
+                                JOptionPane.showMessageDialog(null, "Curso já cadastrado",
+                                        "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
+                            }
                         }
 
                     }

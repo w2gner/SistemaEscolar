@@ -240,7 +240,7 @@ public class ProfessorWindow extends JFrame implements Observer {
                         for (Object o : professores) {
                             Professor teste = (Professor) o;
                             if (selectedObject != null) {
-                                if (teste.getMat_professor() == Integer.parseInt(txfMat.getText())) {
+                                if (teste.getMat_professor() == ((Professor) selectedObject).getMat_professor()) {
                                     professor.setcd_professor(teste.getcd_professor());
                                     isUpdate = true;
                                 }

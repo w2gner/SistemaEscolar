@@ -106,12 +106,11 @@ public class DisciplinaWindow extends JFrame implements Observer {
                         disciplina.setProfessor_disciplina(cbxprofessor.getSelectedItem().toString());
 
                         disciplinas = disciplinaIO.Select(null);
-                        Disciplina disciplinaSelecionado = (Disciplina) selectedObject;
 
                         for (Object o : disciplinas) {
                             Disciplina teste = (Disciplina) o;
                             if (selectedObject != null) {
-                                if (teste.getCod_disciplina() == disciplinaSelecionado.getCod_disciplina()) {
+                                if (teste.getCod_disciplina() == ((Disciplina) selectedObject).getCod_disciplina()) {
                                     disciplina.setCod_disciplina(teste.getCod_disciplina());
                                     isUpdate = true;
                                 }
@@ -128,11 +127,15 @@ public class DisciplinaWindow extends JFrame implements Observer {
                                         "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
                             }
                         } else {
-                            disciplinaIO.Update(disciplina);
-                            JOptionPane.showMessageDialog(null, "Usuário atualizado com" +
-                                    " sucesso", "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
+                            try {
+                                disciplinaIO.Update(disciplina);
+                                JOptionPane.showMessageDialog(null, "Usuário atualizado com" +
+                                        " sucesso", "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
+                            } catch (Exception e3) {
+                                JOptionPane.showMessageDialog(null, "Disciplina já cadastrada",
+                                        "Aviso", JOptionPane.WARNING_MESSAGE, alertIcon);
+                            }
                         }
-
                     }
 
                 } catch (SQLException ex) {

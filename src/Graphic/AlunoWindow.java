@@ -238,7 +238,7 @@ public class AlunoWindow extends JFrame implements Observer {
                         for (Object o : alunos) {
                             Aluno teste = (Aluno) o;
                             if (selectedObject != null) {
-                                if (teste.getMat_aluno() == Integer.parseInt(txfMat.getText())) {
+                                if (teste.getMat_aluno() == ((Aluno) selectedObject).getMat_aluno()) {
                                     aluno.setCd_aluno(teste.getCd_aluno());
                                     isUpdate = true;
                                 }
