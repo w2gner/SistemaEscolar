@@ -57,12 +57,12 @@ public class AlunoWindow extends JFrame implements Observer {
 
     public AlunoWindow(final Connection connection) throws SQLException {
         this.connection = connection;
-        setLayout(null);
-        setSize(750, 400);
-        setResizable(false);
-        setLocationRelativeTo(null);
-        setTitle(" Cadastro de Aluno");
-        setIconImage(Toolkit.getDefaultToolkit().getImage("icons/logo.png"));
+            setLayout(null);
+            setSize(750, 400);
+            setResizable(false);
+            setLocationRelativeTo(null);
+            setTitle(" Cadastro de Aluno");
+            setIconImage(Toolkit.getDefaultToolkit().getImage("icons/logo.png"));
 
         lblimagemcurso = new JLabel(new ImageIcon("icons/cadastro.png"));
         lblimagemcurso.setBounds(515, 90, 200, 200);
