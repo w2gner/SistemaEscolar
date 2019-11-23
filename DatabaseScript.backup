@@ -1,51 +1,9 @@
---
--- PostgreSQL database dump
---
-
--- Dumped from database version 9.5.19
--- Dumped by pg_dump version 9.5.19
-
--- Started on 2019-10-16 20:33:01
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
-
---
--- TOC entry 1 (class 3079 OID 12355)
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
---
-
-CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+CREATE DATABASE SistemaDBA;
 
 
---
--- TOC entry 2166 (class 0 OID 0)
--- Dependencies: 1
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
-
-
-SET default_tablespace = '';
-
-SET default_with_oids = false;
-
---
--- TOC entry 181 (class 1259 OID 16394)
--- Name: tb_alunos; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.tb_alunos (
-    cd_aluno integer NOT NULL,
-    nm_aluno text NOT NULL,
+CREATE TABLE tb_alunos (
+    cd_aluno integer ,
+    nm_aluno text ,
     nasc_aluno date,
     sexo_aluno text,
     cpf_aluno text,
@@ -58,162 +16,38 @@ CREATE TABLE public.tb_alunos (
     telefone_aluno text,
     celular_aluno text,
     email_aluno text,
-    mat_aluno integer NOT NULL
+    mat_aluno integer
 );
 
 
-ALTER TABLE public.tb_alunos OWNER TO postgres;
-
---
--- TOC entry 182 (class 1259 OID 16397)
--- Name: tb_alunos_cd_aluno_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.tb_alunos_cd_aluno_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.tb_alunos_cd_aluno_seq OWNER TO postgres;
-
---
--- TOC entry 2167 (class 0 OID 0)
--- Dependencies: 182
--- Name: tb_alunos_cd_aluno_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.tb_alunos_cd_aluno_seq OWNED BY public.tb_alunos.cd_aluno;
-
-
---
--- TOC entry 189 (class 1259 OID 24678)
--- Name: tb_cursos; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.tb_cursos (
+CREATE TABLE tb_cursos (
     nm_curso text,
     num_creditos integer,
     valor_creditos numeric,
-    id_curso integer NOT NULL
+    id_curso integer
 );
 
 
-ALTER TABLE public.tb_cursos OWNER TO postgres;
-
---
--- TOC entry 190 (class 1259 OID 24684)
--- Name: tb_cursos_id_curso_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.tb_cursos_id_curso_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.tb_cursos_id_curso_seq OWNER TO postgres;
-
---
--- TOC entry 2168 (class 0 OID 0)
--- Dependencies: 190
--- Name: tb_cursos_id_curso_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.tb_cursos_id_curso_seq OWNED BY public.tb_cursos.id_curso;
-
-
---
--- TOC entry 187 (class 1259 OID 24663)
--- Name: tb_disciplinas; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.tb_disciplinas (
+CREATE TABLE tb_disciplinas (
     nm_disciplina text,
     qtd_cargahoraria text,
-    id_disciplina integer NOT NULL,
+    id_disciplina integer,
     professor_disciplina text,
     investimento numeric
 );
 
 
-ALTER TABLE public.tb_disciplinas OWNER TO postgres;
-
---
--- TOC entry 188 (class 1259 OID 24669)
--- Name: tb_disciplinas_id_disciplina_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.tb_disciplinas_id_disciplina_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.tb_disciplinas_id_disciplina_seq OWNER TO postgres;
-
---
--- TOC entry 2169 (class 0 OID 0)
--- Dependencies: 188
--- Name: tb_disciplinas_id_disciplina_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.tb_disciplinas_id_disciplina_seq OWNED BY public.tb_disciplinas.id_disciplina;
-
-
---
--- TOC entry 191 (class 1259 OID 24693)
--- Name: tb_matriculas; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.tb_matriculas (
+CREATE TABLE tb_matriculas (
     id_curso integer,
     id_professor integer,
     id_aluno integer,
     id_disciplina integer,
-    id_matricula integer NOT NULL
+    id_matricula integer
 );
 
 
-ALTER TABLE public.tb_matriculas OWNER TO postgres;
-
---
--- TOC entry 192 (class 1259 OID 24696)
--- Name: tb_matriculas_id_matricula_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.tb_matriculas_id_matricula_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.tb_matriculas_id_matricula_seq OWNER TO postgres;
-
---
--- TOC entry 2170 (class 0 OID 0)
--- Dependencies: 192
--- Name: tb_matriculas_id_matricula_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.tb_matriculas_id_matricula_seq OWNED BY public.tb_matriculas.id_matricula;
-
-
---
--- TOC entry 185 (class 1259 OID 24651)
--- Name: tb_professores; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.tb_professores (
-    cd_professor integer NOT NULL,
+CREATE TABLE tb_professores (
+    cd_professor integer,
     nm_professor text,
     nasc_professor date,
     sexo_professor text,
@@ -231,306 +65,9 @@ CREATE TABLE public.tb_professores (
 );
 
 
-ALTER TABLE public.tb_professores OWNER TO postgres;
-
---
--- TOC entry 186 (class 1259 OID 24654)
--- Name: tb_professores_cd_professor_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.tb_professores_cd_professor_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.tb_professores_cd_professor_seq OWNER TO postgres;
-
---
--- TOC entry 2171 (class 0 OID 0)
--- Dependencies: 186
--- Name: tb_professores_cd_professor_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.tb_professores_cd_professor_seq OWNED BY public.tb_professores.cd_professor;
-
-
---
--- TOC entry 183 (class 1259 OID 24588)
--- Name: tb_usuarios; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.tb_usuarios (
-    cod_usuario integer NOT NULL,
+CREATE TABLE tb_usuarios (
+    cod_usuario integer,
     usuario text,
     senha text,
-    is_admin boolean NOT NULL
+    is_admin boolean
 );
-
-
-ALTER TABLE public.tb_usuarios OWNER TO postgres;
-
---
--- TOC entry 184 (class 1259 OID 24591)
--- Name: tb_usuarios_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.tb_usuarios_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.tb_usuarios_id_seq OWNER TO postgres;
-
---
--- TOC entry 2172 (class 0 OID 0)
--- Dependencies: 184
--- Name: tb_usuarios_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.tb_usuarios_id_seq OWNED BY public.tb_usuarios.cod_usuario;
-
-
---
--- TOC entry 2016 (class 2604 OID 32983)
--- Name: cd_aluno; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.tb_alunos ALTER COLUMN cd_aluno SET DEFAULT nextval('public.tb_alunos_cd_aluno_seq'::regclass);
-
-
---
--- TOC entry 2020 (class 2604 OID 32984)
--- Name: id_curso; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.tb_cursos ALTER COLUMN id_curso SET DEFAULT nextval('public.tb_cursos_id_curso_seq'::regclass);
-
-
---
--- TOC entry 2019 (class 2604 OID 32985)
--- Name: id_disciplina; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.tb_disciplinas ALTER COLUMN id_disciplina SET DEFAULT nextval('public.tb_disciplinas_id_disciplina_seq'::regclass);
-
-
---
--- TOC entry 2021 (class 2604 OID 32986)
--- Name: id_matricula; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.tb_matriculas ALTER COLUMN id_matricula SET DEFAULT nextval('public.tb_matriculas_id_matricula_seq'::regclass);
-
-
---
--- TOC entry 2018 (class 2604 OID 32987)
--- Name: cd_professor; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.tb_professores ALTER COLUMN cd_professor SET DEFAULT nextval('public.tb_professores_cd_professor_seq'::regclass);
-
-
---
--- TOC entry 2017 (class 2604 OID 32988)
--- Name: cod_usuario; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.tb_usuarios ALTER COLUMN cod_usuario SET DEFAULT nextval('public.tb_usuarios_id_seq'::regclass);
-
-
---
--- TOC entry 2146 (class 0 OID 16394)
--- Dependencies: 181
--- Data for Name: tb_alunos; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.tb_alunos (cd_aluno, nm_aluno, nasc_aluno, sexo_aluno, cpf_aluno, rg_aluno, cep_aluno, ende_aluno, bairro_aluno, cidade_aluno, uf_aluno, telefone_aluno, celular_aluno, email_aluno, mat_aluno) FROM stdin;
-42	Outro Aluno	\N	M							AC				123
-2	Wagner Ghedin	1999-04-01	M	095.288.589-10	456.456.10	888.12-381	rua presidente prudente	são luiz	criciúma	SC	(48) 3432-2153	(48) 988.221.818	wagnerghedin10@gmail.com	1
-\.
-
-
---
--- TOC entry 2173 (class 0 OID 0)
--- Dependencies: 182
--- Name: tb_alunos_cd_aluno_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.tb_alunos_cd_aluno_seq', 67, true);
-
-
---
--- TOC entry 2154 (class 0 OID 24678)
--- Dependencies: 189
--- Data for Name: tb_cursos; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.tb_cursos (nm_curso, num_creditos, valor_creditos, id_curso) FROM stdin;
-Economia	456	123.42	7
-Ciência da computação	0	45.23	6
-123	1	1.23	16
-\.
-
-
---
--- TOC entry 2174 (class 0 OID 0)
--- Dependencies: 190
--- Name: tb_cursos_id_curso_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.tb_cursos_id_curso_seq', 23, true);
-
-
---
--- TOC entry 2152 (class 0 OID 24663)
--- Dependencies: 187
--- Data for Name: tb_disciplinas; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.tb_disciplinas (nm_disciplina, qtd_cargahoraria, id_disciplina, professor_disciplina, investimento) FROM stdin;
-123	123	25	Professor Wagner	123
-321	321	26	Professor Wagner	321
-23132	23	29	Outro professor	23
-\.
-
-
---
--- TOC entry 2175 (class 0 OID 0)
--- Dependencies: 188
--- Name: tb_disciplinas_id_disciplina_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.tb_disciplinas_id_disciplina_seq', 29, true);
-
-
---
--- TOC entry 2156 (class 0 OID 24693)
--- Dependencies: 191
--- Data for Name: tb_matriculas; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.tb_matriculas (id_curso, id_professor, id_aluno, id_disciplina, id_matricula) FROM stdin;
-7	7	2	9	40
-7	7	42	10	53
-\.
-
-
---
--- TOC entry 2176 (class 0 OID 0)
--- Dependencies: 192
--- Name: tb_matriculas_id_matricula_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.tb_matriculas_id_matricula_seq', 55, true);
-
-
---
--- TOC entry 2150 (class 0 OID 24651)
--- Dependencies: 185
--- Data for Name: tb_professores; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.tb_professores (cd_professor, nm_professor, nasc_professor, sexo_professor, cpf_professor, rg_professor, cep_professor, ende_professor, bairro_professor, cidade_professor, uf_professor, telefone_professor, celular_professor, email_professor, mat_professor) FROM stdin;
-7	Professor Wagner	1999-04-01	M	09528858910	4879987897	888.12-381	Rua presidente prudente	são luzi	criciúma	SC	48988221818	88221818	wagnerghedin10@gmail.com	1
-27	Outro professor	\N	M							AC				2
-\.
-
-
---
--- TOC entry 2177 (class 0 OID 0)
--- Dependencies: 186
--- Name: tb_professores_cd_professor_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.tb_professores_cd_professor_seq', 37, true);
-
-
---
--- TOC entry 2148 (class 0 OID 24588)
--- Dependencies: 183
--- Data for Name: tb_usuarios; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.tb_usuarios (cod_usuario, usuario, senha, is_admin) FROM stdin;
-45	admin	admin	t
-\.
-
-
---
--- TOC entry 2178 (class 0 OID 0)
--- Dependencies: 184
--- Name: tb_usuarios_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.tb_usuarios_id_seq', 54, true);
-
-
---
--- TOC entry 2023 (class 2606 OID 32990)
--- Name: alunos_uk; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.tb_alunos
-    ADD CONSTRAINT alunos_uk UNIQUE (cpf_aluno);
-
-
---
--- TOC entry 2029 (class 2606 OID 49216)
--- Name: curso_uk; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.tb_cursos
-    ADD CONSTRAINT curso_uk UNIQUE (nm_curso);
-
-
---
--- TOC entry 2027 (class 2606 OID 33017)
--- Name: disciplina_uk; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.tb_disciplinas
-    ADD CONSTRAINT disciplina_uk UNIQUE (nm_disciplina);
-
-
---
--- TOC entry 2031 (class 2606 OID 33027)
--- Name: matricula_uk; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.tb_matriculas
-    ADD CONSTRAINT matricula_uk UNIQUE (id_aluno);
-
-
---
--- TOC entry 2025 (class 2606 OID 33025)
--- Name: professores_uk; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.tb_professores
-    ADD CONSTRAINT professores_uk UNIQUE (cpf_professor);
-
-
---
--- TOC entry 2165 (class 0 OID 0)
--- Dependencies: 7
--- Name: SCHEMA public; Type: ACL; Schema: -; Owner: postgres
---
-
-REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM postgres;
-GRANT ALL ON SCHEMA public TO postgres;
-GRANT ALL ON SCHEMA public TO PUBLIC;
-
-
--- Completed on 2019-10-16 20:33:02
-
---
--- PostgreSQL database dump complete
---
-

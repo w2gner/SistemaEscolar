@@ -23,7 +23,7 @@ public class PrincipalWindow extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         getContentPane().setBackground(Color.darkGray);
         setIconImage(Toolkit.getDefaultToolkit().getImage("icons/logo.png"));
-        lblimagemcurso = new JLabel(new ImageIcon("icons/fundo.png"));
+        lblimagemcurso = new JLabel(new ImageIcon("icons/BackGround.png"));
 
 		add(lblimagemcurso);
 		JPanel panel = new JPanel();
