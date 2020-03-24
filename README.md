@@ -1,2 +1,3 @@
-# Sistema
-Sistema de gerenciamento de escola
+# Aplicação Escolar
+
+Sistema administrativo para gerenciamento de escola
